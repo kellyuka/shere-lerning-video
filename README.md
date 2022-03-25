@@ -59,6 +59,9 @@ YouTubeで見て、有用だった勉強動画の再生リストを作成し
 自分の知見（例：わかりやすい、細かいところまで、実演があるとか。）を入れてアウトプットして価値を出すことで、浪費と感じないようにしたいです。  
 見る側も登録する側もwin-winな関係になれますし、YouTubeの再生回数も上がるので、Youtuberともwin-winの関係になれます。
 
+## 画面遷移図
+[figma](https://www.figma.com/file/aCfkhFpNcFb3WFQMDmtpth/kellyuka%2FShare-Larning-Youtube?node-id=0%3A1)
+
 ## スケジュール
 企画〜技術調査：3/24〆切  
 (YoutubeDataAPIで、ユーザーIDから再生リストの取得、再生リストIDから、動画の取得ができることを確認しました。)  
