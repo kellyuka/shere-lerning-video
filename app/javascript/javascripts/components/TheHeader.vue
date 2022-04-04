@@ -6,13 +6,18 @@
         <img class="image" src="" alt="" width="96px">
         <strong>ShareTechTube</strong>
       </a>
-      <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
+      <a class="navbar-burger" 
+          role="button" 
+          aria-label="menu" 
+          aria-expanded="false" 
+          v-on:click="changeBurgerVisibillity"
+          v-bind:class="{ 'is-active': burgerVisibillity }">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-    <div id="my-menu" class="navbar-menu">
+    <div class="navbar-menu" v-bind:class="{ 'is-active': burgerVisibillity }">
       <div class="navbar-start">
         <a class="navbar-item" href="#">About</a>
         <a class="navbar-item" href="#">Index</a>
@@ -45,7 +50,11 @@
 export default {
   name: "Header",
   data() {
-    return {
+    return { burgerVisibillity: false };
+  },
+  methods: {
+    changeBurgerVisibillity() {
+      this.burgerVisibillity = !this.burgerVisibillity;
     }
   }
 }
