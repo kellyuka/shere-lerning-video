@@ -1,22 +1,16 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
-  </div>
+  <Header/>
+  <Footer/>
 </template>
 
 <script>
+import Header from './javascripts/components/TheHeader.vue'
+import Footer from './javascripts/components/TheFooter.vue'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  }
+  components: {
+    Header,
+    Footer
+  },
 }
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
