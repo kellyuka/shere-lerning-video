@@ -46,7 +46,7 @@
                 <small class="has-text-grey-dark"><a href="#">利用規約</a>、<a href="#">プライバシーポリシー</a>に同意する</small>
               </label>
             </div>
-            <button class="button is-primary py-2 is-fullwidth">Get Started</button>
+            <button class="button is-primary py-2 is-fullwidth"  @click="searchUser">Get Started</button>
           </form>
         </div>
       </div>
@@ -56,8 +56,43 @@
 </template>
 
 <script>
+import axios from 'axios'
+import $axios from '../../plugins/axios'
+
 export default {
   name: "RegisterIndex",
+  data() {
+    return {
+      user: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+      }
+    }
+  },
+  methods: {
+    register() {
+      this.$axios.post('users', { user: this.user })
+        .then(res => {
+          this.$router.push({ name: 'TopIndex' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    searchUser: function() {
+      $axios
+        .get("http://localhost:3000/api/users", {
+        })
+        .then(function(res) {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 
