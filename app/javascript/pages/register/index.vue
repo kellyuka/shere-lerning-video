@@ -17,12 +17,22 @@
             <h3 class="mb-5 is-size-4 has-text-weight-bold">Create new account</h3>
             <div class="field">
               <div class="control">
-                <input class="input" type="email" placeholder="E-mail address">
+                <input
+                  id="email"
+                  v-model="user.email"
+                  class="input" 
+                  type="email" 
+                  placeholder="E-mail address">
               </div>
             </div>
             <div class="field">
               <div class="control">
-                <input class="input" type="text" placeholder="name">
+                <input 
+                  id="name"
+                  v-model="user.name"
+                  class="input"
+                  type="text"
+                  placeholder="name">
               </div>
             </div>
             <div class="field">
@@ -32,12 +42,22 @@
             </div>
             <div class="field">
               <div class="control">
-                <input class="input" type="password" placeholder="Password">
+                <input 
+                id="password"
+                v-model="user.password"
+                class="input" 
+                type="password" 
+                placeholder="Password">
               </div>
             </div>
             <div class="field">
               <div class="control">
-                <input class="input" type="password" placeholder="Repeat password">
+                <input 
+                id="password_confirmation"
+                v-model="user.password_confirmation"
+                class="input" 
+                type="password" 
+                placeholder="Repeat password">
               </div>
             </div>
             <div class="field">
@@ -46,8 +66,13 @@
                 <small class="has-text-grey-dark"><a href="#">利用規約</a>、<a href="#">プライバシーポリシー</a>に同意する</small>
               </label>
             </div>
-            <button class="button is-primary py-2 is-fullwidth"  @click="searchUser">Get Started</button>
           </form>
+            <button 
+              class="button is-primary py-2 is-fullwidth"  
+              @click="register"
+            >
+              Get Started
+            </button>
         </div>
       </div>
     </div>
@@ -57,7 +82,6 @@
 
 <script>
 import axios from 'axios'
-import $axios from '../../plugins/axios'
 
 export default {
   name: "RegisterIndex",
@@ -73,20 +97,19 @@ export default {
   },
   methods: {
     register() {
-      this.$axios.post('users', { user: this.user })
+      axios.post('api/users', { user: this.user })
         .then(res => {
-          this.$router.push({ name: 'TopIndex' })
+          this.$router.push({ name: 'LoginIndex' })
         })
         .catch(err => {
+          alert("登録失敗")
           console.log(err)
         })
     },
     searchUser: function() {
-      $axios
-        .get("http://localhost:3000/api/users", {
-        })
+        axios.get('api/users')
         .then(function(res) {
-          console.log(res)
+          console.log(res.data)
         })
         .catch(err => {
           console.log(err)
