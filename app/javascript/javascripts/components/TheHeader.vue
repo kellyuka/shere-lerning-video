@@ -2,9 +2,9 @@
   <nav class="navbar">
     <div class="container">
       <div class="navbar-brand">
-        <a
-          class="navbar-item has-text-danger	"
-          href="#"
+        <router-link
+          :to="{ name: 'TopIndex' }"
+          class="navbar-item has-text-danger"
         >
           <img
             class="image"
@@ -13,7 +13,7 @@
             width="96px"
           >
           <strong>ShareTechTube</strong>
-        </a>
+        </router-link>
         <a
           class="navbar-burger" 
           role="button" 
@@ -82,25 +82,54 @@
             </div>
           </div>
         </div>
-        <div class="navbar-item">
-          <button class="button is-danger">
-            ログイン
-          </button>
-        </div>
+        <template v-if="!authUser">
+          <div class="navbar-item">
+            <router-link
+              :to="{ name: 'LoginIndex' }"
+              class="nav-link button is-danger"
+            >
+              ログイン
+            </router-link>
+          </div>
+        </template>
+        <template v-else>
+          <div class="navbar-item">
+            <router-link
+              to="#"
+              class="nav-link button is-danger"
+              @click="handleLogout"
+            >
+              ログアウト
+            </router-link>
+          </div>
+        </template>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
 export default {
   name: "Header",
   data() {
     return { burgerVisibillity: false };
   },
+  computed: {
+    ...mapGetters("users", ["authUser"])
+  },
   methods: {
     changeBurgerVisibillity() {
       this.burgerVisibillity = !this.burgerVisibillity;
+    },
+    ...mapActions("users", ["logoutUser"]),
+    async handleLogout() {
+      try {
+        await this.logoutUser()
+        this.$router.push({name: 'TopIndex'})
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

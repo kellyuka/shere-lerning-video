@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  before_action :authenticate!, only: %i[me]
+
   def index
     user = User.all
     render json: user
@@ -12,6 +14,10 @@ class Api::UsersController < ApplicationController
     else
       render json: user.errors, status: :bad_request
     end
+  end
+
+  def me
+    render json: current_user
   end
 
   private
