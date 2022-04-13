@@ -15,6 +15,7 @@
             <h2 class="has-text-white mb-4 is-size-1 is-size-3-mobile has-text-weight-bold">
               SHERE TECH TUBE!!
             </h2>
+            <hr class="login-hr">
             <p class="has-text-white mb-0 is-size-5">
               動画で勉強したこと、共有しませんか？
             </p>

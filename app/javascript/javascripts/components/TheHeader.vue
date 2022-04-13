@@ -2,9 +2,9 @@
   <nav class="navbar">
     <div class="container">
       <div class="navbar-brand">
-        <a
-          class="navbar-item has-text-danger	"
-          href="#"
+        <router-link
+          :to="{ name: 'TopIndex' }"
+          class="navbar-item has-text-danger"
         >
           <img
             class="image"
@@ -13,7 +13,7 @@
             width="96px"
           >
           <strong>ShareTechTube</strong>
-        </a>
+        </router-link>
         <a
           class="navbar-burger" 
           role="button" 
@@ -87,7 +87,7 @@
             <router-link
               :to="{ name: 'LoginIndex' }"
               class="nav-link button is-danger"
-              >
+            >
               ログイン
             </router-link>
           </div>

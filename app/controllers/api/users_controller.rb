@@ -15,7 +15,7 @@ class Api::UsersController < ApplicationController
       render json: user.errors, status: :bad_request
     end
   end
-  
+
   def me
     render json: current_user
   end
