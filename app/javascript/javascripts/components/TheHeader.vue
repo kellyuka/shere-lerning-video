@@ -82,21 +82,37 @@
             </div>
           </div>
         </div>
-        <div class="navbar-item">
-          <button class="button is-danger">
-            ログイン
-          </button>
-        </div>
+        <template v-if="!authUser">
+          <div class="navbar-item">
+            <router-link
+              :to="{ name: 'LoginIndex' }"
+              class="nav-link button is-danger"
+              >
+              ログイン
+            </router-link>
+          </div>
+        </template>
+        <template v-else>
+          <div class="navbar-item">
+            <button class="button is-danger">
+              ログアウト
+            </button>
+          </div>
+        </template>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters, } from "vuex"
 export default {
   name: "Header",
   data() {
     return { burgerVisibillity: false };
+  },
+  computed: {
+    ...mapGetters("users", ["authUser"])
   },
   methods: {
     changeBurgerVisibillity() {
