@@ -22,9 +22,29 @@ const actions = {
     const userResponse = await axios.get('users/me')
     commit('setUser', userResponse.data)
   },
+  async fetchAuthUser({ commit, state }) {
+    if (!localStorage.auth_token) return null
+    if (state.authUser) return state.authUser
+    const userResponse = await axios.get('users/me')
+      .catch((err) => {
+        return null
+      })
+    if (!userResponse) return null
+    const authUser = userResponse.data
+    if (authUser) {
+      commit('setUser', authUser)
+      return authUser
+    } else {
+      commit('setUser', null)
+      return null
+    }
+  },
+  logoutUser({ commit }) {
+    localStorage.removeItem('auth_token')
+    axios.defaults.headers.common['Authorization'] = ''
+    commit('setUser', null)
+  },
 }
-
-
 export default {
   namespaced: true,
   state,

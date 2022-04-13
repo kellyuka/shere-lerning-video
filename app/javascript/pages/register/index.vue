@@ -129,15 +129,15 @@ export default {
           console.log(err)
         })
     },
-    searchUser: function() {
-        axios.get('api/users')
-        .then(function(res) {
-          console.log(res.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+    // searchUser: function() {
+    //     axios.get('api/users')
+    //     .then(function(res) {
+    //       console.log(res.data)
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
   }
 }
 </script>

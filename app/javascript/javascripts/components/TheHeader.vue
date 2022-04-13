@@ -94,9 +94,13 @@
         </template>
         <template v-else>
           <div class="navbar-item">
-            <button class="button is-danger">
+            <router-link
+              to="#"
+              class="nav-link button is-danger"
+              @click="handleLogout"
+            >
               ログアウト
-            </button>
+            </router-link>
           </div>
         </template>
       </div>
@@ -105,7 +109,7 @@
 </template>
 
 <script>
-import { mapGetters, } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 export default {
   name: "Header",
   data() {
@@ -117,6 +121,15 @@ export default {
   methods: {
     changeBurgerVisibillity() {
       this.burgerVisibillity = !this.burgerVisibillity;
+    },
+    ...mapActions("users", ["logoutUser"]),
+    async handleLogout() {
+      try {
+        await this.logoutUser()
+        this.$router.push({name: 'TopIndex'})
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
