@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import LoginIndex from '../pages/login/index.vue'
 import RegisterIndex from '../pages/register/index.vue'
 import TopIndex from '../pages/top/index.vue'
+import Listnew from '../pages/list/new.vue'
 import store from '../store'
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: '/login',
     component: LoginIndex,
     name: "LoginIndex"
+  },
+  {
+    path: '/listnew',
+    component: Listnew,
+    name: "Listnew"
   },
 ];
 
