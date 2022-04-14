@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: shere_lerning_video_production
-  username: shere_lerning_video
-  password: <%= ENV['SHERE_LERNING_VIDEO_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
