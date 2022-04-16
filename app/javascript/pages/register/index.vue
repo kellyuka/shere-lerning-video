@@ -52,9 +52,10 @@
             <div class="field">
               <div class="control">
                 <input
+                  v-model="user.channelid"
                   class="input"
                   type="text"
-                  placeholder="ChannelId"
+                  placeholder="channelid"
                 >
               </div>
             </div>
@@ -114,6 +115,7 @@ export default {
       user: {
         name: '',
         email: '',
+        channelid: '',
         password: '',
         password_confirmation: '',
       }
