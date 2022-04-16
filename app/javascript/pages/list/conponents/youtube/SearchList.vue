@@ -58,7 +58,7 @@ export default {
         type: "video",
         maxResults: "10",
         channelId: this.authuser.channelid,
-        key: "AIzaSyDtPV43IJnQeVA64qCb8hJ7MIRr7k2DgrE"
+        key: process.env.VUE_APP_API_KEY,
       }
     };
   },
