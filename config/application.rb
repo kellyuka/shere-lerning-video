@@ -37,5 +37,13 @@ module ShereLerningVideo
     # i18n
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}').to_s]
+    
+    config.generators do |g|  
+      g.assets false          
+      g.skip_routes true     
+      g.helper false
+      g.template_engine :erb
+      g.test_framework nil
+    end                       
   end
 end

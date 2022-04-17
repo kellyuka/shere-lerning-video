@@ -1,15 +1,59 @@
 <template>
-  <section>
-    <h2>リスト作成</h2>
-    <SearchList 
-      :authuser="authUser"
-    />
-  </section>
+  <div class="box container">
+    <div class="field">
+      <label class="label">タイトル</label>
+      <div class="control">
+        <input 
+          id="title"
+          v-model="list.title"
+          class="input"
+          type="text" 
+          placeholder="30字以内"
+        >
+      </div>
+    </div>
+    <div
+      v-if="authUser.channelid"
+      class="field"
+    >
+      <SearchList 
+        :channelid="authUser.channelid"
+        @select="select"
+      />
+    </div>
+    <div class="field">
+      <label class="label">コメント</label>
+      <div class="control">
+        <textarea 
+          id="recommend"
+          v-model="list.recommend"
+          class="textarea" 
+          placeholder="300字以内" 
+          rows="3"
+        />
+      </div>
+    </div>
+    <div class="field is-grouped">
+      <div class="control">
+        <button
+          class="button is-danger"
+          @click="createlist"
+        >
+          登録
+        </button>
+      </div>
+      <div class="control">
+        <button class="button is-light">
+          キャンセル
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
 import SearchList from './conponents/youtube/SearchList.vue'
-import { mapGetters } from "vuex"
 
 export default {
   name: "ListNew",
@@ -18,10 +62,34 @@ export default {
   },
   data() {
     return {
+      list: {
+        title: '',
+        playlistid: '',
+        recommend:'',
+        }
     }
   },
   computed: {
-      ...mapGetters("users", ["authUser"]),
+      ...mapGetters("users", ["authUser"])
+  },
+  methods: {
+    ...mapActions("lists", [
+      "createList",
+    ]),
+    async createlist() {
+      try {
+        await this.createList(this.list);
+        this.$router.push({ name: 'TopIndex' })
+      } catch (error) {
+        alert("登録失敗")
+        console.log(error);
+      }
+    },
+    select(event) {
+      const self = event.currentTarget.id
+      this.list.playlistid = self
+      console.log(this.list.playlistid)
+    },
   }
 }
 </script>
