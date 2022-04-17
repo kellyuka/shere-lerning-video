@@ -1,34 +1,25 @@
 <template>
-  <div class="container is-max-desktop">
-    <div class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h2 class="subtitle">
-            再生リスト
-          </h2>
-          <button @click="searchplayLists">
-            検索
-          </button>
-        </div>
-      </div>
-    </div>
+  <div>
+    <label class="label">再生リスト</label>
+    <button @click="searchplayLists">
+      検索
+    </button>
     <div v-show="results">
       <div class="columns is-multiline">
         <div
           v-for="(list) in results"
           :key="list.id"
-          class="column is-3"
+          class="column is-2"
         >
-          <article>
-            <img
-              width="320"
-              height="180"
-              :src="list.snippet.thumbnails.medium.url"
-            >
+          <div
+            :id="list.id"
+            @click="select($event)"
+          >
+            <img :src="list.snippet.thumbnails.medium.url">
             <h2 class="subtitle">
               {{ list.snippet.title }}
             </h2>
-          </article>
+          </div>
         </div>
       </div>
     </div>
@@ -41,14 +32,10 @@ import axios from 'axios';
 export default {
   name: "SearchList",
   props: {
-    authuser: {
-      type: Object,
-      required: true,
-      channelid: {
-        type: String,
-        required: true
-      },
-    },
+    channelid:{
+      type: String,
+      required: true
+    }
   },
   data: function() {
     return {
@@ -57,7 +44,7 @@ export default {
         part: "snippet",
         type: "video",
         maxResults: "10",
-        channelId: this.authuser.channelid,
+        channelId: this.channelid,
         key: process.env.VUE_APP_API_KEY,
       }
     };
@@ -75,7 +62,10 @@ export default {
         .catch(function(err) {
           alert("検索に失敗しました。")
         })
-    }
+    },
+    select(event) {
+      this.$emit('select',event)
+    },
   }
 };
 </script>

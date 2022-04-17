@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import LoginIndex from '../pages/login/index.vue'
 import RegisterIndex from '../pages/register/index.vue'
 import TopIndex from '../pages/top/index.vue'
-import Listnew from '../pages/list/new.vue'
+import ListNew from '../pages/list/new.vue'
 import store from '../store'
 
 const routes = [
@@ -23,8 +23,8 @@ const routes = [
   },
   {
     path: '/listnew',
-    component: Listnew,
-    name: "Listnew"
+    component: ListNew,
+    name: "ListNew"
   },
 ];
 

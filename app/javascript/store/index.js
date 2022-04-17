@@ -1,10 +1,10 @@
 import { createStore } from 'vuex'
 import users from './modules/users'
+import lists from './modules/lists'
 
 export default createStore({
-  // state: Vuexで管理する状態を定義
-  // [state]がコンポーネントにおける[data]に相当
   modules: {
-    users
+    users,
+    lists,
   }
 })

@@ -44,10 +44,12 @@
             class="navbar-item"
             href="#"
           >Category</a>
-          <a
+          <router-link
+            :to="{ name: 'ListNew' }"
             class="navbar-item"
-            href="#"
-          >Tag</a>
+          >
+            ListNew
+          </router-link>
         </div>
         <div class="navbar-item">
           <div class="field has-addons">
