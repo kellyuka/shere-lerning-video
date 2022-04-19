@@ -39,11 +39,13 @@
           <a
             class="navbar-item"
             href="#"
-          >Index</a>
-          <a
-            class="navbar-item"
-            href="#"
           >Category</a>
+          <router-link
+            :to="{ name: 'ListIndex' }"
+            class="navbar-item"
+          >
+            ListIndex
+          </router-link>
           <router-link
             :to="{ name: 'ListNew' }"
             class="navbar-item"
