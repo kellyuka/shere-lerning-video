@@ -8,6 +8,8 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import '../javascripts/application.js'
+import "packs/youtube/lite-yt-embed.css"
+import "packs/youtube/lite-yt-embed.js"
 
 Rails.start()
 Turbolinks.start()
