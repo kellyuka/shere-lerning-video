@@ -6,7 +6,7 @@
           :to="{ name: 'ListNew' }"
           class="button is-danger is-block is-alt is-medium"
         >
-        New List
+          New List
         </router-link>
         <div class="menu">
           <p class="menu-label">
@@ -39,7 +39,6 @@
             </div>
             <div class="media-content">
               <div class="content">
-                <!-- <h4>Bulma: How do you center a button in a box?Bulma: How do you center a button in a box?Bulma: How do you center a button in a box?Bulma: How do you center a button in a box?Bulma: How do you center a button in a box?</h4> -->
                 <h4>
                   {{ list.title }} 
                   <span class="tag">Customers</span>
@@ -48,13 +47,24 @@
                   <a href="#">@red</a>
                   {{ list.recommend }}
                 </p>
-                <iframe
+                <!-- <iframe
                   width="320"
                   height="180"
                   :src="'https://www.youtube.com/embed/videoseries?controls=0&amp;list='+ list.playlistid "
                   title="YouTube video player"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                /> -->
+                <iframe
+                  v-for="video in list.videos" 
+                  :key="video.id"
+                  width="320" 
+                  eight="180" 
+                  :src="'https://www.youtube.com/embed/' + video.videoid"
+                  title="YouTube video player" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                   allowfullscreen
                 />
               </div>
@@ -73,7 +83,6 @@ import { mapGetters, mapActions } from "vuex"
 export default {
   name: "ListIndex",
   computed: {
-    //vuexgetterから、tasksをtasksとして取得 
     ...mapGetters("lists", ["lists"]),
   },
   created () {

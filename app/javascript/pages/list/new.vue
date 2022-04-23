@@ -62,6 +62,7 @@ export default {
   },
   data() {
     return {
+      newlist: [],
       list: {
         title: '',
         playlistid: '',
@@ -75,11 +76,21 @@ export default {
   methods: {
     ...mapActions("lists", [
       "createList",
+      "createVideo",
+    ]),
+    ...mapActions("videos", [
+      "searchVideos",
     ]),
     async createlist() {
       try {
-        await this.createList(this.list);
-        this.$router.push({ name: 'TopIndex' })
+        await 
+          this.createList(this.list)
+            .then(res => this.newlist = res.data)
+            .catch(err => { alert("リスト登録失敗"), console.log(err) })
+          this.searchVideos(this.newlist)
+            .then(res => this.createVideo([ this.newlist, res.data.items ]))
+            .catch(err => { alert("ビデオ登録失敗"), console.log(err) })
+          this.$router.push({ name: 'ListIndex' })
       } catch (error) {
         alert("登録失敗")
         console.log(error);

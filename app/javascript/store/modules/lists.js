@@ -20,6 +20,9 @@ const actions = {
   createList({ commit }, list) {
     return axios.post('lists', list)
   },
+  createVideo({ commit },[list,videos]) {
+    return axios.post('videos', {video: videos, list: list})
+  },
 }
 
 export default {

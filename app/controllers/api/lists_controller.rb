@@ -2,8 +2,8 @@ class Api::ListsController < ApplicationController
   before_action :authenticate!, only: %i[create]
 
   def index
-    list = List.all
-    render json: list
+    lists = List.all
+    render json: lists, include: [:videos]
   end
 
   def create
