@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_21_041610) do
+ActiveRecord::Schema.define(version: 2022_04_24_065544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "list_id", null: false
+    t.bigint "user_id", null: false
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["list_id"], name: "index_comments_on_list_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "lists", force: :cascade do |t|
     t.string "title"
@@ -45,6 +55,8 @@ ActiveRecord::Schema.define(version: 2022_04_21_041610) do
     t.index ["list_id"], name: "index_videos_on_list_id"
   end
 
+  add_foreign_key "comments", "lists"
+  add_foreign_key "comments", "users"
   add_foreign_key "lists", "users"
   add_foreign_key "videos", "lists"
 end
