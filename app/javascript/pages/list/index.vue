@@ -1,5 +1,5 @@
 <template>
-  <section class="section ">
+  <section class="section">
     <div class="columns">
       <div class="column is-2">
         <router-link
@@ -39,10 +39,15 @@
             </div>
             <div class="media-content">
               <div class="content">
-                <h4>
-                  {{ list.title }} 
-                  <span class="tag">Customers</span>
-                </h4>
+                <router-link
+                  :to="'/lists/'+list.id"
+                  class=""
+                  :list="list"
+                  @click="show(list)"
+                >
+                  <h4>{{ list.title }} </h4>
+                </router-link>
+                  <span class="tag" >Customers</span>
                 <p>
                   <a href="#">@red</a>
                   {{ list.recommend }}
@@ -80,7 +85,11 @@ export default {
   methods: {
     ...mapActions("lists", [
       "fetchLists",
+      "showList"
     ]),
-  },
+  show(list) {
+    this.showList(list);
+    },
+  }
 }
 </script>
