@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :sessions
     resources :lists
     resources :videos
+    resources :comments
   end
   get 'home/index'
   get '*path', to: 'home#index'

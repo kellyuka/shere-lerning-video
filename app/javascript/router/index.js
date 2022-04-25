@@ -32,7 +32,7 @@ const routes = [
     path: '/lists/:list_id(\\d+)',
     component: ListShow,
     name: "ListShow",
-    //props: route => ({ id: Number(route.params.list_id) }) 
+    props: route => ({ id: Number(route.params.list_id) }) 
   },
   {
     path: '/lists',

@@ -42,8 +42,6 @@
                 <router-link
                   :to="'/lists/'+list.id"
                   class=""
-                  :list="list"
-                  @click="show(list)"
                 >
                   <h4>{{ list.title }} </h4>
                 </router-link>
@@ -85,11 +83,7 @@ export default {
   methods: {
     ...mapActions("lists", [
       "fetchLists",
-      "showList"
     ]),
-  show(list) {
-    this.showList(list);
-    },
   }
 }
 </script>
