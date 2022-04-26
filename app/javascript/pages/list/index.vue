@@ -45,19 +45,19 @@
                 >
                   <h4>{{ list.title }} </h4>
                 </router-link>
-                  <span class="tag" >Customers</span>
+                <span class="tag">Customers</span>
                 <p>
                   <a href="#">@red</a>
                   {{ list.recommend }}
                 </p>
                 <div class="columns is-multiline">
-                  <lite-youtube  v-for="video in list.videos" 
+                  <lite-youtube
+                    v-for="video in list.videos" 
                     :key="video.id"
                     :videoid="video.videoid"
                     style="width:320px" 
                     params="rel=0"
-                    >
-                  </lite-youtube>
+                  />
                 </div>
               </div>
             </div>

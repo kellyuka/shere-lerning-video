@@ -1,12 +1,14 @@
 <template>
   <div class="tile is-parent box">
     <div class="tile is-child ">
-      <p class="title ">コメント</p>
+      <p class="title ">
+        コメント
+      </p>
       <article 
         v-for="comment in comments" 
         :key="comment.id"
         class="media"
-        >
+      >
         <figure class="media-left">
           <p class="image is-48x48">
             <img src="https://bulma.io/images/placeholders/128x128.png">
@@ -14,7 +16,7 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <strong>@{{comment.user.name}}</strong>
+            <strong>@{{ comment.user.name }}</strong>
             <p>{{ comment.body }}</p>
           </div>
         </div>
@@ -32,14 +34,16 @@
               v-model="comment.body"
               class="textarea"
               placeholder="みんなでコメントしよう"
-            ></textarea>
+            />
           </div>
           <div class="field">
             <p class="control">
               <button
                 class="button is-danger"
                 @click.prevent="handle_create_comment"
-              >投稿</button>
+              >
+                投稿
+              </button>
             </p>
           </div>
         </div>

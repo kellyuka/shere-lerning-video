@@ -21,6 +21,7 @@ class Api::ListsController < ApplicationController
   end
 
   private
+
   def set_list
     @list = List.find(params[:id])
   end
