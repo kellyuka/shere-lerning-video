@@ -22,7 +22,6 @@ RSpec.describe User, type: :model do
       duplicated_email = User.new(email: user.email)
       expect(duplicated_email.valid?).to be false
       expect(duplicated_email.errors[:email]).to include('はすでに存在します')
-
     end
   end
 end

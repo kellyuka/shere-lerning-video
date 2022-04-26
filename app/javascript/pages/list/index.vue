@@ -1,5 +1,5 @@
 <template>
-  <section class="section ">
+  <section class="section">
     <div class="columns">
       <div class="column is-2">
         <router-link
@@ -39,22 +39,25 @@
             </div>
             <div class="media-content">
               <div class="content">
-                <h4>
-                  {{ list.title }} 
-                  <span class="tag">Customers</span>
-                </h4>
+                <router-link
+                  :to="'/lists/'+list.id"
+                  class=""
+                >
+                  <h4>{{ list.title }} </h4>
+                </router-link>
+                <span class="tag">Customers</span>
                 <p>
                   <a href="#">@red</a>
                   {{ list.recommend }}
                 </p>
                 <div class="columns is-multiline">
-                  <lite-youtube  v-for="video in list.videos" 
+                  <lite-youtube
+                    v-for="video in list.videos" 
                     :key="video.id"
                     :videoid="video.videoid"
                     style="width:320px" 
                     params="rel=0"
-                    >
-                  </lite-youtube>
+                  />
                 </div>
               </div>
             </div>
@@ -81,6 +84,6 @@ export default {
     ...mapActions("lists", [
       "fetchLists",
     ]),
-  },
+  }
 }
 </script>

@@ -3,6 +3,7 @@ import LoginIndex from '../pages/login/index.vue'
 import RegisterIndex from '../pages/register/index.vue'
 import TopIndex from '../pages/top/index.vue'
 import ListNew from '../pages/list/new.vue'
+import ListShow from '../pages/list/show.vue'
 import ListIndex from '../pages/list/index.vue'
 import store from '../store'
 
@@ -26,6 +27,12 @@ const routes = [
     path: '/listnew',
     component: ListNew,
     name: "ListNew"
+  },
+  {
+    path: '/lists/:list_id(\\d+)',
+    component: ListShow,
+    name: "ListShow",
+    props: route => ({ id: Number(route.params.list_id) }) 
   },
   {
     path: '/lists',
