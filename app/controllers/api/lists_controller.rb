@@ -1,6 +1,6 @@
 class Api::ListsController < ApplicationController
   before_action :authenticate!, only: %i[create]
-  before_action :set_list, only: %i[show update]
+  before_action :set_list, only: %i[show update destroy]
 
   def index
     lists = List.all
@@ -26,6 +26,11 @@ class Api::ListsController < ApplicationController
     else
       render json: @list.errors, status: :bad_request
     end
+  end
+
+  def destroy
+    @list.destroy!
+    render json: @list
   end
 
   private

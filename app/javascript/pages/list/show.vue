@@ -15,6 +15,12 @@
           @changelist="changelist"
           @VisibleModal="VisibleModal"
         />
+        <button 
+          class="button is-danger"
+          @click="deletelist"
+        >
+          削除
+        </button>
       </div>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-9">
@@ -74,6 +80,7 @@ export default {
     ...mapActions("lists", [
     "showList",
     "updateList",
+    "deleteList",
     ]),
     ...mapActions("comments", [
       "createComment",
@@ -89,6 +96,14 @@ export default {
       try {
         await 
           this.updateList(list)
+          this.$router.push({ name: 'ListIndex' })
+      }
+      catch (error) { alert("登録失敗"),console.log(error); }
+    },
+    async deletelist() {
+      try {
+        await 
+          this.deleteList(this.list)
           this.$router.push({ name: 'ListIndex' })
       }
       catch (error) { alert("登録失敗"),console.log(error); }

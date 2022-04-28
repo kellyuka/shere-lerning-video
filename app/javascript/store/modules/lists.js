@@ -19,6 +19,11 @@ const mutations = {
     })
     state.lists.splice(index, 1, updateList);
   },
+  deleteList: (state, deleteList) => { 
+    state.lists = state.lists.filter(list => {
+      return list.id != deleteList.id
+    })
+  }
 }
 const actions = {
   fetchLists({ commit }) {
@@ -40,7 +45,13 @@ const actions = {
   updateList({ commit },list) {
     return axios.patch('lists/'+list.id, list)
       .then(res => { commit('updateList', res.data) })
+      .catch(err => console.log(err.response));
   },
+  deleteList({ commit }, list) {
+    return axios.delete('lists/'+list.id)
+      .then(res => { commit('deleteList', res.data) })
+      .catch(err => console.log(err.response));
+  }
 }
 
 export default {
