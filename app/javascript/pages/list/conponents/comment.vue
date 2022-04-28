@@ -55,20 +55,20 @@
 export default {
   name: "Comment",
   props: { 
-    list_id: [],
-    comments: {},
+    comments: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
       comment: {
-        list_id: '',
         body: '',
       },
     }
   },
   methods: {
     handle_create_comment() {
-      this.comment.list_id = this.list_id
       this.$emit('create-comment',this.comment)
       this.comment = {} 
     },

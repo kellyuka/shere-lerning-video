@@ -10,6 +10,33 @@
             {{ list.recommend }}
           </p>
         </article>
+        <div 
+          v-if="isAuthUserList"
+          class="tile is-child has-text-right"
+        >
+          <button 
+            class="button is-danger m-2"
+            @click="VisibleModal"
+          >
+            編集
+          </button>
+          <button 
+            class="button is-danger m-2"
+            @click="deletelist"
+          >
+            削除
+          </button>
+        </div>
+        <div
+          id="modal"
+          class="modal"
+          :class="modal_class"
+        >
+          <Edit
+            @updatelist="updatelist"
+            @VisibleModal="VisibleModal"
+          />
+        </div>
       </div>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-9">
@@ -37,7 +64,6 @@
           </div>
         </div>
         <Comment
-          :list_id="list.id"
           :comments="comments"
           @create-comment="create_comment"
         />
@@ -47,11 +73,13 @@
 </template>
 <script>
 import Comment from './conponents/comment.vue'
+import Edit from './conponents/edit.vue'
 import { mapGetters, mapActions } from "vuex"
 export default {
   name: "ListShow",
   components: {
     Comment,
+    Edit,
   },
   props: { 
     id: {
@@ -59,24 +87,61 @@ export default {
       required: true
     },
   },
+  data() {
+    return {
+      modal_class: "",
+    }
+  },
   computed: {
+    ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["list"]),
     ...mapGetters("comments", ["comments"]),
+    isAuthUserList() {
+      if (this.authUser) {
+        return this.authUser.id === this.list.user_id
+      }
+    }  
   },
   methods: {
     ...mapActions("lists", [
-    "showList"
+    "showList",
+    "updateList",
+    "deleteList",
     ]),
     ...mapActions("comments", [
       "createComment",
       "fetchComments",
     ]),
     async create_comment(comment) {
+      comment.list_id = this.list.id 
       try {
         await this.createComment(comment);
       }
       catch (error) { console.log(error);}
     },
+    async updatelist(list) {
+      try {
+        await 
+          this.updateList(list)
+          this.$router.push({ name: 'ListIndex' })
+      }
+      catch (error) { alert("登録失敗"),console.log(error); }
+    },
+    async deletelist() {
+      try {
+        await 
+          this.deleteList(this.list)
+          this.$router.push({ name: 'ListIndex' })
+      }
+      catch (error) { alert("登録失敗"),console.log(error); }
+    },
+    VisibleModal(){
+      if (this.modal_class == "is-active"){
+        this.modal_class = ""
+      }else{
+        this.modal_class = "is-active"
+      }
+    }
   },
   created () {
     this.showList(this.id);
