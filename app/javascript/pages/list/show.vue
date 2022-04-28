@@ -64,7 +64,6 @@
           </div>
         </div>
         <Comment
-          :list_id="list.id"
           :comments="comments"
           @create-comment="create_comment"
         />
@@ -114,6 +113,7 @@ export default {
       "fetchComments",
     ]),
     async create_comment(comment) {
+      comment.list_id = this.list.id 
       try {
         await this.createComment(comment);
       }
