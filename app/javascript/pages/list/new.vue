@@ -20,6 +20,20 @@
         :channelid="authUser.channelid"
         @select="select"
       />
+      <div>
+        <label class="label">選択中の再生リスト</label>
+        <div v-if="list.playlistid">
+          <iframe
+            width="560"
+            height="315"
+            :src="'https://www.youtube.com/embed/videoseries?controls=0&amp;list='+ list.playlistid"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          />
+        </div>
+      </div>
     </div>
     <div class="field">
       <label class="label">コメント</label>
@@ -96,10 +110,8 @@ export default {
         console.log(error);
       }
     },
-    select(event) {
-      const self = event.currentTarget.id
-      this.list.playlistid = self
-      console.log(this.list.playlistid)
+    select(id) {
+      this.list.playlistid = id
     },
   }
 }

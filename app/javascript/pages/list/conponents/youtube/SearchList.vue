@@ -10,16 +10,12 @@
           v-for="(list) in results"
           :key="list.id"
           class="column is-2"
+          @click="select(list.id)"
         >
-          <div
-            :id="list.id"
-            @click="select($event)"
-          >
-            <img :src="list.snippet.thumbnails.medium.url">
-            <h2 class="subtitle">
-              {{ list.snippet.title }}
-            </h2>
-          </div>
+          <img :src="list.snippet.thumbnails.medium.url">
+          <h2 class="subtitle">
+            {{ list.snippet.title }}
+          </h2>
         </div>
       </div>
     </div>
@@ -46,7 +42,8 @@ export default {
         maxResults: "10",
         channelId: this.channelid,
         key: process.env.VUE_APP_API_KEY,
-      }
+      },
+      selectid: ""
     };
   },
   methods: {
@@ -63,8 +60,9 @@ export default {
           alert("検索に失敗しました。")
         })
     },
-    select(event) {
-      this.$emit('select',event)
+    select(id) {
+      this.$emit('select',id)
+      this.selectid = id
     },
   }
 };

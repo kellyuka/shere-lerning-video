@@ -1,6 +1,6 @@
 class Api::ListsController < ApplicationController
   before_action :authenticate!, only: %i[create]
-  before_action :set_list, only: %i[show]
+  before_action :set_list, only: %i[show update]
 
   def index
     lists = List.all
@@ -17,6 +17,14 @@ class Api::ListsController < ApplicationController
       render json: list
     else
       render json: list.errors, status: :bad_request
+    end
+  end
+
+  def update
+    if @list.update(list_params)
+      render json: @list
+    else
+      render json: @list.errors, status: :bad_request
     end
   end
 

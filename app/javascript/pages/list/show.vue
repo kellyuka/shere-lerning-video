@@ -10,6 +10,11 @@
             {{ list.recommend }}
           </p>
         </article>
+        <Edit
+          @updatelist="updatelist"
+          @changelist="changelist"
+          @VisibleModal="VisibleModal"
+        />
       </div>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-9">
@@ -47,11 +52,13 @@
 </template>
 <script>
 import Comment from './conponents/comment.vue'
+import Edit from './conponents/edit.vue'
 import { mapGetters, mapActions } from "vuex"
 export default {
   name: "ListShow",
   components: {
     Comment,
+    Edit,
   },
   props: { 
     id: {
@@ -65,7 +72,8 @@ export default {
   },
   methods: {
     ...mapActions("lists", [
-    "showList"
+    "showList",
+    "updateList",
     ]),
     ...mapActions("comments", [
       "createComment",
@@ -77,6 +85,14 @@ export default {
       }
       catch (error) { console.log(error);}
     },
+    async updatelist(list) {
+      try {
+        await 
+          this.updateList(list)
+          this.$router.push({ name: 'ListIndex' })
+      }
+      catch (error) { alert("登録失敗"),console.log(error); }
+    }
   },
   created () {
     this.showList(this.id);
