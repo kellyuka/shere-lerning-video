@@ -10,17 +10,33 @@
             {{ list.recommend }}
           </p>
         </article>
-        <Edit
-          @updatelist="updatelist"
-          @changelist="changelist"
-          @VisibleModal="VisibleModal"
-        />
-        <button 
-          class="button is-danger"
-          @click="deletelist"
+        <div 
+          v-if="isAuthUserList"
+          class="tile is-child has-text-right"
         >
-          削除
-        </button>
+          <button 
+            class="button is-danger m-2"
+            @click="VisibleModal"
+          >
+            編集
+          </button>
+          <button 
+            class="button is-danger m-2"
+            @click="deletelist"
+          >
+            削除
+          </button>
+        </div>
+        <div
+          id="modal"
+          class="modal"
+          :class="modal_class"
+        >
+          <Edit
+            @updatelist="updatelist"
+            @VisibleModal="VisibleModal"
+          />
+        </div>
       </div>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-9">
@@ -72,9 +88,20 @@ export default {
       required: true
     },
   },
+  data() {
+    return {
+      modal_class: "",
+    }
+  },
   computed: {
+    ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["list"]),
     ...mapGetters("comments", ["comments"]),
+    isAuthUserList() {
+      if (this.authUser) {
+        return this.authUser.id === this.list.user_id
+      }
+    }  
   },
   methods: {
     ...mapActions("lists", [
@@ -107,6 +134,13 @@ export default {
           this.$router.push({ name: 'ListIndex' })
       }
       catch (error) { alert("登録失敗"),console.log(error); }
+    },
+    VisibleModal(){
+      if (this.modal_class == "is-active"){
+        this.modal_class = ""
+      }else{
+        this.modal_class = "is-active"
+      }
     }
   },
   created () {

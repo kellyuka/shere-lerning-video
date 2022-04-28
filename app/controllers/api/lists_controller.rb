@@ -1,6 +1,7 @@
 class Api::ListsController < ApplicationController
   before_action :authenticate!, only: %i[create]
-  before_action :set_list, only: %i[show update destroy]
+  before_action :set_list, only: %i[show]
+  before_action :currentuser_set_list, only: %i[update destroy]
 
   def index
     lists = List.all
@@ -37,6 +38,10 @@ class Api::ListsController < ApplicationController
 
   def set_list
     @list = List.find(params[:id])
+  end
+
+  def currentuser_set_list
+    @list = current_user.lists.find(params[:id])
   end
 
   def list_params
