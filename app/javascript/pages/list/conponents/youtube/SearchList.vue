@@ -41,7 +41,7 @@ export default {
         type: "video",
         maxResults: "10",
         channelId: this.channelid,
-        key: process.env.VUE_APP_API_KEY,
+        key: process.env.YOUTUBE_API_KEY,
       },
       selectid: ""
     };

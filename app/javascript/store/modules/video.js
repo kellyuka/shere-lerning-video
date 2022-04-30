@@ -6,7 +6,7 @@ const actions = {
       params: {
         part: 'snippet',
         playlistId: list.playlistid,
-        key: process.env.VUE_APP_API_KEY,
+        key: process.env.YOUTUBE_API_KEY,
       }
     });
   }

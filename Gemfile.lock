@@ -90,6 +90,10 @@ GEM
     debug_inspector (1.1.0)
     declarative (0.0.20)
     diff-lcs (1.5.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -330,6 +334,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   capybara
+  dotenv-rails
   factory_bot_rails
   faker
   foreman
