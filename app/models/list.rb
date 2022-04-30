@@ -4,6 +4,6 @@ class List < ApplicationRecord
   belongs_to :user
   has_many :videos, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :list_tags
+  has_many :list_tags, dependent: :destroy
   has_many :tags, through: :list_tags
 end
