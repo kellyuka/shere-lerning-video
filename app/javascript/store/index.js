@@ -3,6 +3,8 @@ import users from './modules/users'
 import lists from './modules/lists'
 import videos from './modules/video'
 import comments from './modules/comments'
+import tags from './modules/tags'
+
 
 export default createStore({
   modules: {
@@ -10,5 +12,6 @@ export default createStore({
     lists,
     videos,
     comments,
+    tags,
   }
 })

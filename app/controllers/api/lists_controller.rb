@@ -5,7 +5,7 @@ class Api::ListsController < ApplicationController
 
   def index
     lists = List.all
-    render json: lists, include: [:videos]
+    render json: lists, include: %i[videos tags]
   end
 
   def show
@@ -13,7 +13,14 @@ class Api::ListsController < ApplicationController
   end
 
   def create
+    tag_ids = []
+    params[:tag_names].each do |name|
+      tag = Tag.find_or_create_by(name: name)
+      tag_ids << tag.id
+    end
+
     list = current_user.lists.build(list_params)
+    list.tag_ids = tag_ids
     if list.save
       render json: list
     else
@@ -45,6 +52,7 @@ class Api::ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:title, :recommend, :playlistid)
+    # params.require(:list).permit(:title, :recommend, :playlistid, tag_ids: [])
+    params.permit(:title, :recommend, :playlistid, tag_ids: [])
   end
 end

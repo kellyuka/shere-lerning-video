@@ -47,6 +47,21 @@
         />
       </div>
     </div>
+    <div class="field">
+      <label class="label">タグ</label>
+      <div class="control">
+        <v-select 
+          v-model="list.tag_names"
+          label="name"
+          :options="options"
+          :reduce="options => options.name"
+          :selectable="function(){ return list.tag_names.length < 5}"
+          placeholder="5個まで選べます" 
+          multiple
+          taggable
+        />
+      </div>
+    </div>
     <div class="field is-grouped">
       <div class="control">
         <button
@@ -81,11 +96,16 @@ export default {
         title: '',
         playlistid: '',
         recommend:'',
-        }
+        tag_names: [],
+        },
     }
   },
   computed: {
-      ...mapGetters("users", ["authUser"])
+      ...mapGetters("users", ["authUser"]),
+      ...mapGetters("tags", ["tags"]),
+    options:{
+      get(){ return this.tags }
+    }
   },
   methods: {
     ...mapActions("lists", [
@@ -94,6 +114,9 @@ export default {
     ]),
     ...mapActions("videos", [
       "searchVideos",
+    ]),
+    ...mapActions("tags", [
+      "fetchTags",
     ]),
     async createlist() {
       try {
@@ -113,6 +136,9 @@ export default {
     select(id) {
       this.list.playlistid = id
     },
-  }
+  },
+  created () {
+    this.fetchTags();
+  },
 }
 </script>

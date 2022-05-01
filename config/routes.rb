@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     resources :sessions
     resources :lists
+    resources :tags
     resources :videos
     resources :comments
   end

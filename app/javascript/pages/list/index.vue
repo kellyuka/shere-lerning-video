@@ -39,17 +39,25 @@
             </div>
             <div class="media-content">
               <div class="content">
+                <a href="#">@red</a>
                 <router-link
                   :to="'/lists/'+list.id"
                   class=""
                 >
                   <h4>{{ list.title }} </h4>
                 </router-link>
-                <span class="tag">Customers</span>
                 <p>
-                  <a href="#">@red</a>
                   {{ list.recommend }}
                 </p>
+                <ul>
+                  <span 
+                    v-for="tag in list.tags"
+                    :key="tag.id"
+                    class="tag is-light is-danger"
+                  >
+                    {{ tag.name }}
+                  </span>
+                </ul>
                 <div class="columns is-multiline">
                   <lite-youtube
                     v-for="video in list.videos" 
