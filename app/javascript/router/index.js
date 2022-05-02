@@ -5,6 +5,7 @@ import TopIndex from '../pages/top/index.vue'
 import ListNew from '../pages/list/new.vue'
 import ListShow from '../pages/list/show.vue'
 import ListIndex from '../pages/list/index.vue'
+import ProfileIndex from "../pages/profile/index";
 import store from '../store'
 
 const routes = [
@@ -38,6 +39,12 @@ const routes = [
     path: '/lists',
     component: ListIndex,
     name: "ListIndex"
+  },
+  {
+    path: "/profile",
+    component: ProfileIndex,
+    name: "ProfileIndex",
+    meta: { requiredAuth: true },
   },
 ];
 

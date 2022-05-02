@@ -44,6 +44,12 @@ const actions = {
     axios.defaults.headers.common['Authorization'] = ''
     commit('setUser', null)
   },
+  updateUser({ commit, state }, user) {
+    return axios.patch(`profile/${state.authUser.id}`, user)
+      .then(res => {
+        commit('setUser', res.data)
+      })
+  },
 }
 export default {
   namespaced: true,
