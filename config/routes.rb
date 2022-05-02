@@ -7,7 +7,11 @@ Rails.application.routes.draw do
       end
     end
     resources :sessions
-    resources :lists
+    resources :lists do
+      collection do
+        get 'userlists'
+      end
+    end
     resources :tags
     resources :videos
     resources :comments

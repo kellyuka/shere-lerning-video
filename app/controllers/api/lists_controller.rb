@@ -41,6 +41,12 @@ class Api::ListsController < ApplicationController
     render json: @list
   end
 
+  def userlists
+    user = User.find(current_user.id)
+    lists = user.lists
+    render json: lists, include: %i[videos tags]
+  end
+
   private
 
   def set_list

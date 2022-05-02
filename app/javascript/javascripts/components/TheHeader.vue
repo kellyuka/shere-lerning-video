@@ -97,13 +97,26 @@
           </div>
         </template>
         <template v-else>
-          <div class="navbar-item">
+          <div class="navbar-start">
+            <div class="navbar-item">
+              <router-link
+                to="#"
+                class="nav-link button is-danger"
+                @click="handleLogout"
+              >
+                ログアウト
+              </router-link>
+            </div>
             <router-link
-              to="#"
-              class="nav-link button is-danger"
-              @click="handleLogout"
+              :to="{ name: 'ProfileIndex' }"
+              class="navbar"
             >
-              ログアウト
+              <div class="navbar-item active avatar-image-wrapper ">
+                <img
+                  :src="authUser.avatar_url"
+                  alt="プロフィール画像"
+                >
+              </div>
             </router-link>
           </div>
         </template>
@@ -142,5 +155,11 @@ export default {
 <style scoped>
 .navbar-menu a:hover{
   color:red
+}
+.avatar-image-wrapper {
+  line-height: 40px;
+}
+.avatar-image {
+  width: 20px;
 }
 </style>

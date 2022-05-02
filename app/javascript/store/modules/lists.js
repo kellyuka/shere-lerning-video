@@ -31,6 +31,11 @@ const actions = {
     .then(res => { commit('setLists', res.data) })
     .catch(err => console.log(err.response));
   },
+  userlists({ commit }) {
+    axios.get('lists/userlists')
+    .then(res => { commit('setLists', res.data) })
+    .catch(err => console.log(err.response));
+  },
   showList({ commit }, id) {
     axios.get('lists/'+ id)
     .then(res => { commit('setList', res.data) })
