@@ -14,14 +14,23 @@ class Api::ListsController < ApplicationController
 
   def create
     tag_ids = []
+    videos = []
     params[:tag_names].each do |name|
       tag = Tag.find_or_create_by(name: name)
       tag_ids << tag.id
     end
 
+    params[:videos].each do |item|
+      video = {
+        videoid: item[:snippet][:resourceId][:videoId],
+        created_at: Time.current,
+        updated_at: Time.current
+      }
+      videos << video
+    end
     list = current_user.lists.build(list_params)
     list.tag_ids = tag_ids
-    if list.save
+    if list.save && list.videos.insert_all(videos)
       render json: list
     else
       render json: list.errors, status: :bad_request

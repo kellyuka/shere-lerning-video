@@ -37,17 +37,27 @@
           @select="select"
         />
         <div>
-          <label class="label">選択中の再生リスト</label>
+          <p>{{ errors.playlistid }}</p>
           <div v-if="list.playlistid">
-            <iframe
-              width="560"
-              height="315"
-              :src="'https://www.youtube.com/embed/videoseries?controls=0&amp;list='+ list.playlistid"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            />
+            <label class="label">選択中の再生リスト</label>
+            <Field
+              v-slot="{ field }"
+              v-model="list.playlistid"
+              name="playlistid"
+            >
+              <iframe
+                id="playlistid"
+                name="playlistid"
+                v-bind="field"
+                width="560"
+                height="315"
+                :src="'https://www.youtube.com/embed/videoseries?controls=0&amp;list='+ list.playlistid"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+            </Field>
           </div>
         </div>
       </div>
@@ -125,6 +135,7 @@ export default {
         title: '',
         playlistid: '',
         recommend: '',
+        videos: "",
         tag_names: [],
       }
     }
@@ -139,6 +150,9 @@ export default {
         string()
         .required('必須の項目です。')
         .max(1000,("${min}文字以内で入力してください")),
+      playlistid: 
+        string()
+        .required('必須の項目です。動画を選択してください。')
     })
     const { errors, meta } = useForm({
       validationSchema: schema,
@@ -152,6 +166,7 @@ export default {
   computed: {
       ...mapGetters("users", ["authUser"]),
       ...mapGetters("tags", ["tags"]),
+      ...mapGetters("videos", ["videos"]),
     options:{
       get(){ return this.tags }
     }
@@ -168,19 +183,22 @@ export default {
       "fetchTags",
     ]),
     async createlist() {
+      this.searchVideos(this.list.playlistid)
+      this.list.videos = this.videos
       try {
-        await 
-          this.createList(this.list)
-            .then(res => this.newlist = res.data)
-            .catch(err => { alert("リスト登録失敗"), console.log(err) })
-          this.searchVideos(this.newlist)
-            .then(res => this.createVideo([ this.newlist, res.data.items ]))
-            .catch(err => { alert("ビデオ登録失敗"), console.log(err) })
-          this.$router.push({ name: 'ListIndex' })
+        await
+        this.createList(this.list)
+        this.$router.push({ name: 'ListIndex' })
+        this.$notify({
+          title: "登録しました",
+          text:"引き続き勉強を頑張りましょう!"
+        });
       } catch (error) {
-        alert("登録失敗")
-        console.log(error);
-      }
+          this.$notify({
+            type: "warn",
+            title: "登録に失敗しました",
+          });
+        }
     },
     select(id) {
       this.list.playlistid = id

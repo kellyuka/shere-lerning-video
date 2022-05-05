@@ -6,6 +6,7 @@
     "lint-fix": "eslint --fix --ext .js,.vue app/javascript"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.3.4",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",

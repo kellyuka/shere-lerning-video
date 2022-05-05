@@ -23,7 +23,7 @@
               <Field
                 v-slot="{ field }"
                 v-model="editlist.title"
-                name="email"
+                name="title"
               >
                 <input
                   id="title"
@@ -31,7 +31,7 @@
                   v-bind="field"
                   class="input"
                   type="text"
-                  placeholder="30字以内"
+                  placeholder="100字以内で入力してください"
                 >
               </Field>
             </div>
@@ -57,14 +57,14 @@
               <Field
                 v-slot="{ field }"
                 v-model="editlist.recommend"
-                name="email"
+                name="recommend"
               >
                 <textarea
                   id="recommend"
                   name="recommend"
                   v-bind="field"
                   class="textarea"
-                  placeholder="300字以内"
+                  placeholder="1000字以内で入力してください"
                   rows="5"
                 />
               </Field>

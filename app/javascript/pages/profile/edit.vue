@@ -79,8 +79,16 @@
         </div>
         <div class="ml-4">
           <img
+            v-if="edituser.avatar_url"
             :src="edituser.avatar_url"
             class="image is-128x128"
+            alt="プロフィール画像"
+          >
+          <img
+            v-else
+            src="../../../assets/images/noimage.png"
+            class="image is-128x128"
+            alt="プロフィール画像"
           >
         </div>
       </div>
@@ -168,7 +176,7 @@ export default {
         this.edituser.avatar_url = URL.createObjectURL(this.uploadAvatar)
       }
     },
-    updateuser() {
+    async updateuser() {
       const formData = new FormData()
       formData.append("user[email]", this.edituser.email)
       formData.append("user[name]", this.edituser.name)
@@ -176,10 +184,16 @@ export default {
       if (this.uploadAvatar)
         formData.append("user[avatar]", this.uploadAvatar)
       try {
-        this.updateUser(formData)
+        await this.updateUser(formData)
         this.$router.push({ name: "ListIndex" })
+        this.$notify({
+          title: "編集に成功しました"
+        });
       } catch (error) {
-        console.log(error);
+        this.$notify({
+          type: "warn",
+          title: "編集にに失敗しました"
+        });
       }
     }
   }

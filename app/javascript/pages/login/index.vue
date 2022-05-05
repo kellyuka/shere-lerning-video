@@ -113,9 +113,17 @@ export default {
     async login() {
       try {
         await this.loginUser(this.user);
-        this.$router.push({ name: 'TopIndex' })
+        this.$router.push({ name: 'ListIndex' })
+        this.$notify({
+          title: "ログインに成功しました",
+          text: "youtubeで勉強していきましょう!",
+        });
       } catch (error) {
-        console.log(error);
+        this.$notify({
+          type: "warn",
+          title: "ログインに失敗しました",
+          text: "メールアドレスかパスワードが間違っています",
+        });
       }
     }  
   }

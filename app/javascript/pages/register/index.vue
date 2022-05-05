@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string, ref } from 'yup';
 export default {
@@ -199,15 +199,24 @@ export default {
     };
   },
   methods: {
-    register() {
-      axios.post('api/users', { user: this.user })
-        .then(res => {
+    ...mapActions("users", [
+      "createUser",
+      "loginUser",
+    ]),
+    async register() {
+      try {
+        await 
+          this.createUser(this.user)
           this.$router.push({ name: 'LoginIndex' })
-        })
-        .catch(err => {
-          alert("登録失敗")
-          console.log(err)
-        })
+          this.$notify({
+            title: "登録に成功しました。ログインしてください。",
+          });
+      } catch (error) {
+        this.$notify({
+          type: "warn",
+          title: "登録に失敗しました",
+        });
+      }
     },
   }
 }

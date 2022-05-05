@@ -65,6 +65,7 @@
         </div>
         <Comment
           :comments="comments"
+          :auth-user="authUser"
           @create-comment="create_comment"
         />
       </div>
