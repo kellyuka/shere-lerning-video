@@ -1,80 +1,106 @@
 <template>
-  <div class="box container">
-    <div class="field">
-      <label class="label">タイトル</label>
-      <div class="control">
-        <input 
-          id="title"
-          v-model="list.title"
-          class="input"
-          type="text" 
-          placeholder="30字以内"
-        >
+  <div class="section">
+    <div class="box container">
+      <div class="tabs is-centered">
+        <ul>
+          <li class="is-active">
+            <a>NEW LIST</a>
+          </li>
+        </ul>
       </div>
-    </div>
-    <div
-      v-if="authUser.channelid"
-      class="field"
-    >
-      <SearchList 
-        :channelid="authUser.channelid"
-        @select="select"
-      />
-      <div>
-        <label class="label">選択中の再生リスト</label>
-        <div v-if="list.playlistid">
-          <iframe
-            width="560"
-            height="315"
-            :src="'https://www.youtube.com/embed/videoseries?controls=0&amp;list='+ list.playlistid"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
+      <div class="field">
+        <label class="label">タイトル</label>
+        <div class="control">
+          <Field
+            v-slot="{ field }"
+            v-model="list.title"
+            name="title"
+          >
+            <input
+              id="title"
+              name="title"
+              v-bind="field"
+              class="input"
+              type="text" 
+              placeholder="100字以内"
+            >
+          </Field>
+        </div>
+        <p>{{ errors.title }}</p>
+      </div>
+      <div
+        v-if="authUser.channelid"
+        class="field"
+      >
+        <SearchList 
+          :channelid="authUser.channelid"
+          @select="select"
+        />
+        <div>
+          <label class="label">選択中の再生リスト</label>
+          <div v-if="list.playlistid">
+            <iframe
+              width="560"
+              height="315"
+              :src="'https://www.youtube.com/embed/videoseries?controls=0&amp;list='+ list.playlistid"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">おすすめポイント</label>
+        <div class="control">
+          <Field
+            v-slot="{ field }"
+            v-model="list.recommend"
+            name="recommend"
+          >
+            <textarea
+              id="recommend"
+              name="recommend"
+              v-bind="field"
+              class="textarea" 
+              placeholder="1000字以内" 
+              rows="15"
+            />
+          </Field>
+        </div>
+        <p>{{ errors.recommend }}</p>
+      </div>
+      <div class="field">
+        <label class="label">タグ</label>
+        <div class="control">
+          <v-select 
+            v-model="list.tag_names"
+            label="name"
+            :options="options"
+            :reduce="options => options.name"
+            :selectable="function(){ return list.tag_names.length < 5}"
+            placeholder="5個まで選べます" 
+            multiple
+            taggable
           />
         </div>
       </div>
-    </div>
-    <div class="field">
-      <label class="label">コメント</label>
-      <div class="control">
-        <textarea 
-          id="recommend"
-          v-model="list.recommend"
-          class="textarea" 
-          placeholder="300字以内" 
-          rows="3"
-        />
-      </div>
-    </div>
-    <div class="field">
-      <label class="label">タグ</label>
-      <div class="control">
-        <v-select 
-          v-model="list.tag_names"
-          label="name"
-          :options="options"
-          :reduce="options => options.name"
-          :selectable="function(){ return list.tag_names.length < 5}"
-          placeholder="5個まで選べます" 
-          multiple
-          taggable
-        />
-      </div>
-    </div>
-    <div class="field is-grouped">
-      <div class="control">
-        <button
-          class="button is-danger"
-          @click="createlist"
-        >
-          登録
-        </button>
-      </div>
-      <div class="control">
-        <button class="button is-light">
-          キャンセル
-        </button>
+      <div class="field is-grouped">
+        <div class="control">
+          <button
+            class="button is-danger"
+            :disabled="!meta.valid"
+            @click="createlist"
+          >
+            登録
+          </button>
+        </div>
+        <div class="control">
+          <button class="button is-light">
+            キャンセル
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -83,11 +109,14 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 import SearchList from './conponents/youtube/SearchList.vue'
+import { useForm, Field } from 'vee-validate';
+import { object, string } from 'yup';
 
 export default {
   name: "ListNew",
   components: {
     SearchList,
+    Field,
   },
   data() {
     return {
@@ -95,10 +124,30 @@ export default {
       list: {
         title: '',
         playlistid: '',
-        recommend:'',
+        recommend: '',
         tag_names: [],
-        },
+      }
     }
+  },
+  setup() {
+    const schema = object({
+      title: 
+        string()
+        .required('必須の項目です。')
+        .max(100,("${max}文字以内で入力してください")),
+      recommend: 
+        string()
+        .required('必須の項目です。')
+        .max(1000,("${min}文字以内で入力してください")),
+    })
+    const { errors, meta } = useForm({
+      validationSchema: schema,
+    });
+
+    return {
+      errors,
+      meta,
+    };
   },
   computed: {
       ...mapGetters("users", ["authUser"]),

@@ -6,4 +6,7 @@ class List < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :list_tags, dependent: :destroy
   has_many :tags, through: :list_tags
+
+  validates :title, length: { maximum: 100 }
+  validates :recommend, length: { maximum: 1000 }
 end

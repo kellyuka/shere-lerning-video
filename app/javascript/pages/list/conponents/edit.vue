@@ -11,7 +11,7 @@
       <div class="box">
         <div class="tabs is-centered">
           <ul>
-            <li>
+            <li class="is-active">
               <a>EDIT</a>
             </li>
           </ul>
@@ -20,14 +20,22 @@
           <div class="field">
             <label class="label">タイトル</label>
             <div class="control">
-              <input
-                id="title"
+              <Field
+                v-slot="{ field }"
                 v-model="editlist.title"
-                class="input"
-                type="text"
-                placeholder="30字以内"
+                name="email"
               >
+                <input
+                  id="title"
+                  name="title"
+                  v-bind="field"
+                  class="input"
+                  type="text"
+                  placeholder="30字以内"
+                >
+              </Field>
             </div>
+            <p>{{ errors.title }}</p>
           </div>
           <div>
             <label class="label">登録している再生リスト（変更はできません）</label>
@@ -46,14 +54,22 @@
           <div class="field">
             <label class="label">おすすめポイント</label>
             <div class="control">
-              <textarea
-                id="recommend"
+              <Field
+                v-slot="{ field }"
                 v-model="editlist.recommend"
-                class="textarea"
-                placeholder="300字以内"
-                rows="5"
-              />
+                name="email"
+              >
+                <textarea
+                  id="recommend"
+                  name="recommend"
+                  v-bind="field"
+                  class="textarea"
+                  placeholder="300字以内"
+                  rows="5"
+                />
+              </Field>
             </div>
+            <p>{{ errors.recommend }}</p>
           </div>
           <div class="field is-grouped">
             <div class="control">
@@ -84,8 +100,34 @@
 </template>
 <script>
 import { mapGetters } from "vuex"
+import { useForm, Field } from 'vee-validate';
+import { object, string } from 'yup';
+
 export default {
   name: "ListEdit",
+    components: {
+    Field,
+  },
+  setup() {
+    const schema = object({
+      title: 
+        string()
+        .required('必須の項目です。')
+        .max(100,("${max}文字以内で入力してください")),
+      recommend: 
+        string()
+        .required('必須の項目です。')
+        .max(1000,("${min}文字以内で入力してください")),
+    })
+    const { errors, meta } = useForm({
+      validationSchema: schema,
+    });
+
+    return {
+      errors,
+      meta,
+    };
+  },
   computed: {
     ...mapGetters("lists", ["list"]),
     editlist:{

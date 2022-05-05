@@ -7,7 +7,6 @@
             Let's Login
           </h3>
           <hr class="login-hr">
-          <!-- form start -->
           <div class="box has-background-light has-text-centered">
             <span class="has-text-grey-dark">Sign In</span>
             <h3 class="mb-5 is-size-4 has-text-weight-bold">
@@ -15,25 +14,41 @@
             </h3>
             <div class="field">
               <div class="control">
-                <input 
-                  id="email"
+                <Field
+                  v-slot="{ field }"
                   v-model="user.email"
-                  class="input" 
-                  type="email" 
-                  placeholder="メールアドレス"
+                  name="email"
                 >
+                  <input 
+                    id="email"
+                    name="email"
+                    v-bind="field"
+                    class="input" 
+                    type="email" 
+                    placeholder="E-mail address"
+                  >
+                </Field>
               </div>
+              <p>{{ errors.email }}</p>
             </div>
             <div class="field">
               <div class="control">
-                <input 
-                  id="password"
+                <Field
+                  v-slot="{ field }"
                   v-model="user.password"
-                  class="input" 
-                  type="password" 
-                  placeholder="パスワード"
+                  name="password"
                 >
+                  <input 
+                    id="password"
+                    name="password"
+                    v-bind="field"
+                    class="input" 
+                    type="password" 
+                    placeholder="Password"
+                  >
+                </Field>
               </div>
+              <p>{{ errors.password }}</p>
             </div>
             <button 
               class="button is-primary mb-4 is-fullwidth"
@@ -52,7 +67,6 @@
               <span class="has-text-grey-dark">create new account!</span>
             </router-link>
           </div>
-          <!-- form end -->
         </div>
       </div>
     </div>
@@ -60,18 +74,38 @@
 </template>
 <script>
 import { mapActions } from "vuex"
+import { useForm, Field } from 'vee-validate';
+import { object, string } from 'yup';
 
 export default {
   name: "LoginIndex",
-  data() {
+  components: {
+    Field,
+  },
+  setup() {
+    const user = {
+      email: "",
+      password:"",
+    }
+    const schema = object({
+      email: 
+        string()
+        .required('必須の項目です。')
+        .email('メールアドレスの形式にして下さい。'),
+      password: 
+        string()
+        .required('必須の項目です。')
+        .min(5,("${min}文字以上で入力してください")),
+    })
+    const { errors } = useForm({
+      validationSchema: schema,
+      initialValues: user,
+    })
     return {
-      user: {
-        email: "",
-        password: "",
-      }
+      user,
+      errors,
     }
   },
-  
   methods: {
     ...mapActions("users", [
       "loginUser",

@@ -29,71 +29,114 @@
             </h3>
             <div class="field">
               <div class="control">
-                <input
-                  id="email"
+                <Field
+                  v-slot="{ field }"
                   v-model="user.email"
-                  class="input" 
-                  type="email" 
-                  placeholder="E-mail address"
+                  name="email"
                 >
+                  <input
+                    id="email"
+                    name="email"
+                    v-bind="field"
+                    class="input" 
+                    type="email" 
+                    placeholder="E-mail address"
+                  >
+                </Field>
+                <p>{{ errors.email }}</p>
               </div>
             </div>
             <div class="field">
               <div class="control">
-                <input 
-                  id="name"
+                <Field
+                  v-slot="{ field }"
                   v-model="user.name"
-                  class="input"
-                  type="text"
-                  placeholder="name"
+                  name="name"
                 >
+                  <input
+                    id="name"
+                    name="name"
+                    v-bind="field"
+                    class="input"
+                    type="text"
+                    placeholder="Name"
+                  >
+                </Field>
+                <p>{{ errors.name }}</p>
               </div>
             </div>
             <div class="field">
               <div class="control">
-                <input
+                <Field
+                  v-slot="{ field }"
                   v-model="user.channelid"
-                  class="input"
-                  type="text"
-                  placeholder="channelid"
+                  name="channelid"
                 >
+                  <input
+                    id="channelid"
+                    name="channelid"
+                    v-bind="field"
+                    class="input"
+                    type="text"
+                    placeholder="Channelid"
+                  >
+                </Field>
               </div>
+              <p>{{ errors.channelid }}</p>
             </div>
             <div class="field">
               <div class="control">
-                <input 
-                  id="password"
+                <Field
+                  v-slot="{ field }"
                   v-model="user.password"
-                  class="input" 
-                  type="password" 
-                  placeholder="Password"
+                  name="password"
                 >
+                  <input
+                    id="password"
+                    name="password"
+                    v-bind="field"
+                    class="input" 
+                    type="password" 
+                    placeholder="Password"
+                  >
+                </Field>
               </div>
+              <p>{{ errors.password }}</p>
             </div>
             <div class="field">
               <div class="control">
-                <input 
-                  id="password_confirmation"
+                <Field
+                  v-slot="{ field }"
                   v-model="user.password_confirmation"
-                  class="input" 
-                  type="password" 
-                  placeholder="Repeat password"
+                  name="password_confirmation"
                 >
+                  <input 
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    v-bind="field"
+                    class="input" 
+                    type="password" 
+                    placeholder="Password Confirmation"
+                  >
+                </Field>
               </div>
+              <p>{{ errors.password_confirmation }}</p>
             </div>
             <div class="field">
               <label class="checkbox mb-4">
-                <input
+                <Field
+                  id="terms"
+                  name="terms"
                   class="checkbox mr-2"
                   type="checkbox"
-                  name="terms"
-                  value="1"
-                >
+                />
                 <small class="has-text-grey-dark"><a href="#">利用規約</a>、<a href="#">プライバシーポリシー</a>に同意する</small>
               </label>
+              <p>{{ errors.terms }}</p>
             </div>
             <button 
               class="button is-primary py-2 is-fullwidth"  
+              :disabled="!meta.valid"
               @click="register"
             >
               Get Started
@@ -107,19 +150,53 @@
 
 <script>
 import axios from 'axios'
-
+import { useForm, Field } from 'vee-validate';
+import { object, string, ref } from 'yup';
 export default {
   name: "RegisterIndex",
-  data() {
-    return {
-      user: {
+  components: {
+    Field,
+  },
+  setup() {
+    const user = {
         name: '',
         email: '',
         channelid: '',
         password: '',
         password_confirmation: '',
-      }
+        terms: false,
     }
+    const schema = object({
+      name: 
+        string().
+        required('必須の項目です。'),
+      email: 
+        string()
+        .required('必須の項目です。')
+        .email('メールアドレスの形式にして下さい。'),
+      password: 
+        string()
+        .required('必須の項目です。')
+        .min(5,("${min}文字以上で入力してください")),
+      password_confirmation: 
+        string()
+        .required('必須の項目です。')
+        .oneOf([ref("password")], "パスワードが一致しません")
+        .min(5,("${min}文字以上で入力してください")),
+      terms:
+      string()
+        .oneOf([true], "チェックをつけてください"),
+    });
+    const { errors, meta } = useForm({
+      validationSchema: schema,
+      initialValues: user,
+    });
+
+    return {
+      user,
+      errors,
+      meta,
+    };
   },
   methods: {
     register() {
@@ -132,15 +209,6 @@ export default {
           console.log(err)
         })
     },
-    // searchUser: function() {
-    //     axios.get('api/users')
-    //     .then(function(res) {
-    //       console.log(res.data)
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // }
   }
 }
 </script>

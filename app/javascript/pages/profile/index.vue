@@ -1,69 +1,80 @@
 <template>
-<div class="section"> 
-  <div class="tile is-ancestor">
-    <div class="tile is-vertical is-8">
+  <div class="section"> 
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
         <div class="tile is-parent">
           <div class="tile is-child">
+            <div class="tabs">
+              <ul>
+                <li class="is-active">
+                  <a>MY LIST</a>
+                </li>
+              </ul>
+            </div>
             <div class="content">
-              <p class="subtitle">LIST</p>
-            <article 
-              v-for="list in lists" 
-              :key="list.id"
-              class="media box" 
-            >
-              <div class="media-content">
-                <div class="content">
-                  <router-link
-                    :to="'/lists/'+list.id"
-                    class=""
-                  >
-                  <h4>{{ list.title }} </h4>
-                  </router-link>
-                  <p>
-                    {{ list.recommend }}
-                  </p>
-                  <ul>
-                    <span 
-                      v-for="tag in list.tags"
-                      :key="tag.id"
-                      class="tag is-light is-danger"
+              <article 
+                v-for="list in lists" 
+                :key="list.id"
+                class="media box" 
+              >
+                <div class="media-content">
+                  <div class="content">
+                    <router-link
+                      :to="'/lists/'+list.id"
+                      class=""
                     >
-                      {{ tag.name }}
-                    </span>
-                  </ul>
-                  <div class="columns is-multiline">
-                    <div
-                    v-for="video in list.videos"
-                    :key="video.id"  
-                    class="column is-3"
-                    >
-                      <lite-youtube
-                        :videoid="video.videoid"
-                        params="rel=0"
-                      />
+                      <h4>{{ list.title }} </h4>
+                    </router-link>
+                    <p>
+                      {{ list.recommend }}
+                    </p>
+                    <ul>
+                      <span 
+                        v-for="tag in list.tags"
+                        :key="tag.id"
+                        class="tag is-light is-danger"
+                      >
+                        {{ tag.name }}
+                      </span>
+                    </ul>
+                    <div class="columns is-multiline">
+                      <div
+                        v-for="video in list.videos"
+                        :key="video.id"  
+                        class="column is-3"
+                      >
+                        <lite-youtube
+                          :videoid="video.videoid"
+                          params="rel=0"
+                        />
+                      </div>
                     </div>
-                      <!-- style="width:320px"  -->
                   </div>
                 </div>
-              </div>
-              <div class="media-right">
-                <span class="has-text-grey-light"><i class="fa fa-comments" /> 1</span>
-              </div>
-            </article>
+                <div class="media-right">
+                  <span class="has-text-grey-light"><i class="fa fa-comments" /> 1</span>
+                </div>
+              </article>
             </div>
           </div>
         </div>
-    </div>
-    <div class="tile is-parent">
-      <div class="tile is-child">
-        <div class="content">
-          <p class="subtitle">PROFILE</p>
-          <ProfileEdit/>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child">
+          <div class="tabs">
+            <ul>
+              <li class="is-active">
+                <a>PROFILE</a>
+              </li>
+            </ul>
+          </div>
+          <div class="content">
+            <ProfileEdit />
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
