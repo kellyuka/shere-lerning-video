@@ -65,6 +65,7 @@
         </div>
         <Comment
           :comments="comments"
+          :auth-user="authUser"
           @create-comment="create_comment"
         />
       </div>
@@ -124,16 +125,28 @@ export default {
         await 
           this.updateList(list)
           this.$router.push({ name: 'ListIndex' })
+          this.$notify({
+            title: "編集しました",
+            text:"引き続き勉強を頑張りましょう!"
+        });
       }
-      catch (error) { alert("登録失敗"),console.log(error); }
+      catch (error) {
+        this.$notify({
+          type: "warn",
+          title: "編集に失敗しました",
+        });
+      }
     },
     async deletelist() {
       try {
         await 
           this.deleteList(this.list)
           this.$router.push({ name: 'ListIndex' })
+          this.$notify({
+            title: "削除しました",
+          });
       }
-      catch (error) { alert("登録失敗"),console.log(error); }
+      catch (error) { alert("削除失敗"),console.log(error); }
     },
     VisibleModal(){
       if (this.modal_class == "is-active"){

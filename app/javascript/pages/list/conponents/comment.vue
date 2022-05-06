@@ -24,7 +24,9 @@
       <article class="media">
         <figure class="media-left">
           <p class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/128x128.png">
+            <img 
+              :src="authUser.avatar_url"
+            >
           </p>
         </figure>
         <div class="media-content">
@@ -56,6 +58,10 @@ export default {
   name: "Comment",
   props: { 
     comments: {
+      type: Object,
+      required: true
+    },
+    authUser: {
       type: Object,
       required: true
     },

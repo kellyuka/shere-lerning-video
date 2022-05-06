@@ -113,9 +113,16 @@
             >
               <div class="navbar-item active avatar-image-wrapper ">
                 <img
+                  v-if="authUser.avatar_url"
                   :src="authUser.avatar_url"
                   alt="プロフィール画像"
                 >
+                <img
+                  v-else
+                  src="../../../assets/images/noimage.png"
+                  alt="プロフィール画像"
+                >
+                <p>{{ authUser.name }}</p>
               </div>
             </router-link>
           </div>
@@ -144,6 +151,9 @@ export default {
       try {
         await this.logoutUser()
         this.$router.push({name: 'TopIndex'})
+        this.$notify({
+          title: "ログアウトしました",
+        });
       } catch (error) {
         console.log(error)
       }

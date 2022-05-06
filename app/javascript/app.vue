@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header />
+    <notifications />
     <router-view />
     <Footer />
   </div>

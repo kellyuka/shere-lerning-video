@@ -83,6 +83,7 @@ import { mapGetters, mapActions } from "vuex"
 export default {
   name: "ListIndex",
   computed: {
+    ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["lists"]),
   },
   created () {
