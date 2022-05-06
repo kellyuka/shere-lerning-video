@@ -151,6 +151,9 @@ export default {
       try {
         await this.logoutUser()
         this.$router.push({name: 'TopIndex'})
+        this.$notify({
+          title: "ログアウトしました",
+        });
       } catch (error) {
         console.log(error)
       }
