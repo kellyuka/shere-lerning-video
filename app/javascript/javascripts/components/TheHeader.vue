@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link
-          :to="{ name: 'TopIndex' }"
+          :to="{ name: 'ListIndex' }"
           class="navbar-item has-text-danger"
         >
           <img
@@ -32,25 +32,23 @@
         :class="{ 'is-active': burgerVisibillity }"
       >
         <div class="navbar-start">
-          <a
+          <router-link
+            :to="{ name: 'AboutIndex' }"
             class="navbar-item"
-            href="#"
-          >About</a>
-          <a
-            class="navbar-item"
-            href="#"
-          >Category</a>
+          >
+            About
+          </router-link>
           <router-link
             :to="{ name: 'ListIndex' }"
             class="navbar-item"
           >
-            ListIndex
+            List
           </router-link>
           <router-link
             :to="{ name: 'ListNew' }"
             class="navbar-item"
           >
-            ListNew
+            New List
           </router-link>
         </div>
         <div class="navbar-item">
@@ -92,21 +90,12 @@
               :to="{ name: 'LoginIndex' }"
               class="nav-link button is-danger"
             >
-              ログイン
+              LOGIN
             </router-link>
           </div>
         </template>
         <template v-else>
-          <div class="navbar-start">
-            <div class="navbar-item">
-              <router-link
-                to="#"
-                class="nav-link button is-danger"
-                @click="handleLogout"
-              >
-                ログアウト
-              </router-link>
-            </div>
+          <div class="navbar-item">
             <router-link
               :to="{ name: 'ProfileIndex' }"
               class="navbar"
@@ -124,6 +113,13 @@
                 >
                 <p>{{ authUser.name }}</p>
               </div>
+            </router-link>
+            <router-link
+              to="#"
+              class="nav-link button is-danger"
+              @click="handleLogout"
+            >
+              LOGOUT
             </router-link>
           </div>
         </template>

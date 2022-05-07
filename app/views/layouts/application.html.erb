@@ -7,8 +7,10 @@
     <%= csp_meta_tag %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>  
   </head>
 
   <body>
@@ -16,4 +18,9 @@
     <%= javascript_pack_tag 'hello_vue.js' %>
     <%= yield %>
   </body>
+    <script>
+    AOS.init({
+      once: true
+    });
+  </script>
 </html>

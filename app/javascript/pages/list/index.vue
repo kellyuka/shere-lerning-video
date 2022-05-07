@@ -24,6 +24,13 @@
         </div>
       </div>
       <div class="column is-10">
+        <div class="tabs">
+          <ul>
+            <li class="is-active">
+              <a>LIST</a>
+            </li>
+          </ul>
+        </div>
         <div class="box content">
           <article 
             v-for="list in lists" 
@@ -49,7 +56,12 @@
                 <p>
                   {{ list.recommend }}
                 </p>
-                <ul>
+                
+                <div class="tags">
+                  <ion-icon
+                    name="pricetag-outline"
+                    class="pr-2"
+                  />
                   <span 
                     v-for="tag in list.tags"
                     :key="tag.id"
@@ -57,20 +69,32 @@
                   >
                     {{ tag.name }}
                   </span>
-                </ul>
+                </div>
                 <div class="columns is-multiline">
-                  <lite-youtube
-                    v-for="video in list.videos" 
+                  <div 
+                    v-for="video in list.videos"
                     :key="video.id"
-                    :videoid="video.videoid"
-                    style="width:320px" 
-                    params="rel=0"
-                  />
+                    class="column is-3"
+                  >
+                    <lite-youtube   
+                      :videoid="video.videoid"
+                      params="rel=0"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
             <div class="media-right">
-              <span class="has-text-grey-light"><i class="fa fa-comments" /> 1</span>
+              <span class="icon-text">
+                <span class="icon">
+                  <ion-icon name="chatbox-ellipses-outline" />
+                </span>
+                {{ list.comments.length }}
+                <span class="icon">
+                  <ion-icon name="heart-outline" />
+                </span>
+                {{ list.comments.length }}
+              </span>
             </div>
           </article>
         </div>

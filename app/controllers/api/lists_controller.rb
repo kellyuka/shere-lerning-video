@@ -5,7 +5,7 @@ class Api::ListsController < ApplicationController
 
   def index
     lists = List.all
-    render json: lists, include: %i[videos tags]
+    render json: lists, include: %i[videos tags  comments]
   end
 
   def show
@@ -54,6 +54,11 @@ class Api::ListsController < ApplicationController
     user = User.find(current_user.id)
     lists = user.lists
     render json: lists, include: %i[videos tags]
+  end
+
+  def aboutlists
+    lists = List.all.limit(3)
+    render json: lists, include: %i[videos]
   end
 
   private

@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import LoginIndex from '../pages/login/index.vue'
 import RegisterIndex from '../pages/register/index.vue'
-import TopIndex from '../pages/top/index.vue'
+import AboutIndex from '../pages/top/about.vue'
 import ListNew from '../pages/list/new.vue'
 import ListShow from '../pages/list/show.vue'
 import ListIndex from '../pages/list/index.vue'
@@ -11,8 +11,8 @@ import store from '../store'
 const routes = [
   {
     path: '/',
-    component: TopIndex,
-    name: "TopIndex"
+    component: AboutIndex,
+    name: "AboutIndex"
   },
   {
     path: '/register',
