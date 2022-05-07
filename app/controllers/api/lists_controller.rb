@@ -56,6 +56,11 @@ class Api::ListsController < ApplicationController
     render json: lists, include: %i[videos tags]
   end
 
+  def aboutlists
+    lists = List.all.limit(3)
+    render json: lists, include: %i[videos]
+  end
+
   private
 
   def set_list

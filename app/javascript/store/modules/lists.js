@@ -36,6 +36,11 @@ const actions = {
     .then(res => { commit('setLists', res.data) })
     .catch(err => console.log(err.response));
   },
+  aboutLists({ commit }) {
+    axios.get('lists/aboutlists')
+    .then(res => { commit('setLists', res.data) })
+    .catch(err => console.log(err.response));
+  },
   showList({ commit }, id) {
     axios.get('lists/'+ id)
     .then(res => { commit('setList', res.data) })
@@ -43,9 +48,6 @@ const actions = {
   },
   createList({ commit }, list) {
     return axios.post('lists', list)
-  },
-  createVideo({ commit },[list,videos]) {
-    return axios.post('videos', {video: videos, list: list})
   },
   updateList({ commit },list) {
     return axios.patch('lists/'+list.id, list)
