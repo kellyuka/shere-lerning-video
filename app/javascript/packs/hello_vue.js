@@ -12,4 +12,3 @@ document.addEventListener("DOMContentLoaded", () => {
     app.use(router).use(store).use(Notifications).mount("#app")
     //app.config.globalProperties.$axios = axios
 });
-

@@ -5,7 +5,7 @@ class Api::ListsController < ApplicationController
 
   def index
     lists = List.all
-    render json: lists, include: %i[videos tags]
+    render json: lists, include: %i[videos tags  comments]
   end
 
   def show
