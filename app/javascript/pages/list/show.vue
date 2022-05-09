@@ -44,7 +44,7 @@
             <div class="tile is-child is-2">
               <img src="/assets/canvas.jpg">
               <p class="subtitle has-text-centered">
-                {{ list.user_id }}
+                {{ list.user.name }}
               </p>
             </div>
             <div class="tile is-child">
@@ -101,7 +101,7 @@ export default {
       if (this.authUser) {
         return this.authUser.id === this.list.user_id
       }
-    }  
+    }
   },
   methods: {
     ...mapActions("lists", [

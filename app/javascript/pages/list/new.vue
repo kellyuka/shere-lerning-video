@@ -135,7 +135,7 @@ export default {
         title: '',
         playlistid: '',
         recommend: '',
-        videos: "",
+        videos: '',
         tag_names: [],
       }
     }
@@ -183,10 +183,10 @@ export default {
       "fetchTags",
     ]),
     async createlist() {
-      this.searchVideos(this.list.playlistid)
-      this.list.videos = this.videos
       try {
         await
+        this.searchVideos(this.list.playlistid)
+        this.list.videos = this.videos
         this.createList(this.list)
         this.$router.push({ name: 'ListIndex' })
         this.$notify({

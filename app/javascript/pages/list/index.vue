@@ -2,12 +2,12 @@
   <section class="section">
     <div class="columns">
       <div class="column is-2">
-        <router-link
-          :to="{ name: 'ListNew' }"
+        <div
           class="button is-danger is-block is-alt is-medium"
+          @click="require_login"
         >
           New List
-        </router-link>
+        </div>
         <div class="menu">
           <p class="menu-label">
             Tags
@@ -55,6 +55,17 @@ export default {
   },
   methods: {
     ...mapActions("lists", ["fetchLists"]),
+    require_login(){
+      if (this.authUser) {
+        this.$router.push({name: 'ListNew'})
+      } else {
+        this.$router.push({name: 'LoginIndex'})
+        this.$notify({
+          type: "warn",
+          title: "ログインしてください",
+        });
+      }
+    },
   }
 }
 </script>

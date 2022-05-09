@@ -118,7 +118,9 @@ export default {
 
   },
   created () {
-    this.fetchmyFavorites();
+    if(this.authUser){
+      this.fetchmyFavorites();
+    }
   },
   methods: {
     ...mapActions("favorites", ["fetchmyFavorites", "createFavorite", "deleteFavorite"]),

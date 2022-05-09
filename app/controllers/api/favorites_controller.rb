@@ -7,7 +7,7 @@ class Api::FavoritesController < ApplicationController
   end
 
   def create
-    favorite = current_user.favorite(@list)
+    current_user.favorite(@list)
     render json: @list, include: %i[user videos tags comments]
   end
 
