@@ -123,11 +123,11 @@ export default {
     async updatelist(list) {
       try {
         await 
-          this.updateList(list)
-          this.$router.push({ name: 'ListIndex' })
-          this.$notify({
-            title: "編集しました",
-            text:"引き続き勉強を頑張りましょう!"
+        this.updateList(list)
+        this.$router.push({ name: 'ListIndex' })
+        this.$notify({
+          title: "編集しました",
+          text:"引き続き勉強を頑張りましょう!"
         });
       }
       catch (error) {

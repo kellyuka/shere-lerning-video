@@ -118,44 +118,10 @@
           class="mb-6"
           data-aos="fade-down"
         >
-        <div
-          class="box content"
-          data-aos="fade-down"
-        >
-          <article 
-            v-for="list in lists" 
-            :key="list.id"
-            class="media" 
-          >
-            <div class="media-left">
-              <img
-                width="64"
-                height="64"
-                src="/assets/canvas.jpg"
-              >
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p href="#">
-                  @red
-                </p>
-                <h4>{{ list.title }} </h4>
-                <p>{{ list.recommend }}</p>
-                <div class="columns is-multiline">
-                  <div 
-                    v-for="video in list.videos"
-                    :key="video.id"
-                    class="column is-3"
-                  >
-                    <lite-youtube   
-                      :videoid="video.videoid"
-                      params="rel=0"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+        <div data-aos="fade-down">
+          <ListItem
+            :lists="limitlists"
+          />
         </div>
       </div>
     </div>
@@ -190,20 +156,28 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex"
-  export default {
-    name: "AboutIndex",
-    computed: {
-      ...mapGetters("lists", ["lists"]),
-    },
-    methods: {
-      ...mapActions("lists", [
-        "aboutLists",
-      ]),
-    },
-    created () {
-      this.aboutLists();
-    },
-  }
+import ListItem from '../list/conponents/listitems.vue'
+
+export default {
+  name: "AboutIndex",
+  components: {
+    ListItem,
+  },
+  computed: {
+    ...mapGetters("lists", ["lists"]),
+    limitlists() {
+      return this.lists.slice(0,3)
+    }
+  },
+  methods: {
+    ...mapActions("lists", [
+      "fetchLists",
+    ]),
+  },
+  created () {
+    this.fetchLists();
+  },
+}
 </script>
 <style>
 .border {
