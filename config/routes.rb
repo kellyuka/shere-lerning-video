@@ -7,12 +7,15 @@ Rails.application.routes.draw do
       end
     end
     resources :sessions
-    resources :lists do
+    resources :lists ,shallow: true do
+      resources :favorites, only: %i[create destroy]
       collection do
         get 'userlists'
         get 'aboutlists'
+        get :favorites
       end
     end
+    resources :favorites , only: %i[index]
     resources :tags
     resources :videos
     resources :comments
