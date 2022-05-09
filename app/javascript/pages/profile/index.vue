@@ -6,55 +6,27 @@
           <div class="tile is-child">
             <div class="tabs">
               <ul>
-                <li class="is-active">
-                  <a>MY LIST</a>
+                <li :class="{ 'is-active': isActive == 'list' }">
+                  <a @click="isActive = 'list'">MY LIST</a>
+                </li>
+                <li :class="{ 'is-active': isActive == 'favorite' }">
+                  <a @click="isActive = 'favorite'">MY FAVORITE</a>
                 </li>
               </ul>
             </div>
-            <div class="content">
-              <article 
-                v-for="list in lists" 
-                :key="list.id"
-                class="media box" 
-              >
-                <div class="media-content">
-                  <div class="content">
-                    <router-link
-                      :to="'/lists/'+list.id"
-                      class=""
-                    >
-                      <h4>{{ list.title }} </h4>
-                    </router-link>
-                    <p>
-                      {{ list.recommend }}
-                    </p>
-                    <ul>
-                      <span 
-                        v-for="tag in list.tags"
-                        :key="tag.id"
-                        class="tag is-light is-danger"
-                      >
-                        {{ tag.name }}
-                      </span>
-                    </ul>
-                    <div class="columns is-multiline">
-                      <div
-                        v-for="video in list.videos"
-                        :key="video.id"  
-                        class="column is-3"
-                      >
-                        <lite-youtube
-                          :videoid="video.videoid"
-                          params="rel=0"
-                        />
-                      </div>
-                    </div>
-                  </div>
+            <div class="tab-contents">
+              <div class="content">
+                <div v-if="isActive == 'list'">
+                  <ListItem 
+                    :lists="userlists"
+                  />
                 </div>
-                <div class="media-right">
-                  <span class="has-text-grey-light"><i class="fa fa-comments" /> 1</span>
+                <div v-if="isActive == 'favorite'">
+                  <ListItem 
+                    :lists="favorites"
+                  />
                 </div>
-              </article>
+              </div>
             </div>
           </div>
         </div>
@@ -78,29 +50,37 @@
 </template>
 
 <script>
-import ProfileEdit from './edit.vue'
 import { mapGetters, mapActions } from "vuex"
+import ProfileEdit from './edit.vue'
+import ListItem from '../list/conponents/listitems.vue'
 
 export default {
   name: "ProfileIndex",
   components: {
     ProfileEdit,
+    ListItem,
   },
   data() {
     return {
+      isActive: 'list'
     }
   },
   computed: {
-    ...mapGetters("lists", ["lists"]),
     ...mapGetters("users", ["authUser"]),
+    ...mapGetters("lists", ["lists"]),
+    ...mapGetters("favorites", ["favorites"]),
+    userlists() {
+    return this.lists.filter(
+      list => list.user_id === this.authUser.id)
+    },
   },
   methods: {
-    ...mapActions("lists", [
-      "userlists",
-    ]),
+    ...mapActions("lists", ["fetchLists",]),
+    ...mapActions("favorites", ["fetchmyFavorites"]),
   },
   created () {
-    this.userlists();
+    this.fetchLists();
+    this.fetchmyFavorites();
   },
 }
 </script>

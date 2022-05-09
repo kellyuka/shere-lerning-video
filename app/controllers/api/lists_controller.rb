@@ -5,11 +5,11 @@ class Api::ListsController < ApplicationController
 
   def index
     lists = List.all
-    render json: lists, include: %i[videos tags  comments]
+    render json: lists, include: %i[user videos tags comments]
   end
 
   def show
-    render json: @list, include: [:videos]
+    render json: @list, include: %i[user videos tags comments]
   end
 
   def create
@@ -48,17 +48,6 @@ class Api::ListsController < ApplicationController
   def destroy
     @list.destroy!
     render json: @list
-  end
-
-  def userlists
-    user = User.find(current_user.id)
-    lists = user.lists
-    render json: lists, include: %i[videos tags]
-  end
-
-  def aboutlists
-    lists = List.all.limit(3)
-    render json: lists, include: %i[videos]
   end
 
   private

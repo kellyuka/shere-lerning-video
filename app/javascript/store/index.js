@@ -4,6 +4,7 @@ import lists from './modules/lists'
 import videos from './modules/video'
 import comments from './modules/comments'
 import tags from './modules/tags'
+import favorites from './modules/favorites'
 
 
 export default createStore({
@@ -13,5 +14,6 @@ export default createStore({
     videos,
     comments,
     tags,
+    favorites,
   }
 })

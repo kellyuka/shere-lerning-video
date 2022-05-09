@@ -2,12 +2,12 @@
   <section class="section">
     <div class="columns">
       <div class="column is-2">
-        <router-link
-          :to="{ name: 'ListNew' }"
+        <div
           class="button is-danger is-block is-alt is-medium"
+          @click="require_login"
         >
           New List
-        </router-link>
+        </div>
         <div class="menu">
           <p class="menu-label">
             Tags
@@ -31,81 +31,21 @@
             </li>
           </ul>
         </div>
-        <div class="box content">
-          <article 
-            v-for="list in lists" 
-            :key="list.id"
-            class="media" 
-          >
-            <div class="media-left">
-              <img
-                width="64"
-                height="64"
-                src="/assets/canvas.jpg"
-              >
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <a href="#">@red</a>
-                <router-link
-                  :to="'/lists/'+list.id"
-                  class=""
-                >
-                  <h4>{{ list.title }} </h4>
-                </router-link>
-                <p>
-                  {{ list.recommend }}
-                </p>
-                
-                <div class="tags">
-                  <ion-icon
-                    name="pricetag-outline"
-                    class="pr-2"
-                  />
-                  <span 
-                    v-for="tag in list.tags"
-                    :key="tag.id"
-                    class="tag is-light is-danger"
-                  >
-                    {{ tag.name }}
-                  </span>
-                </div>
-                <div class="columns is-multiline">
-                  <div 
-                    v-for="video in list.videos"
-                    :key="video.id"
-                    class="column is-3"
-                  >
-                    <lite-youtube   
-                      :videoid="video.videoid"
-                      params="rel=0"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="media-right">
-              <span class="icon-text">
-                <span class="icon">
-                  <ion-icon name="chatbox-ellipses-outline" />
-                </span>
-                {{ list.comments.length }}
-                <span class="icon">
-                  <ion-icon name="heart-outline" />
-                </span>
-                {{ list.comments.length }}
-              </span>
-            </div>
-          </article>
-        </div>
+        <ListItem
+          :lists="lists"
+        />
       </div>
     </div>
   </section>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex"
+import ListItem from './conponents/listitems.vue'
 export default {
   name: "ListIndex",
+  components: {
+    ListItem,
+  },
   computed: {
     ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["lists"]),
@@ -114,9 +54,23 @@ export default {
     this.fetchLists();
   },
   methods: {
-    ...mapActions("lists", [
-      "fetchLists",
-    ]),
+    ...mapActions("lists", ["fetchLists"]),
+    require_login(){
+      if (this.authUser) {
+        this.$router.push({name: 'ListNew'})
+      } else {
+        this.$router.push({name: 'LoginIndex'})
+        this.$notify({
+          type: "warn",
+          title: "ログインしてください",
+        });
+      }
+    },
   }
 }
 </script>
+<style>
+.favorited {
+  color:  rgb(255, 104, 129);
+}
+</style>

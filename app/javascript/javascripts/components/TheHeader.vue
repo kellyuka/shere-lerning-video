@@ -7,10 +7,10 @@
           class="navbar-item has-text-danger"
         >
           <img
-            class="image"
-            src=""
-            alt=""
-            width="96px"
+            class="pr-4"
+            src="../../../assets/images/desktop.png"
+            alt="アイコン"
+            height="20"
           >
           <strong>ShareTechTube</strong>
         </router-link>
@@ -36,19 +36,20 @@
             :to="{ name: 'AboutIndex' }"
             class="navbar-item"
           >
-            About
+            ABOUT
           </router-link>
           <router-link
             :to="{ name: 'ListIndex' }"
             class="navbar-item"
           >
-            List
+            LISTS
           </router-link>
           <router-link
+            v-if="authUser"
             :to="{ name: 'ListNew' }"
             class="navbar-item"
           >
-            New List
+            NEW LIST
           </router-link>
         </div>
         <div class="navbar-item">
@@ -146,12 +147,23 @@ export default {
     async handleLogout() {
       try {
         await this.logoutUser()
-        this.$router.push({name: 'TopIndex'})
+        this.$router.push({name: 'ListIndex'})
         this.$notify({
           title: "ログアウトしました",
         });
       } catch (error) {
         console.log(error)
+      }
+    },
+    require_login(){
+      if (this.authUser) {
+        this.$router.push({name: 'ListNew'})
+      } else {
+        this.$router.push({name: 'LoginIndex'})
+        this.$notify({
+          type: "warn",
+          title: "ログインしてください",
+        });
       }
     }
   }

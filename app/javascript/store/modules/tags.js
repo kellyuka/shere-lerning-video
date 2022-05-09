@@ -39,9 +39,6 @@ const actions = {
   createTag({ commit }, tag) {
     return axios.post('tags', tag)
   },
-  createVideo({ commit },[tag,videos]) {
-    return axios.post('videos', {video: videos, tag: tag})
-  },
   updateTag({ commit },tag) {
     return axios.patch('tags/'+tag.id, tag)
       .then(res => { commit('updateTag', res.data) })
