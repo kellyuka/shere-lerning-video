@@ -10,5 +10,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const app = createApp(App);
     app.component('v-select', vSelect)
     app.use(router).use(store).use(Notifications).mount("#app")
-    //app.config.globalProperties.$axios = axios
 });

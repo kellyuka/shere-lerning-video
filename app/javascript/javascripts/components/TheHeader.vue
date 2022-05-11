@@ -52,39 +52,6 @@
             NEW LIST
           </router-link>
         </div>
-        <div class="navbar-item">
-          <div class="field has-addons">
-            <div class="control">
-              <input
-                class="input"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              >
-            </div>
-            <div class="control">
-              <button
-                class="button"
-                type="submit"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  style="width: 24px;height: 24px"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
         <template v-if="!authUser">
           <div class="navbar-item">
             <router-link
