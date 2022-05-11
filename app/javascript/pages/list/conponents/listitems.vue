@@ -7,23 +7,27 @@
     >
       <div class="media-left">
         <img
-          width="64"
-          height="64"
-          src="/assets/canvas.jpg"
+          v-if="list.user.avatar_url"
+          :src="list.user.avatar_url"
+          alt="プロフィール画像"
+          class="image is-64x64"
+        >
+        <img
+          v-else
+          src="../../../../assets/images/noimage.png"
+          alt="プロフィール画像"
+          class="image is-64x64"
         >
       </div>
       <div class="media-content">
         <div class="content">
-          <a href="#">@{{ list.user.name }}</a>
+          @{{ list.user.name }}
           <router-link
             :to="'/lists/'+list.id"
           >
-            <h4>{{ list.title }} </h4>
+            <h3>{{ list.title }} </h3>
           </router-link>
-          <p>
-            {{ list.recommend }}
-          </p>
-          
+          <p>{{ list.recommend }}</p>
           <div class="tags">
             <ion-icon
               name="pricetag-outline"

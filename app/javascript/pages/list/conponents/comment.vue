@@ -1,57 +1,61 @@
 <template>
-  <div class="tile is-parent box">
-    <div class="tile is-child ">
-      <p class="title ">
-        コメント
-      </p>
-      <article 
-        v-for="comment in comments" 
-        :key="comment.id"
-        class="media"
+  <article 
+    v-for="comment in comments" 
+    :key="comment.id"
+    class="media"
+  >
+    <figure class="media-left">
+      <img
+        v-if="comment.user.avatar_url"
+        :src="comment.user.avatar_url"
+        alt="プロフィール画像"
+        class="image is-64x64"
       >
-        <figure class="media-left">
-          <p class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/128x128.png">
-          </p>
-        </figure>
-        <div class="media-content">
-          <div class="content">
-            <strong>@{{ comment.user.name }}</strong>
-            <p>{{ comment.body }}</p>
-          </div>
-        </div>
-      </article>
-      <article class="media">
-        <figure class="media-left">
-          <p class="image is-48x48">
-            <img 
-              :src="authUser.avatar_url"
-            >
-          </p>
-        </figure>
-        <div class="media-content">
-          <div class="field">
-            <textarea
-              id="comment"
-              v-model="comment.body"
-              class="textarea"
-              placeholder="みんなでコメントしよう"
-            />
-          </div>
-          <div class="field">
-            <p class="control">
-              <button
-                class="button is-danger"
-                @click.prevent="handle_create_comment"
-              >
-                投稿
-              </button>
-            </p>
-          </div>
-        </div>
-      </article>
+      <img
+        v-else
+        src="../../../../assets/images/noimage.png"
+        alt="プロフィール画像"
+        class="image is-64x64"
+      >
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <strong>@{{ comment.user.name }}</strong>
+        <p>{{ comment.body }}</p>
+      </div>
     </div>
-  </div>
+  </article>
+  <template v-if="authUser">
+    <article class="media">
+      <figure class="media-left">
+        <p class="image is-64x64">
+          <img 
+            :src="authUser.avatar_url"
+          >
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="field">
+          <textarea
+            id="comment"
+            v-model="comment.body"
+            class="textarea"
+            placeholder="みんなでコメントしよう"
+          />
+        </div>
+        <div class="field">
+          <p class="control">
+            <button
+              class="button is-danger"
+              @click.prevent="handle_create_comment"
+            >
+              投稿
+            </button>
+          </p>
+        </div>
+      </div>
+    </article>
+  </template>
 </template>
 <script>
 export default {

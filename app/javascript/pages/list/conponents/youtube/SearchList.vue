@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="label">再生リスト</label>
-    <button @click="searchplayLists">
+    <button @click="searchLists">
       検索
     </button>
     <div v-show="results">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions } from "vuex"
 
 export default {
   name: "SearchList",
@@ -35,34 +35,20 @@ export default {
   },
   data: function() {
     return {
-      results: null,
-      params: {
-        part: "snippet",
-        type: "video",
-        maxResults: "10",
-        channelId: this.channelid,
-        key: process.env.YOUTUBE_API_KEY,
-      },
-      selectid: ""
+      results: "",
     };
   },
   methods: {
-    searchplayLists: function() {
-      var self = this;
-      axios
-        .get("https://www.googleapis.com/youtube/v3/playlists", {
-          params: this.params
-        })
-        .then(function(res) {
-          self.results = res.data.items;
-        })
+    ...mapActions("youtube", ["searchplayLists"]),
+    searchLists() {
+      this.searchplayLists(this.channelid)
+        .then(res => { this.results = res.data.items })
         .catch(function(err) {
           alert("検索に失敗しました。")
         })
     },
     select(id) {
       this.$emit('select',id)
-      this.selectid = id
     },
   }
 };

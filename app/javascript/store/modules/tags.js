@@ -39,16 +39,6 @@ const actions = {
   createTag({ commit }, tag) {
     return axios.post('tags', tag)
   },
-  updateTag({ commit },tag) {
-    return axios.patch('tags/'+tag.id, tag)
-      .then(res => { commit('updateTag', res.data) })
-      .catch(err => console.log(err.response));
-  },
-  deleteTag({ commit }, tag) {
-    return axios.delete('tags/'+tag.id)
-      .then(res => { commit('deleteTag', res.data) })
-      .catch(err => console.log(err.response));
-  }
 }
 
 export default {

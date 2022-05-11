@@ -10,6 +10,16 @@ const mutations = {
   setVideos: (state, videos) => { state.videos = videos},
 }
 const actions = {
+  searchplayLists({ commit }, channelid){
+    return axios.get("https://www.googleapis.com/youtube/v3/playlists", {
+      params: {
+        part: "snippet",
+        type: "video",
+        channelId: channelid,
+        key: process.env.YOUTUBE_API_KEY,
+      }
+    })
+  },
   searchVideos({ commit },playlistid) {
     return axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
       params: {
