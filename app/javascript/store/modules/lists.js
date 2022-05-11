@@ -13,6 +13,7 @@ const getters =  {
 const mutations = {
   setLists: (state, lists) => { state.lists = lists},
   setList: (state, list) => { state.list = list},
+  addList: (state, list) => { state.lists.push(list)},
   updateList: (state, updateList) => {
     const index = state.lists.findIndex(list => {
       return list.id === updateList.id 
@@ -31,16 +32,6 @@ const actions = {
     .then(res => { commit('setLists', res.data) })
     .catch(err => console.log(err.response));
   },
-  userlists({ commit }) {
-    axios.get('lists/userlists')
-    .then(res => { commit('setLists', res.data) })
-    .catch(err => console.log(err.response));
-  },
-  aboutLists({ commit }) {
-    axios.get('lists/aboutlists')
-    .then(res => { commit('setLists', res.data) })
-    .catch(err => console.log(err.response));
-  },
   showList({ commit }, id) {
     axios.get('lists/'+ id)
     .then(res => { commit('setList', res.data) })
@@ -48,6 +39,8 @@ const actions = {
   },
   createList({ commit }, list) {
     return axios.post('lists', list)
+    .then(res => { commit('addList', res.data) })
+    .catch(err => console.log(err.response));
   },
   updateList({ commit },list) {
     return axios.patch('lists/'+list.id, list)

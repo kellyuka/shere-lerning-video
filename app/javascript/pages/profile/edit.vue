@@ -58,6 +58,26 @@
       <p>{{ errors.channelid }}</p>
     </div>
     <div class="field">
+      <label class="label">プロフィール</label>
+      <div class="control">
+        <Field
+          v-slot="{ field }"
+          v-model="edituser.profile"
+          name="profile"
+        >
+          <textarea
+            id="profile"
+            name="profile"
+            v-bind="field"
+            class="textarea" 
+            placeholder="200字以内" 
+            rows="5"
+          />
+        </Field>
+      </div>
+      <p>{{ errors.profile }}</p>
+    </div>
+    <div class="field">
       <label class="label">プロフィール画像</label>
       <div class="tile">
         <div class="file is-boxed is-danger">
@@ -129,6 +149,9 @@ export default {
       name: 
         string().
         required('必須の項目です。'),
+      profile: 
+        string()
+        .max(200,("${min}文字以内で入力してください")),
       avatar:
         array()
         .nullable()
@@ -162,6 +185,7 @@ export default {
           name: this.authUser.name,
           email: this.authUser.email,
           channelid: this.authUser.channelid,
+          profile: this.authUser.profile,
           avatar_url: this.authUser.avatar_url,
         }
       },
@@ -180,6 +204,7 @@ export default {
       const formData = new FormData()
       formData.append("user[email]", this.edituser.email)
       formData.append("user[name]", this.edituser.name)
+      formData.append("user[profile]", this.edituser.profile)
       formData.append("user[channelid]", this.edituser.channelid)
       if (this.uploadAvatar)
         formData.append("user[avatar]", this.uploadAvatar)

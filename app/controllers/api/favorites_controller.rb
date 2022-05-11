@@ -2,7 +2,7 @@ class Api::FavoritesController < ApplicationController
   before_action :set_list, only: %i[create destroy]
 
   def index
-    favorites = current_user.favorites_lists
+    favorites = current_user.favorites_lists.order(created_at: :desc)
     render json: favorites, include: %i[user videos tags comments]
   end
 

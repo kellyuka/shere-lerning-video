@@ -1,15 +1,12 @@
 <template>
-  <div class="section"> 
-    <div class="tile is-vertical box">
+  <div class="section tile is-ancestor">
+    <div class="tile is-vertical is-8 box">
       <div class="tile is-parent">
-        <article class="tile is-child">
+        <div class="tile is-child is-10">
           <p class="title">
             {{ list.title }}
           </p>
-          <p class="subtitle">
-            {{ list.recommend }}
-          </p>
-        </article>
+        </div>
         <div 
           v-if="isAuthUserList"
           class="tile is-child has-text-right"
@@ -17,7 +14,7 @@
           <button 
             class="button is-danger m-2"
             @click="VisibleModal"
-          >
+          >  
             編集
           </button>
           <button 
@@ -38,37 +35,69 @@
           />
         </div>
       </div>
-      <div class="tile is-ancestor">
-        <div class="tile is-vertical is-9">
-          <div class="tile is-parent">
-            <div class="tile is-child is-2">
-              <img src="/assets/canvas.jpg">
-              <p class="subtitle has-text-centered">
-                {{ list.user.name }}
+      <div class="tile">
+        <div class="tile is-parent is-vertical is-3">
+          <article class="tile is-child">
+            <div class="has-text-centered">
+              <img
+                v-if="list.user.avatar_url"
+                :src="list.user.avatar_url"
+                alt="プロフィール画像"
+                width="96"
+              >
+              <img
+                v-else
+                src="../../../assets/images/noimage.png"
+                alt="プロフィール画像"
+                width="96"
+              >
+              <p class="subtitle">
+                @{{ list.user.name }}
               </p>
             </div>
-            <div class="tile is-child">
-              <article class="tile is-child columns is-multiline">
-                <div 
-                  v-for="video in list.videos"
-                  :key="video.id"
-                  class="column is-6"
-                >
-                  <lite-youtube   
-                    :videoid="video.videoid"
-                    params="rel=0"
-                  />
-                </div>
-              </article>
-            </div>
-          </div>
+            <p class="subtitle">
+              {{ list.user.profile }}
+            </p>
+          </article>
         </div>
-        <Comment
-          :comments="comments"
-          :auth-user="authUser"
-          @create-comment="create_comment"
-        />
+        <div class="tile is-parent">
+          <article class="tile is-child">
+            <p class="subtitle">
+              {{ list.recommend }}
+            </p>
+            <div class="content columns is-multiline">
+              <div 
+                v-for="video in list.videos"
+                :key="video.id"
+                class="column is-12"
+              >
+                <lite-youtube   
+                  :videoid="video.videoid"
+                  params="rel=0"
+                />
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
+    </div>
+    <div class="tile is-parent is-3">
+      <article class="tile is-child">
+        <div class="tabs is-centered">
+          <ul>
+            <li class="is-active">
+              <a>COMMENT</a>
+            </li>
+          </ul>
+        </div>
+        <div class="content">
+          <Comment
+            :comments="comments"
+            :auth-user="authUser"
+            @create-comment="create_comment"
+          />
+        </div>
+      </article>
     </div>
   </div>
 </template>

@@ -4,12 +4,25 @@ class Api::ListsController < ApplicationController
   before_action :currentuser_set_list, only: %i[update destroy]
 
   def index
-    lists = List.all
-    render json: lists, include: %i[user videos tags comments]
+    lists = List.all.order(created_at: :desc)
+    render json: lists,
+           only: %i[id user_id title recommend],
+           include: [
+             { videos: { only: :videoid } },
+             { comments: { only: [] } },
+             { tags: { only: %i[id name] } },
+             { user: { methods: :avatar_url,
+                       only: :name } }
+           ]
   end
 
   def show
-    render json: @list, include: %i[user videos tags comments]
+    render json: @list,
+           include: [
+             { videos: { only: :videoid } },
+             { tags: { only: :name } },
+             { user: { methods: :avatar_url } }
+           ]
   end
 
   def create

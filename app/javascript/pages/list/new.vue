@@ -166,7 +166,7 @@ export default {
   computed: {
       ...mapGetters("users", ["authUser"]),
       ...mapGetters("tags", ["tags"]),
-      ...mapGetters("videos", ["videos"]),
+      ...mapGetters("youtube", ["videos"]),
     options:{
       get(){ return this.tags }
     }
@@ -176,7 +176,7 @@ export default {
       "createList",
       "createVideo",
     ]),
-    ...mapActions("videos", [
+    ...mapActions("youtube", [
       "searchVideos",
     ]),
     ...mapActions("tags", [

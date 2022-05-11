@@ -9,13 +9,23 @@ class Api::CommentsController < ApplicationController
   def show
     list = List.find(params[:id])
     comments = list.comments
-    render json: comments, include: [:user]
+    render json: comments,
+           include: [
+             { user:
+               { methods: :avatar_url,
+                 only: :name } }
+           ]
   end
 
   def create
     comment = current_user.comments.build(comment_params)
     if comment.save
-      render json: comment, include: [:user]
+      render json: comment,
+             include: [
+               { user:
+                 { methods: :avatar_url,
+                   only: :name } }
+             ]
     else
       render json: comment.errors, status: :bad_request
     end
