@@ -1,6 +1,6 @@
 import axios from 'axios'
 const axiosInstance = axios.create({
-  baseURL: process.env.API_URL
+  baseURL: process.env.VUE_APP_API_URL
 })
 
 if (localStorage.auth_token) {
