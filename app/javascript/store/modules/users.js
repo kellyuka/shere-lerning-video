@@ -45,7 +45,7 @@ const actions = {
     commit('setUser', null)
   },
   createUser({ commit }, user ) {
-    axios.post('/users', { user: user })
+    return axios.post('/users', { user: user })
   },
   updateUser({ commit, state }, user) {
     return axios.patch(`profile/${state.authUser.id}`, user)
