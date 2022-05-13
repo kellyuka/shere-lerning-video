@@ -1,6 +1,13 @@
 import axios from 'axios'
+let baseUrl ;
+if ( process.env.NODE_ENV == 'production' ) {
+  baseUrl = 'https://share-techtube.herokuapp.com/api'
+} else {
+  baseUrl = 'http://localhost:3000/api/'
+}
+
 const axiosInstance = axios.create({
-  baseURL: 'https://share-techtube.herokuapp.com/api'
+  baseURL: baseUrl
 })
 
 if (localStorage.auth_token) {
