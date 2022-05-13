@@ -1,6 +1,6 @@
 import axios from 'axios'
 const axiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_API_URL
+  baseURL: 'https://share-techtube.herokuapp.com/api'
 })
 
 if (localStorage.auth_token) {
