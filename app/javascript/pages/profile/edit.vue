@@ -40,7 +40,19 @@
       <p>{{ errors.name }}</p>
     </div>
     <div class="field">
-      <label class="label">チャンネルID</label>
+      <label class="label">
+        チャンネルID
+        <span
+          class="icon-text"
+          @click="VisibleChannelid"
+        >
+          <span class="icon">
+            <ion-icon 
+              name="help-circle" 
+            />
+          </span>
+        </span>
+      </label>
       <div class="control">
         <Field
           v-slot="{ field }"
@@ -126,17 +138,23 @@
       </div>
     </div>
   </div>
+  <transition name="fade">
+    <Channelid
+      v-if="Channelidmodal"
+      @VisibleChannelid="VisibleChannelid"
+    />
+  </transition>
 </template>
-
 <script>
 import { mapGetters, mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string, array } from 'yup';
-
+import Channelid from './channelidmodal.vue'
 export default {
   name: "ProfileEdit",
   components: {
     Field,
+    Channelid,
   },
   setup() {
     const uploadAvatar = ""
@@ -175,6 +193,11 @@ export default {
       filename,
       errors,
       meta,
+    }
+  },
+  data() {
+    return {
+      Channelidmodal: false,
     }
   },
   computed: {
@@ -220,9 +243,22 @@ export default {
           title: "編集にに失敗しました"
         });
       }
-    }
+    },
+    VisibleChannelid(){
+      if (this.Channelidmodal == false) {
+        this.Channelidmodal = true
+      } else {
+        this.Channelidmodal = false
+      }
+    },
   }
 }
 </script>
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

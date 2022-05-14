@@ -82,6 +82,17 @@
                   >
                 </Field>
               </div>
+              <span
+                class="icon-text"
+                @click="VisibleChannelid"
+              >
+                <span>channelidについてはこちら</span>
+                <span class="icon">
+                  <ion-icon 
+                    name="help-circle" 
+                  />
+                </span>
+              </span>
               <p>{{ errors.channelid }}</p>
             </div>
             <div class="field">
@@ -158,6 +169,12 @@
             @VisiblePrivacy="VisiblePrivacy"
           />
         </transition>
+        <transition name="fade">
+          <Channelid
+            v-if="Channelidmodal"
+            @VisibleChannelid="VisibleChannelid"
+          />
+        </transition>
       </div>
     </div>
   </section>
@@ -169,6 +186,7 @@ import { useForm, Field } from 'vee-validate';
 import { object, string, ref } from 'yup';
 import Teams from '../../javascripts/components/teams.vue'
 import Privacy from '../../javascripts/components/privacy_policy.vue'
+import Channelid from '../profile/channelidmodal.vue'
 
 export default {
   name: "RegisterIndex",
@@ -176,6 +194,7 @@ export default {
     Field,
     Teams,
     Privacy,
+    Channelid,
   },
   setup() {
     const user = {
@@ -222,6 +241,7 @@ export default {
     return {
       Teamsmodal: false,
       Privacymodal: false,
+      Channelidmodal: false,
     }
   },
   methods: {
@@ -257,7 +277,14 @@ export default {
       } else {
         this.Privacymodal = false
       }
-    }
+    },
+    VisibleChannelid(){
+      if (this.Channelidmodal == false) {
+        this.Channelidmodal = true
+      } else {
+        this.Channelidmodal = false
+      }
+    },
   }
 }
 </script>
