@@ -63,6 +63,22 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.587.0)
+    aws-sdk-core (3.130.2)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.525.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.56.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.114.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
+    aws-sigv4 (1.5.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.17)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
@@ -144,6 +160,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.1)
     jwt (2.3.0)
     jwt_sessions (2.7.2)
       jwt (>= 2.2.3, < 3)
@@ -331,6 +348,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aws-sdk-s3
   better_errors
   binding_of_caller
   bootsnap (>= 1.4.4)

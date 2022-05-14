@@ -92,9 +92,6 @@
             multiple
             taggable
           />
-            <!-- 
-            :selectable="function(){ return list.tag_names.length < 5}"
-            placeholder="5個まで選べます"  -->
         </div>
       </div>
       <div class="field is-grouped">
