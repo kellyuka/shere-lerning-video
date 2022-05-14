@@ -31,6 +31,8 @@ gem 'jwt_sessions'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rails-i18n', '~> 6.0'
 gem 'google-api-client', require: 'google/apis/youtube_v3'
+gem "aws-sdk-s3", require: false
+
 # gem 'google-api-client', '~> 0.28.7'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -44,7 +46,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem "factory_bot_rails"
   gem 'faker'
-  gem "aws-sdk-s3", require: false
 end
 
 group :development do
