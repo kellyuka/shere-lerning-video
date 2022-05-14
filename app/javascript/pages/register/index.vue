@@ -165,6 +165,7 @@ export default {
         password: '',
         password_confirmation: '',
         terms: false,
+        profile: '',
     }
     const schema = object({
       name: 
