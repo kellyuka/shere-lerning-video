@@ -6,22 +6,69 @@
     >
       <ul>
         <li>
-          <a href="/">プライバシーポリシー</a>
+          <a @click="VisiblePrivacy">プライバシーポリシー</a>
         </li>
         <li>
-          <a href="/css/">利用規約</a>
+          <a @click="VisibleTearms">利用規約</a>
         </li>
       </ul>
       <p>Copyright &copy; 2022. ShareTechTube</p>
     </nav>
   </footer>
+  <transition name="fade">
+    <Teams
+      v-if="Teamsmodal"
+      @VisibleTearms="VisibleTearms"
+    />
+  </transition>
+  <transition name="fade">
+    <Privacy
+      v-if="Privacymodal"
+      @VisiblePrivacy="VisiblePrivacy"
+    />
+  </transition>
 </template>
 
 <script>
+import Teams from '../../javascripts/components/teams.vue'
+import Privacy from '../../javascripts/components/privacy_policy.vue'
+
 export default {
-  name: "Footer"
+  name: "Footer",
+  components: {
+    Teams,
+    Privacy,
+  },
+  data() {
+    return {
+      Teamsmodal: false,
+      Privacymodal: false,
+    }
+  },
+  methods: {
+    VisibleTearms(){
+      if (this.Teamsmodal == false) {
+        this.Teamsmodal = true
+      } else {
+        this.Teamsmodal = false
+      }
+    },
+    VisiblePrivacy(){
+      if (this.Privacymodal == false) {
+        this.Privacymodal = true
+      } else {
+        this.Privacymodal = false
+      }
+    },
+  }
 }
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
