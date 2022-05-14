@@ -14,19 +14,19 @@
       </ul>
       <p>Copyright &copy; 2022. ShareTechTube</p>
     </nav>
+    <transition name="fade">
+      <Teams
+        v-if="Teamsmodal"
+        @VisibleTearms="VisibleTearms"
+      />
+    </transition>
+    <transition name="fade">
+      <Privacy
+        v-if="Privacymodal"
+        @VisiblePrivacy="VisiblePrivacy"
+      />
+    </transition>
   </footer>
-  <transition name="fade">
-    <Teams
-      v-if="Teamsmodal"
-      @VisibleTearms="VisibleTearms"
-    />
-  </transition>
-  <transition name="fade">
-    <Privacy
-      v-if="Privacymodal"
-      @VisiblePrivacy="VisiblePrivacy"
-    />
-  </transition>
 </template>
 
 <script>

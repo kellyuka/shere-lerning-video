@@ -137,13 +137,13 @@
         </button>
       </div>
     </div>
+    <transition name="fade">
+      <Channelid
+        v-if="Channelidmodal"
+        @VisibleChannelid="VisibleChannelid"
+      />
+    </transition>
   </div>
-  <transition name="fade">
-    <Channelid
-      v-if="Channelidmodal"
-      @VisibleChannelid="VisibleChannelid"
-    />
-  </transition>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex"

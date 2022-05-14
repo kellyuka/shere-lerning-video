@@ -3,12 +3,28 @@ class Api::FavoritesController < ApplicationController
 
   def index
     favorites = current_user.favorites_lists.order(created_at: :desc)
-    render json: favorites, include: %i[user videos tags comments]
+    render json: favorites,
+           only: %i[id user_id title recommend],
+           include: [
+             { videos: { only: :videoid } },
+             { comments: { only: [] } },
+             { tags: { only: %i[id name] } },
+             { user: { methods: :avatar_url,
+                       only: :name } }
+           ]
   end
 
   def create
     current_user.favorite(@list)
-    render json: @list, include: %i[user videos tags comments]
+    render json: @list,
+           only: %i[id user_id title recommend],
+           include: [
+             { videos: { only: :videoid } },
+             { comments: { only: [] } },
+             { tags: { only: %i[id name] } },
+             { user: { methods: :avatar_url,
+                       only: :name } }
+           ]
   end
 
   def destroy
