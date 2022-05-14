@@ -16,7 +16,7 @@ const actions = {
         part: "snippet",
         type: "video",
         channelId: channelid,
-        key: process.env.VUE_APP_YOUTUBE_API_KEY,
+        key: 'AIzaSyCQtHNjxHRZq_H5ledUA-XIQW2-k3lE5cY',
       }
     })
   },
@@ -25,7 +25,7 @@ const actions = {
       params: {
         part: 'snippet',
         playlistId: playlistid,
-        key: process.env.VUE_APP_YOUTUBE_API_KEY,
+        key: 'AIzaSyCQtHNjxHRZq_H5ledUA-XIQW2-k3lE5cY',
       }
     })
     .then(res => { commit('setVideos', res.data.items) })
