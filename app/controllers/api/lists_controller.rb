@@ -46,7 +46,15 @@ class Api::ListsController < ApplicationController
     list = current_user.lists.build(list_params)
     list.tag_ids = tag_ids
     if list.save && list.videos.insert_all(videos)
-      render json: list
+      render json: list,
+             only: %i[id user_id title recommend],
+             include: [
+               { videos: { only: %i[videoid] } },
+               { comments: { only: [] } },
+               { tags: { only: %i[id name] } },
+               { user: { methods: :avatar_url,
+                         only: %i[name profile] } }
+             ]
     else
       render json: list.errors, status: :bad_request
     end
@@ -54,7 +62,15 @@ class Api::ListsController < ApplicationController
 
   def update
     if @list.update(list_params)
-      render json: @list
+      render json: @list,
+             only: %i[id user_id title recommend],
+             include: [
+               { videos: { only: %i[videoid] } },
+               { comments: { only: [] } },
+               { tags: { only: %i[id name] } },
+               { user: { methods: :avatar_url,
+                         only: %i[name profile] } }
+             ]
     else
       render json: @list.errors, status: :bad_request
     end
