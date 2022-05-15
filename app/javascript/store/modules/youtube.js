@@ -17,6 +17,7 @@ const actions = {
         type: "video",
         channelId: channelid,
         key: 'AIzaSyCQtHNjxHRZq_H5ledUA-XIQW2-k3lE5cY',
+        maxResults: 50,
       }
     })
   },
@@ -26,6 +27,7 @@ const actions = {
         part: 'snippet',
         playlistId: playlistid,
         key: 'AIzaSyCQtHNjxHRZq_H5ledUA-XIQW2-k3lE5cY',
+        maxResults: 50,
       }
     })
     .then(res => { commit('setVideos', res.data.items) })

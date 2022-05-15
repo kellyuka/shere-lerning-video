@@ -82,6 +82,17 @@
                   >
                 </Field>
               </div>
+              <span
+                class="icon-text"
+                @click="VisibleChannelid"
+              >
+                <span>channelidについてはこちら</span>
+                <span class="icon">
+                  <ion-icon 
+                    name="help-circle" 
+                  />
+                </span>
+              </span>
               <p>{{ errors.channelid }}</p>
             </div>
             <div class="field">
@@ -130,8 +141,11 @@
                   class="checkbox mr-2"
                   type="checkbox"
                 />
-                <small class="has-text-grey-dark"><a href="#">利用規約</a>、<a href="#">プライバシーポリシー</a>に同意する</small>
               </label>
+              <smal class="has-text-grey-dark">
+                <a @click="VisiblePrivacy">プライバシーポリシー</a>、
+                <a @click="VisibleTearms">利用規約</a>に同意する
+              </smal>
               <p>{{ errors.terms }}</p>
             </div>
             <button 
@@ -143,6 +157,24 @@
             </button>
           </div>
         </div>
+        <transition name="fade">
+          <Teams
+            v-if="Teamsmodal"
+            @VisibleTearms="VisibleTearms"
+          />
+        </transition>
+        <transition name="fade">
+          <Privacy
+            v-if="Privacymodal"
+            @VisiblePrivacy="VisiblePrivacy"
+          />
+        </transition>
+        <transition name="fade">
+          <Channelid
+            v-if="Channelidmodal"
+            @VisibleChannelid="VisibleChannelid"
+          />
+        </transition>
       </div>
     </div>
   </section>
@@ -152,10 +184,17 @@
 import { mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string, ref } from 'yup';
+import Teams from '../../javascripts/components/teams.vue'
+import Privacy from '../../javascripts/components/privacy_policy.vue'
+import Channelid from '../profile/channelidmodal.vue'
+
 export default {
   name: "RegisterIndex",
   components: {
     Field,
+    Teams,
+    Privacy,
+    Channelid,
   },
   setup() {
     const user = {
@@ -192,12 +231,18 @@ export default {
       validationSchema: schema,
       initialValues: user,
     });
-
     return {
       user,
       errors,
       meta,
     };
+  },
+  data() {
+    return {
+      Teamsmodal: false,
+      Privacymodal: false,
+      Channelidmodal: false,
+    }
   },
   methods: {
     ...mapActions("users", [
@@ -219,9 +264,36 @@ export default {
         });
       }
     },
+    VisibleTearms(){
+      if (this.Teamsmodal == false) {
+        this.Teamsmodal = true
+      } else {
+        this.Teamsmodal = false
+      }
+    },
+    VisiblePrivacy(){
+      if (this.Privacymodal == false) {
+        this.Privacymodal = true
+      } else {
+        this.Privacymodal = false
+      }
+    },
+    VisibleChannelid(){
+      if (this.Channelidmodal == false) {
+        this.Channelidmodal = true
+      } else {
+        this.Channelidmodal = false
+      }
+    },
   }
 }
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

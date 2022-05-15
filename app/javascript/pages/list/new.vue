@@ -29,7 +29,6 @@
         <p>{{ errors.title }}</p>
       </div>
       <div
-        v-if="authUser.channelid"
         class="field"
       >
         <SearchList 
