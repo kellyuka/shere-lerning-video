@@ -18,10 +18,12 @@ class Api::ListsController < ApplicationController
 
   def show
     render json: @list,
+           only: %i[id user_id title recommend],
            include: [
-             { videos: { only: :videoid } },
-             { tags: { only: :name } },
-             { user: { methods: :avatar_url } }
+             { videos: { only: %i[id videoid] } },
+             { tags: { only: %i[id name] } },
+             { user: { methods: :avatar_url,
+                       only: %i[name profile] } }
            ]
   end
 
