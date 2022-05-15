@@ -56,10 +56,10 @@
             >
               Get Started
             </button>
-            <a
+            <!-- <a
               class="mb-4 is-inline-block"
               href="#"
-            ><small>Forgot password?</small></a>
+            ><small>Forgot password?</small></a> -->
             <router-link
               :to="{ name: 'RegisterIndex' }"
               class="button is-white mb-2 is-flex is-justify-content-center is-align-items-center is-fullwidth"
