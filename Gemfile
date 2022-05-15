@@ -32,6 +32,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rails-i18n', '~> 6.0'
 gem 'google-api-client', require: 'google/apis/youtube_v3'
 gem "aws-sdk-s3", require: false
+gem 'meta-tags'
 
 # gem 'google-api-client', '~> 0.28.7'
 group :development, :test do
