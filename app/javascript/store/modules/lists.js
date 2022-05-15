@@ -13,7 +13,7 @@ const getters =  {
 const mutations = {
   setLists: (state, lists) => { state.lists = lists},
   setList: (state, list) => { state.list = list},
-  addList: (state, list) => { state.lists.push(list)},
+  addList: (state, list) => { state.lists.unshift(list)},
   updateList: (state, updateList) => {
     const index = state.lists.findIndex(list => {
       return list.id === updateList.id 
