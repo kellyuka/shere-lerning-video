@@ -18,7 +18,7 @@ class Api::ListsController < ApplicationController
 
   def show
     render json: @list,
-           only: %i[id user_id title recommend],
+           only: %i[id user_id playlistid title recommend],
            include: [
              { videos: { only: %i[id videoid] } },
              { tags: { only: %i[id name] } },
