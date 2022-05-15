@@ -49,7 +49,7 @@ class Api::ListsController < ApplicationController
       render json: list,
              only: %i[id user_id title recommend],
              include: [
-               { videos: { only: %i[videoid] } },
+               { videos: { only: %i[id videoid] } },
                { comments: { only: [] } },
                { tags: { only: %i[id name] } },
                { user: { methods: :avatar_url,
@@ -65,7 +65,7 @@ class Api::ListsController < ApplicationController
       render json: @list,
              only: %i[id user_id title recommend],
              include: [
-               { videos: { only: %i[videoid] } },
+               { videos: { only: %i[id videoid] } },
                { comments: { only: [] } },
                { tags: { only: %i[id name] } },
                { user: { methods: :avatar_url,
