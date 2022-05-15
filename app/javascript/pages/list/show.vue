@@ -6,6 +6,22 @@
           <p class="title">
             {{ list.title }}
           </p>
+          <div class="tags">
+            <ion-icon
+              name="pricetag-outline"
+              class="pr-2"
+            />
+            <span 
+              v-for="tag in list.tags"
+              :key="tag.id"
+              class="tag is-light is-danger"
+            >
+              {{ tag.name }}
+            </span>
+          </div>
+          <p class="subtitle">
+            {{ list.recommend }}
+          </p>
         </div>
         <div 
           v-if="isAuthUserList"
@@ -62,9 +78,6 @@
         </div>
         <div class="tile is-parent">
           <article class="tile is-child">
-            <p class="subtitle">
-              {{ list.recommend }}
-            </p>
             <div class="content columns is-multiline">
               <div 
                 v-for="video in list.videos"
