@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link
-          :to="{ name: 'ListIndex' }"
+          :to="{ name: 'AboutIndex' }"
           class="navbar-item has-text-danger"
         >
           <img
@@ -33,12 +33,6 @@
       >
         <div class="navbar-start">
           <router-link
-            :to="{ name: 'AboutIndex' }"
-            class="navbar-item"
-          >
-            ABOUT
-          </router-link>
-          <router-link
             :to="{ name: 'ListIndex' }"
             class="navbar-item"
           >
@@ -52,45 +46,48 @@
             NEW LIST
           </router-link>
         </div>
-        <template v-if="!authUser">
-          <div class="navbar-item">
-            <router-link
-              :to="{ name: 'LoginIndex' }"
-              class="nav-link button is-danger"
-            >
-              LOGIN
-            </router-link>
-          </div>
-        </template>
-        <template v-else>
-          <div class="navbar-item">
-            <router-link
-              :to="{ name: 'ProfileIndex' }"
-              class="navbar"
-            >
-              <div class="navbar-item active avatar-image-wrapper ">
-                <img
-                  v-if="authUser.avatar_url"
-                  :src="authUser.avatar_url"
-                  alt="プロフィール画像"
-                >
-                <img
-                  v-else
-                  src="../../../assets/images/noimage.png"
-                  alt="プロフィール画像"
-                >
-                <p>{{ authUser.name }}</p>
+        <div class="navbar-end">
+          <template v-if="authUser">
+            <div class="navbar-item">
+              <router-link
+                :to="{ name: 'ProfileIndex' }"
+                class="nav-link"
+              >
+                <div class="button is-rounded">
+                  <img
+                    v-if="authUser.avatar_url"
+                    :src="authUser.avatar_url"
+                    alt="プロフィール画像"
+                  >
+                  <img
+                    v-else
+                    src="../../../assets/images/noimage.png"
+                    alt="プロフィール画像"
+                  >
+                  <p>{{ authUser.name }}</p>
+                </div>
+              </router-link>
+            </div>
+            <div class="navbar-item">
+              <div
+                class="nav-link button is-danger"
+                @click="handleLogout"
+              >
+                LOGOUT
               </div>
-            </router-link>
-            <router-link
-              to="#"
-              class="nav-link button is-danger"
-              @click="handleLogout"
-            >
-              LOGOUT
-            </router-link>
-          </div>
-        </template>
+            </div>
+          </template>
+          <template v-else>
+            <div class="navbar-item">
+              <router-link
+                :to="{ name: 'LoginIndex' }"
+                class="nav-link button is-danger"
+              >
+                LOGIN
+              </router-link>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
   </nav>
@@ -122,17 +119,6 @@ export default {
         console.log(error)
       }
     },
-    require_login(){
-      if (this.authUser) {
-        this.$router.push({name: 'ListNew'})
-      } else {
-        this.$router.push({name: 'LoginIndex'})
-        this.$notify({
-          type: "warn",
-          title: "ログインしてください",
-        });
-      }
-    }
   }
 }
 </script>
