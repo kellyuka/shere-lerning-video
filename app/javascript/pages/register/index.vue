@@ -40,10 +40,12 @@
                     v-bind="field"
                     class="input" 
                     type="email" 
-                    placeholder="E-mail address"
+                    placeholder="*E-mail address"
                   >
                 </Field>
-                <p>{{ errors.email }}</p>
+                <p class="help is-danger">
+                  {{ errors.email }}
+                </p>
               </div>
             </div>
             <div class="field">
@@ -59,10 +61,12 @@
                     v-bind="field"
                     class="input"
                     type="text"
-                    placeholder="Name"
+                    placeholder="*Name"
                   >
                 </Field>
-                <p>{{ errors.name }}</p>
+                <p class="help is-danger">
+                  {{ errors.name }}
+                </p>
               </div>
             </div>
             <div class="field">
@@ -93,7 +97,9 @@
                   />
                 </span>
               </span>
-              <p>{{ errors.channelid }}</p>
+              <p class="help is-danger">
+                {{ errors.channelid }}
+              </p>
             </div>
             <div class="field">
               <div class="control">
@@ -108,11 +114,13 @@
                     v-bind="field"
                     class="input" 
                     type="password" 
-                    placeholder="Password"
+                    placeholder="*Password"
                   >
                 </Field>
               </div>
-              <p>{{ errors.password }}</p>
+              <p class="help is-danger">
+                {{ errors.password }}
+              </p>
             </div>
             <div class="field">
               <div class="control">
@@ -127,14 +135,19 @@
                     v-bind="field"
                     class="input" 
                     type="password" 
-                    placeholder="Password Confirmation"
+                    placeholder="*Password Confirmation"
                   >
                 </Field>
               </div>
-              <p>{{ errors.password_confirmation }}</p>
+              <p class="help is-danger">
+                {{ errors.password_confirmation }}
+              </p>
+              <div class="has-text-right">
+                <span class="help">* 必須項目</span>
+              </div>
             </div>
             <div class="field">
-              <label class="checkbox mb-4">
+              <label class="checkbox">
                 <Field
                   id="terms"
                   name="terms"
@@ -142,11 +155,13 @@
                   type="checkbox"
                 />
               </label>
-              <smal class="has-text-grey-dark">
+              <small class="has-text-grey-dark">
                 <a @click="VisiblePrivacy">プライバシーポリシー</a>、
                 <a @click="VisibleTearms">利用規約</a>に同意する
-              </smal>
-              <p>{{ errors.terms }}</p>
+              </small>
+              <p class="help is-danger">
+                {{ errors.terms }}
+              </p>
             </div>
             <button 
               class="button is-primary py-2 is-fullwidth"  
@@ -209,18 +224,18 @@ export default {
     const schema = object({
       name: 
         string().
-        required('必須の項目です。'),
+        required('必須の項目です'),
       email: 
         string()
-        .required('必須の項目です。')
-        .email('メールアドレスの形式にして下さい。'),
+        .required('必須の項目です')
+        .email('メールアドレスの形式にして下さい'),
       password: 
         string()
-        .required('必須の項目です。')
+        .required('必須の項目です')
         .min(5,("${min}文字以上で入力してください")),
       password_confirmation: 
         string()
-        .required('必須の項目です。')
+        .required('必須の項目です')
         .oneOf([ref("password")], "パスワードが一致しません")
         .min(5,("${min}文字以上で入力してください")),
       terms:
@@ -255,7 +270,7 @@ export default {
           this.createUser(this.user)
           this.$router.push({ name: 'LoginIndex' })
           this.$notify({
-            title: "登録に成功しました。ログインしてください。",
+            title: "登録に成功しました。ログインしてください",
           });
       } catch (error) {
         this.$notify({

@@ -35,10 +35,12 @@
                 >
               </Field>
             </div>
-            <p>{{ errors.title }}</p>
+            <p class="help is-danger">
+              {{ errors.title }}
+            </p>
           </div>
           <div>
-            <label class="label">登録している再生リスト（変更はできません）</label>
+            <label class="label">登録している再生リスト（変更できません）</label>
             <div v-if="editlist.playlistid">
               <iframe
                 width="560"
@@ -69,12 +71,15 @@
                 />
               </Field>
             </div>
-            <p>{{ errors.recommend }}</p>
+            <p class="help is-danger">
+              {{ errors.recommend }}
+            </p>
           </div>
           <div class="field is-grouped">
             <div class="control">
               <button
                 class="button is-danger"
+                :disabled="!meta.valid"
                 @click="handleupdatelist"
               >
                 編集
@@ -112,17 +117,16 @@ export default {
     const schema = object({
       title: 
         string()
-        .required('必須の項目です。')
+        .required('必須の項目です')
         .max(100,("${max}文字以内で入力してください")),
       recommend: 
         string()
-        .required('必須の項目です。')
+        .required('必須の項目です')
         .max(1000,("${min}文字以内で入力してください")),
     })
     const { errors, meta } = useForm({
       validationSchema: schema,
     });
-
     return {
       errors,
       meta,
@@ -150,7 +154,6 @@ export default {
     },
   },
 }
-
 </script>
 <style scoped>
 </style>

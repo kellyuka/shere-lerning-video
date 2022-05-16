@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="label">再生リスト
+    <label class="label">*再生リスト
       <span
         class="icon-text"
         @click="VisiblePlaylistmodal"

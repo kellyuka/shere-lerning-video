@@ -8,8 +8,11 @@
           </li>
         </ul>
       </div>
+      <div class="has-text-right">
+        <span class="help">* 必須項目</span>
+      </div>
       <div class="field">
-        <label class="label">タイトル</label>
+        <label class="label">*タイトル</label>
         <div class="control">
           <Field
             v-slot="{ field }"
@@ -26,7 +29,9 @@
             >
           </Field>
         </div>
-        <p>{{ errors.title }}</p>
+        <p class="help is-danger">
+          {{ errors.title }}
+        </p>
       </div>
       <div
         class="field"
@@ -36,7 +41,9 @@
           @select="select"
         />
         <div>
-          <p>{{ errors.playlistid }}</p>
+          <p class="help is-danger">
+            {{ errors.playlistid }}
+          </p>
           <div v-if="list.playlistid">
             <label class="label">選択中の再生リスト</label>
             <Field
@@ -61,7 +68,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">おすすめポイント</label>
+        <label class="label">*おすすめポイント</label>
         <div class="control">
           <Field
             v-slot="{ field }"
@@ -78,7 +85,9 @@
             />
           </Field>
         </div>
-        <p>{{ errors.recommend }}</p>
+        <p class="help is-danger">
+          {{ errors.recommend }}
+        </p>
       </div>
       <div class="field">
         <label class="label">タグ</label>

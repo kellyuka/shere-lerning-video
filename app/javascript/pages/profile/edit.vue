@@ -17,7 +17,9 @@
           >
         </Field>
       </div>
-      <p>{{ errors.email }}</p>
+      <p class="help is-danger">
+        {{ errors.email }}
+      </p>
     </div>
     <div class="field">
       <label class="label">ユーザー名</label>
@@ -37,7 +39,9 @@
           >
         </Field>
       </div>
-      <p>{{ errors.name }}</p>
+      <p class="help is-danger">
+        {{ errors.name }}
+      </p>
     </div>
     <div class="field">
       <label class="label">
@@ -67,7 +71,9 @@
           >
         </Field>
       </div>
-      <p>{{ errors.channelid }}</p>
+      <p class="help is-danger">
+        {{ errors.channelid }}
+      </p>
     </div>
     <div class="field">
       <label class="label">プロフィール</label>
@@ -87,7 +93,9 @@
           />
         </Field>
       </div>
-      <p>{{ errors.profile }}</p>
+      <p class="help is-danger">
+        {{ errors.profile }}
+      </p>
     </div>
     <div class="field">
       <label class="label">プロフィール画像</label>
@@ -124,7 +132,9 @@
           >
         </div>
       </div>
-      <p>{{ errors.avatar }}</p>
+      <p class="help is-danger">
+        {{ errors.avatar }}
+      </p>
     </div>
     <div class="field is-grouped">
       <div class="control">
