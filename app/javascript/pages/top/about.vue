@@ -198,10 +198,10 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .border {
   border-bottom: solid;
-  border-color: #ff3636;
+  border-color: #ff5a5a;
   border-width: 5px;
 }
 </style>

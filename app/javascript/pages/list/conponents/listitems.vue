@@ -47,7 +47,7 @@
               :key="video.id"
               class="column is-4"
             >
-              <lite-youtube   
+              <lite-youtube
                 :videoid="video.videoid"
                 params="rel=0"
               />

@@ -15,7 +15,7 @@
       </span>
     </label>
     <template v-if="channelid">
-      <div class="control pb-2">
+      <div class="control pb-4">
         <button 
           class="button is-small is-danger is-outlined is-rounded"
           @click="searchLists"
@@ -54,20 +54,18 @@
             v-for="(list) in results"
             :key="list.id"
             class="column is-2"
+            :class="{ 'box border': isActive == list.id }"
             @click="select(list.id)"
           >
-            <img :src="list.snippet.thumbnails.medium.url">
-            <h2 class="is-size-6">
+            <figure class="image is-16by9">
+              <img :src="list.snippet.thumbnails.medium.url">
+            </figure>
+            <h2 class="is-size-5">
               {{ list.snippet.title }}
             </h2>
           </div>
         </div>
       </div>
-    </div>
-    <div class="column is-2">
-      <img src="https://i.ytimg.com/vi/9xxXKkwpRg4/mqdefault.jpg"><h2 class="is-size-6">
-        jwt
-      </h2>
     </div>
   </div>
   <transition name="fade">
@@ -95,6 +93,7 @@ export default {
   },
   data: function() {
     return {
+      isActive: '',
       results: "",
       playlistmodal: false,
     };
@@ -113,6 +112,7 @@ export default {
       })
     },
     select(id) {
+      this.isActive = id
       this.$emit('select',id)
     },
     Searched() {
@@ -129,5 +129,9 @@ export default {
 };
 </script>
 <style scoped>
-
+.border {
+  border: solid;
+  border-color: #ff5a5a;
+  border-width: 2px;
+}
 </style>
