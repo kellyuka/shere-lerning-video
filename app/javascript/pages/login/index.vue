@@ -29,7 +29,9 @@
                   >
                 </Field>
               </div>
-              <p>{{ errors.email }}</p>
+              <p class="help is-danger">
+                {{ errors.email }}
+              </p>
             </div>
             <div class="field">
               <div class="control">
@@ -48,7 +50,9 @@
                   >
                 </Field>
               </div>
-              <p>{{ errors.password }}</p>
+              <p class="help is-danger">
+                {{ errors.password }}
+              </p>
             </div>
             <button 
               class="button is-primary mb-4 is-fullwidth"
@@ -62,7 +66,7 @@
             ><small>Forgot password?</small></a> -->
             <router-link
               :to="{ name: 'RegisterIndex' }"
-              class="button is-white mb-2 is-flex is-justify-content-center is-align-items-center is-fullwidth"
+              class="button mb-2 is-flex is-justify-content-center is-align-items-center is-fullwidth"
             >
               <span class="has-text-grey-dark">create new account!</span>
             </router-link>
@@ -90,11 +94,11 @@ export default {
     const schema = object({
       email: 
         string()
-        .required('必須の項目です。')
-        .email('メールアドレスの形式にして下さい。'),
+        .required('必須の項目です')
+        .email('メールアドレスの形式にして下さい'),
       password: 
         string()
-        .required('必須の項目です。')
+        .required('必須の項目です')
         .min(5,("${min}文字以上で入力してください")),
     })
     const { errors } = useForm({

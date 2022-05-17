@@ -8,8 +8,11 @@
           </li>
         </ul>
       </div>
+      <div class="has-text-right">
+        <span class="help">* 必須項目</span>
+      </div>
       <div class="field">
-        <label class="label">タイトル</label>
+        <label class="label">*タイトル</label>
         <div class="control">
           <Field
             v-slot="{ field }"
@@ -25,19 +28,19 @@
               placeholder="100字以内"
             >
           </Field>
+          <p class="help is-danger">
+            {{ errors.title }}
+          </p>
         </div>
-        <p>{{ errors.title }}</p>
       </div>
-      <div
-        class="field"
-      >
-        <SearchList 
-          :channelid="authUser.channelid"
-          @select="select"
-        />
-        <div>
-          <p>{{ errors.playlistid }}</p>
-          <div v-if="list.playlistid">
+      <SearchList 
+        :channelid="authUser.channelid"
+        @select="select"
+        @Searched="Searched"
+      />
+      <div class="field">
+        <template v-if="searched">
+          <template v-if="list.playlistid">
             <label class="label">選択中の再生リスト</label>
             <Field
               v-slot="{ field }"
@@ -57,11 +60,16 @@
                 allowfullscreen
               />
             </Field>
-          </div>
-        </div>
+          </template>
+          <template v-else>
+            <p class="help is-danger">
+              {{ errors.playlistid }}
+            </p>
+          </template>
+        </template>
       </div>
       <div class="field">
-        <label class="label">おすすめポイント</label>
+        <label class="label">*おすすめポイント</label>
         <div class="control">
           <Field
             v-slot="{ field }"
@@ -78,7 +86,9 @@
             />
           </Field>
         </div>
-        <p>{{ errors.recommend }}</p>
+        <p class="help is-danger">
+          {{ errors.recommend }}
+        </p>
       </div>
       <div class="field">
         <label class="label">タグ</label>
@@ -127,7 +137,7 @@ export default {
   },
   data() {
     return {
-      newlist: [],
+      searched: false,
       list: {
         title: '',
         playlistid: '',
@@ -154,7 +164,6 @@ export default {
     const { errors, meta } = useForm({
       validationSchema: schema,
     });
-
     return {
       errors,
       meta,
@@ -171,7 +180,6 @@ export default {
   methods: {
     ...mapActions("lists", [
       "createList",
-      "createVideo",
     ]),
     ...mapActions("youtube", [
       "searchVideos",
@@ -199,6 +207,9 @@ export default {
     },
     select(id) {
       this.list.playlistid = id
+    },
+    Searched() {
+      this.searched = true
     },
   },
   created () {

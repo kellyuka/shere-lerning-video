@@ -16,18 +16,34 @@
                 <p>プログラミングに特化したyoutube共有プラットフォームです</p>
               </div>
               <div class="buttons">
-                <router-link
-                  :to="{ name: 'LoginIndex' }"
-                  class="nav-link button is-danger"
-                >
-                  LOGIN
-                </router-link>
-                <router-link
-                  :to="{ name: 'RegisterIndex' }"
-                  class="nav-link button is-danger"
-                >
-                  NEW ACCOUNT
-                </router-link>
+                <template v-if="!authUser">
+                  <router-link
+                    :to="{ name: 'LoginIndex' }"
+                    class="nav-link button is-danger"
+                  >
+                    LOGIN
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'RegisterIndex' }"
+                    class="nav-link button is-danger"
+                  >
+                    NEW ACCOUNT
+                  </router-link>
+                </template>
+                <template v-else>
+                  <router-link
+                    :to="{ name: 'ListIndex' }"
+                    class="nav-link button is-danger"
+                  >
+                    LISTS
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'ListNew' }"
+                    class="nav-link button is-danger"
+                  >
+                    LIST NEW
+                  </router-link>
+                </template>
               </div>
             </div>
             <div class="column">
@@ -166,6 +182,7 @@ export default {
     ListItem,
   },
   computed: {
+    ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["lists"]),
     limitlists() {
       return this.lists.slice(0,3)
@@ -181,10 +198,10 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .border {
   border-bottom: solid;
-  border-color: #ff3636;
+  border-color: #ff5a5a;
   border-width: 5px;
 }
 </style>

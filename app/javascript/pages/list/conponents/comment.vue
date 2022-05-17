@@ -46,17 +46,28 @@
         </figure>
         <div class="media-content">
           <div class="field">
-            <textarea
-              id="createcomment"
+            <Field
+              v-slot="{ field }"
               v-model="createcomment.body"
-              class="textarea"
-              placeholder="みんなでコメントしよう"
-            />
+              name="createcomment"
+            >
+              <textarea
+                id="createcomment"
+                name="createcomment"
+                v-bind="field"
+                class="textarea"
+                placeholder="みんなでコメントしよう"
+              />
+            </Field>
+            <p class="help is-danger">
+              {{ errors.createcomment }}
+            </p>
           </div>
           <div class="field">
             <p class="control">
               <button
                 class="button is-danger"
+                :disabled="!meta.valid"
                 @click.prevent="handle_create_comment"
               >
                 投稿
@@ -69,8 +80,14 @@
   </div>
 </template>
 <script>
+import { useForm, Field } from 'vee-validate';
+import { object, string } from 'yup';
+
 export default {
   name: "Comment",
+  components: {
+    Field,
+  },
   props: { 
     comments: {
       type: Object,
@@ -81,11 +98,22 @@ export default {
       required: true
     },
   },
-  data() {
+  setup() {
+    const createcomment = {
+      body: '',
+    }
+    const schema = object({
+      createcomment: 
+        string()
+        .required('必須の項目です。')
+    })
+    const { errors, meta } = useForm({
+      validationSchema: schema,
+    })
     return {
-      createcomment: {
-        body: '',
-      },
+      createcomment,
+      errors,
+      meta,
     }
   },
   methods: {

@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <label class="label">再生リスト
+  <div class="field">
+    <label class="label">
+      *再生リスト
       <span
         class="icon-text"
         @click="VisiblePlaylistmodal"
@@ -8,35 +9,71 @@
         <span class="icon">
           <ion-icon 
             name="help-circle" 
+            size="large"
           />
         </span>
       </span>
     </label>
-    <button @click="searchLists">
-      検索
-    </button>
-    <div v-show="results">
-      <div class="columns is-multiline">
-        <div
-          v-for="(list) in results"
-          :key="list.id"
-          class="column is-2"
-          @click="select(list.id)"
+    <template v-if="channelid">
+      <div class="control pb-4">
+        <button 
+          class="button is-small is-danger is-outlined is-rounded"
+          @click="searchLists"
         >
-          <img :src="list.snippet.thumbnails.medium.url">
-          <h2 class="subtitle">
-            {{ list.snippet.title }}
-          </h2>
+          <span>Youtubeから取得</span>
+          <span class="icon">
+            <ion-icon 
+              name="arrow-down-circle-outline"
+              size="large"
+            />
+          </span>
+        </button>
+      </div>
+    </template>
+    <template v-else>
+      <p class="help is-danger">
+        チャンネルIDを
+        <router-link
+          :to="{ name: 'ProfileIndex' }"
+          class="link"
+        >
+          プロフィール
+        </router-link>
+        から登録してください     
+      </p>
+    </template>
+    <div v-if="results">
+      <div v-if="!results.length">
+        <p class="help is-danger">
+          再生リストがありません。Youtubeで再生リストを作成してください
+        </p>
+      </div>
+      <div v-else>
+        <div class="columns is-multiline">
+          <div
+            v-for="(list) in results"
+            :key="list.id"
+            class="column is-2"
+            :class="{ 'box border': isActive == list.id }"
+            @click="select(list.id)"
+          >
+            <figure class="image is-16by9">
+              <img :src="list.snippet.thumbnails.medium.url">
+            </figure>
+            <h2 class="is-size-5">
+              {{ list.snippet.title }}
+            </h2>
+          </div>
         </div>
       </div>
     </div>
-    <transition name="fade">
-      <PlaylistModal
-        v-if="playlistmodal"
-        @Visiblemodal="VisiblePlaylistmodal"
-      />
-    </transition>
   </div>
+  <transition name="fade">
+    <PlaylistModal
+      v-if="playlistmodal"
+      @Visiblemodal="VisiblePlaylistmodal"
+    />
+  </transition>
 </template>
 
 <script>
@@ -56,6 +93,7 @@ export default {
   },
   data: function() {
     return {
+      isActive: '',
       results: "",
       playlistmodal: false,
     };
@@ -63,26 +101,22 @@ export default {
   methods: {
     ...mapActions("youtube", ["searchplayLists"]),
     searchLists() {
-      if (this.channelid !== "") {
       this.searchplayLists(this.channelid)
-        .then(res => { this.results = res.data.items })
-        .catch(err => {
-          this.$notify({
-            type: "warn",
-            title: "再生リストの取得に失敗しました",
-            text: "チャンネルIDをご確認ください",
-          });
-        })
-      } else { 
+      .then(res => { this.results = res.data.items },this.$emit('Searched'))
+      .catch(err => {
         this.$notify({
-            type: "warn",
-            title: "チャンネルIDを登録してください",
-            text: "プロフィールから登録できます。",
-          });
-      }
+          type: "warn",
+          title: "再生リストの取得に失敗しました",
+          text: "チャンネルIDをご確認ください",
+        });
+      })
     },
     select(id) {
+      this.isActive = id
       this.$emit('select',id)
+    },
+    Searched() {
+      this.$emit('Searched')
     },
     VisiblePlaylistmodal(){
       if (this.playlistmodal == false) {
@@ -95,4 +129,9 @@ export default {
 };
 </script>
 <style scoped>
+.border {
+  border: solid;
+  border-color: #ff5a5a;
+  border-width: 2px;
+}
 </style>
