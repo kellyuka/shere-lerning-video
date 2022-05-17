@@ -4,7 +4,7 @@ module ApplicationHelper
       title: 'ShareTechTube',
       description: 'ShareTechTubeはプログラミングに特化したyoutube共有プラットフォームです',
       keywords: 'youtube,プログラミング',
-      noindex: !Rails.env.production?, 
+      noindex: !Rails.env.production?,
       canonical: request.original_url,
       charset: 'UTF-8',
       og: {
