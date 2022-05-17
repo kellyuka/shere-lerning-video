@@ -268,9 +268,10 @@ export default {
       try {
         await 
           this.createUser(this.user)
-          this.$router.push({ name: 'LoginIndex' })
+          this.$router.push({ name: 'ListIndex' })
           this.$notify({
-            title: "登録に成功しました。ログインしてください",
+            title: "登録に成功しました",
+            text: "勉強頑張りましょう！",
           });
       } catch (error) {
         this.$notify({

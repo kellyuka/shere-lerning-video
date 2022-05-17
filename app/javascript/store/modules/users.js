@@ -44,8 +44,12 @@ const actions = {
     axios.defaults.headers.common['Authorization'] = ''
     commit('setUser', null)
   },
-  createUser({ commit }, user ) {
-    return axios.post('/users', { user: user })
+  async createUser({ commit }, user ) {
+    const sessionsResponse = await axios.post('/users', { user: user })
+    localStorage.auth_token = sessionsResponse.data.token
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.auth_token}`
+    const userResponse = await axios.get('users/me')
+    commit('setUser', userResponse.data)
   },
   updateUser({ commit, state }, user) {
     return axios.patch(`profile/${state.authUser.id}`, user)
