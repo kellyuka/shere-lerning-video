@@ -25,7 +25,27 @@
           <p>{{ comment.body }}</p>
         </div>
       </div>
+      <div v-if="isAuthUserComment(comment)">
+        <div class="media-right">
+          <ion-icon 
+            name="create-outline"
+            @click="visibleComment(comment)"
+          />
+        </div>
+      </div>
     </article>
+    <transition name="fade">
+      <div
+        v-show="visiblecomment"
+        class="modal is-active"
+      >
+        <CommentEdit
+          :comment="editcomment"
+          @update_comment="update_comment"
+          @visibleComment="visibleComment"
+        />
+      </div>
+    </transition>
     <template v-if="authUser">
       <article class="media">
         <figure class="media-left">
@@ -80,13 +100,16 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string } from 'yup';
+import CommentEdit from '../../comment/edit.vue'
 
 export default {
   name: "Comment",
   components: {
     Field,
+    CommentEdit,
   },
   props: { 
     comments: {
@@ -98,10 +121,16 @@ export default {
       required: true
     },
   },
+  data() {
+    return {
+    visiblecomment: false,
+    }
+  },
   setup() {
     const createcomment = {
       body: '',
     }
+    const editcomment = ""
     const schema = object({
       createcomment: 
         string()
@@ -112,15 +141,58 @@ export default {
     })
     return {
       createcomment,
+      editcomment,
       errors,
       meta,
     }
   },
+  computed: {
+    ...mapGetters("users", ["authUser"]),
+    ...mapGetters("comments", ["comments"]),
+  },
   methods: {
+    ...mapActions("comments", [
+      "updateComment",
+    ]),
+    isAuthUserComment(comment) {
+      if (this.authUser) {
+        return this.authUser.id === comment.user_id
+      }
+    },
     handle_create_comment() {
       this.$emit('create-comment',this.createcomment)
       this.createcomment = {} 
     },
+    visibleComment(comment){
+      if (this.visiblecomment == false) {
+        this.editcomment = comment
+        this.visiblecomment = true
+      } else {
+        this.visiblecomment = false
+      }
+    },
+    async update_comment(comment) {
+      try {
+        await
+        this.updateComment(comment)
+        this.visiblecomment = false
+        this.$notify({
+          title: "編集しました",
+        });
+      } catch (error) {
+          this.$notify({
+            type: "warn",
+            title: "編集に失敗しました",
+          });
+        }
+    },
   },
 }
 </script>
+
+<style scoped>
+ion-icon {
+  font-size: 24px;
+  color: red;
+}
+</style>

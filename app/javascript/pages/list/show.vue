@@ -120,13 +120,15 @@
 </template>
 <script>
 import Comment from './conponents/comment.vue'
+
 import Edit from './conponents/edit.vue'
 import { mapGetters, mapActions } from "vuex"
 export default {
   name: "ListShow",
   components: {
-    Comment,
     Edit,
+    Comment,
+    
   },
   props: { 
     id: {
