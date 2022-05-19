@@ -12,7 +12,7 @@
         <div class="tabs is-centered">
           <ul>
             <li class="is-active">
-              <a>EDIT</a>
+              <a>LIST EDIT</a>
             </li>
           </ul>
         </div>

@@ -11,18 +11,18 @@
           v-if="isAuthUserList"
           class="tile is-child has-text-right"
         >
-          <button 
-            class="button is-danger m-2"
+          <!-- 編集 -->
+          <ion-icon 
+            name="create-outline"
+            class="edit-icon"
             @click="VisibleModal"
-          >  
-            編集
-          </button>
-          <button 
-            class="button is-danger m-2"
+          />
+          <!-- 削除-->
+          <ion-icon
+            name="trash-outline"
+            class="edit-icon"
             @click="deletelist"
-          >
-            削除
-          </button>
+          />
         </div>
         <div
           id="modal"
@@ -67,7 +67,7 @@
               >
               <img
                 v-else
-                src="../../../assets/images/noimage.png"
+                src="../../../../assets/images/noimage.png"
                 alt="プロフィール画像"
                 width="96"
               >
@@ -109,9 +109,7 @@
         </div>
         <div class="content">
           <Comment
-            :comments="comments"
-            :auth-user="authUser"
-            @create-comment="create_comment"
+            :list_id="list.id"
           />
         </div>
       </article>
@@ -119,16 +117,14 @@
   </div>
 </template>
 <script>
-import Comment from './conponents/comment.vue'
-
-import Edit from './conponents/edit.vue'
+import Edit from '../conponents/edit.vue'
+import Comment from './comment.vue'
 import { mapGetters, mapActions } from "vuex"
 export default {
   name: "ListShow",
   components: {
     Edit,
     Comment,
-    
   },
   props: { 
     id: {
@@ -144,12 +140,11 @@ export default {
   computed: {
     ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["list"]),
-    ...mapGetters("comments", ["comments"]),
     isAuthUserList() {
       if (this.authUser) {
         return this.authUser.id === this.list.user_id
       }
-    }
+    },
   },
   methods: {
     ...mapActions("lists", [
@@ -157,17 +152,7 @@ export default {
     "updateList",
     "deleteList",
     ]),
-    ...mapActions("comments", [
-      "createComment",
-      "fetchComments",
-    ]),
-    async create_comment(comment) {
-      comment.list_id = this.list.id 
-      try {
-        await this.createComment(comment);
-      }
-      catch (error) { console.log(error);}
-    },
+    
     async updatelist(list) {
       try {
         await 
@@ -194,7 +179,12 @@ export default {
             title: "削除しました",
           });
       }
-      catch (error) { alert("削除失敗"),console.log(error); }
+      catch (error) { 
+        this.$notify({
+          title: "削除に失敗しました",
+        });
+        console.log(error);
+      }
     },
     VisibleModal(){
       if (this.modal_class == "is-active"){
@@ -204,9 +194,15 @@ export default {
       }
     }
   },
-  created () {
+  created: function(){
     this.showList(this.id);
-    this.fetchComments(this.id);
   }
 }
 </script>
+
+<style scoped>
+.edit-icon {
+  font-size: 36px;
+  color: red;
+}
+</style>

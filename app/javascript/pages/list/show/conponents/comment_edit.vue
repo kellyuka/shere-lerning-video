@@ -106,7 +106,7 @@ export default {
       this.$emit('update_comment',this.editcomment)
     },
     handleVisibleModal(){
-      this.$emit('visibleComment')
+      this.$emit('VisibleComment')
     },
   },
 }

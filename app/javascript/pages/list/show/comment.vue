@@ -27,12 +27,16 @@
       </div>
       <div v-if="isAuthUserComment(comment)">
         <div class="media-right">
+          <!-- 編集 -->
           <ion-icon 
             name="create-outline"
-            @click="visibleComment(comment)"
+            class="edit-icon"
+            @click="VisibleComment(comment)"
           />
+          <!-- 削除-->
           <ion-icon
             name="trash-outline"
+            class="edit-icon"
             @click="delete_comment(comment)"
           />
         </div>
@@ -46,7 +50,7 @@
         <CommentEdit
           :comment="editcomment"
           @update_comment="update_comment"
-          @visibleComment="visibleComment"
+          @VisibleComment="VisibleComment"
         />
       </div>
     </transition>
@@ -92,7 +96,7 @@
               <button
                 class="button is-danger"
                 :disabled="!meta.valid"
-                @click.prevent="handle_create_comment"
+                @click="create_comment"
               >
                 投稿
               </button>
@@ -107,7 +111,7 @@
 import { mapGetters, mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string } from 'yup';
-import CommentEdit from '../../comment/edit.vue'
+import CommentEdit from './conponents/comment_edit.vue'
 
 export default {
   name: "Comment",
@@ -116,14 +120,10 @@ export default {
     CommentEdit,
   },
   props: { 
-    comments: {
-      type: Object,
+    list_id: {
+      type: Number,
       required: true
-    },
-    authUser: {
-      type: Object,
-      required: true
-    },
+    }
   },
   data() {
     return {
@@ -132,6 +132,7 @@ export default {
   },
   setup() {
     const createcomment = {
+      list_id: '',
       body: '',
     }
     const editcomment = ""
@@ -154,26 +155,33 @@ export default {
     ...mapGetters("users", ["authUser"]),
     ...mapGetters("comments", ["comments"]),
   },
+  created () {
+    this.fetchComments(this.list_id);
+  },
   methods: {
     ...mapActions("comments", [
-      "updateComment","deleteComment",
+      "fetchComments","createComment","updateComment","deleteComment", 
     ]),
     isAuthUserComment(comment) {
-      if (this.authUser) {
-        return this.authUser.id === comment.user_id
-      }
-    },
-    handle_create_comment() {
-      this.$emit('create-comment',this.createcomment)
-      this.createcomment = {} 
-    },
-    visibleComment(comment){
+        if (this.authUser) {
+          return this.authUser.id === comment.user_id
+        }
+      },
+    VisibleComment(comment){
       if (this.visiblecomment == false) {
         this.editcomment = comment
         this.visiblecomment = true
       } else {
         this.visiblecomment = false
       }
+    },
+    async create_comment() {
+      try { 
+        this.createcomment.list_id = this.list_id 
+        await this.createComment(this.createcomment);
+        this.createcomment = {} 
+      }
+      catch (error) { console.log(error);}
     },
     async update_comment(comment) {
       try {
@@ -190,7 +198,7 @@ export default {
           });
         }
     },
-     async delete_comment(comment) {
+    async delete_comment(comment) {
       try {
         await
         console.log("ugo") 
@@ -209,9 +217,8 @@ export default {
   },
 }
 </script>
-
 <style scoped>
-ion-icon {
+.edit-icon {
   font-size: 24px;
   color: red;
 }
