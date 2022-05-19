@@ -40,7 +40,7 @@ const actions = {
       .catch(err => console.log(err.response));
   },
   deleteComment({ commit }, comment) {
-    return axios.delete('comments/'+ comment.id)
+    axios.delete('comments/'+ comment.id)
       .then(res => { commit('deleteComment', res.data) })
       .catch(err => console.log(err.response));
   }

@@ -31,6 +31,10 @@
             name="create-outline"
             @click="visibleComment(comment)"
           />
+          <ion-icon
+            name="trash-outline"
+            @click="delete_comment(comment)"
+          />
         </div>
       </div>
     </article>
@@ -152,7 +156,7 @@ export default {
   },
   methods: {
     ...mapActions("comments", [
-      "updateComment",
+      "updateComment","deleteComment",
     ]),
     isAuthUserComment(comment) {
       if (this.authUser) {
@@ -185,6 +189,22 @@ export default {
             title: "編集に失敗しました",
           });
         }
+    },
+     async delete_comment(comment) {
+      try {
+        await
+        console.log("ugo") 
+        this.deleteComment(comment)
+        this.$notify({
+          title: "削除しました",
+        });
+      }
+      catch (error) { 
+        this.$notify({
+          title: "削除に失敗しました",
+        });
+        console.log(error);
+      }
     },
   },
 }
