@@ -96,7 +96,7 @@
               </h2>
               <div class="subtitle">
                 <p>いい動画は見つかった？</p>
-                <p>動画と一緒に学んだことをここで共有してみよう！!</p>
+                <p>動画と一緒におすすめポイントや学んだことを共有してみよう！!</p>
               </div>
               <h3 class="subtitle" />
               <figure class="column is-half is-offset-one-quarter">
