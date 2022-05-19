@@ -25,7 +25,35 @@
           <p>{{ comment.body }}</p>
         </div>
       </div>
+      <div v-if="isAuthUserComment(comment)">
+        <div class="media-right">
+          <!-- 編集 -->
+          <ion-icon 
+            name="create-outline"
+            class="edit-icon"
+            @click="VisibleComment(comment)"
+          />
+          <!-- 削除-->
+          <ion-icon
+            name="trash-outline"
+            class="edit-icon"
+            @click="delete_comment(comment)"
+          />
+        </div>
+      </div>
     </article>
+    <transition name="fade">
+      <div
+        v-show="visiblecomment"
+        class="modal is-active"
+      >
+        <CommentEdit
+          :comment="editcomment"
+          @update_comment="update_comment"
+          @VisibleComment="VisibleComment"
+        />
+      </div>
+    </transition>
     <template v-if="authUser">
       <article class="media">
         <figure class="media-left">
@@ -68,7 +96,7 @@
               <button
                 class="button is-danger"
                 :disabled="!meta.valid"
-                @click.prevent="handle_create_comment"
+                @click="create_comment"
               >
                 投稿
               </button>
@@ -80,28 +108,34 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string } from 'yup';
+import CommentEdit from './conponents/comment_edit.vue'
 
 export default {
   name: "Comment",
   components: {
     Field,
+    CommentEdit,
   },
   props: { 
-    comments: {
-      type: Object,
+    list_id: {
+      type: Number,
       required: true
-    },
-    authUser: {
-      type: Object,
-      required: true
-    },
+    }
+  },
+  data() {
+    return {
+    visiblecomment: false,
+    }
   },
   setup() {
     const createcomment = {
+      list_id: '',
       body: '',
     }
+    const editcomment = ""
     const schema = object({
       createcomment: 
         string()
@@ -112,15 +146,80 @@ export default {
     })
     return {
       createcomment,
+      editcomment,
       errors,
       meta,
     }
   },
+  computed: {
+    ...mapGetters("users", ["authUser"]),
+    ...mapGetters("comments", ["comments"]),
+  },
+  created () {
+    this.fetchComments(this.list_id);
+  },
   methods: {
-    handle_create_comment() {
-      this.$emit('create-comment',this.createcomment)
-      this.createcomment = {} 
+    ...mapActions("comments", [
+      "fetchComments","createComment","updateComment","deleteComment", 
+    ]),
+    isAuthUserComment(comment) {
+        if (this.authUser) {
+          return this.authUser.id === comment.user_id
+        }
+      },
+    VisibleComment(comment){
+      if (this.visiblecomment == false) {
+        this.editcomment = comment
+        this.visiblecomment = true
+      } else {
+        this.visiblecomment = false
+      }
+    },
+    async create_comment() {
+      try { 
+        this.createcomment.list_id = this.list_id 
+        await this.createComment(this.createcomment);
+        this.createcomment = {} 
+      }
+      catch (error) { console.log(error);}
+    },
+    async update_comment(comment) {
+      try {
+        await
+        this.updateComment(comment)
+        this.visiblecomment = false
+        this.$notify({
+          title: "編集しました",
+        });
+      } catch (error) {
+          this.$notify({
+            type: "warn",
+            title: "編集に失敗しました",
+          });
+        }
+    },
+    async delete_comment(comment) {
+      try {
+        await
+        console.log("ugo") 
+        this.deleteComment(comment)
+        this.$notify({
+          title: "削除しました",
+        });
+      }
+      catch (error) { 
+        this.$notify({
+          title: "削除に失敗しました",
+        });
+        console.log(error);
+      }
     },
   },
 }
 </script>
+<style scoped>
+.edit-icon {
+  font-size: 24px;
+  color: red;
+}
+</style>

@@ -1,6 +1,5 @@
 class Api::ListsController < ApplicationController
-  before_action :authenticate!, only: %i[create]
-  before_action :set_list, only: %i[show]
+  before_action :authenticate!, only: %i[create update destroy]
   before_action :currentuser_set_list, only: %i[update destroy]
 
   def index
@@ -17,6 +16,7 @@ class Api::ListsController < ApplicationController
   end
 
   def show
+    @list = List.find(params[:id])
     render json: @list,
            only: %i[id user_id playlistid title recommend],
            include: [
@@ -82,10 +82,6 @@ class Api::ListsController < ApplicationController
   end
 
   private
-
-  def set_list
-    @list = List.find(params[:id])
-  end
 
   def currentuser_set_list
     @list = current_user.lists.find(params[:id])

@@ -3,7 +3,7 @@ import LoginIndex from '../pages/login/index.vue'
 import RegisterIndex from '../pages/register/index.vue'
 import AboutIndex from '../pages/top/about.vue'
 import ListNew from '../pages/list/new.vue'
-import ListShow from '../pages/list/show.vue'
+import ListShow from '../pages/list/show/show.vue'
 import ListIndex from '../pages/list/index.vue'
 import ProfileIndex from "../pages/profile/index";
 import store from '../store'
