@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :comments
     resources :profile
   end
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
     get '*path', to: 'home#index', constraints: lambda { |req|
       req.path.exclude? 'rails/active_storage'
     }
