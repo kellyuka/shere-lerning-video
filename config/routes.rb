@@ -9,18 +9,15 @@ Rails.application.routes.draw do
     resources :sessions
     resources :lists ,shallow: true do
       resources :favorites, only: %i[create destroy]
-      collection do
-        get 'userlists'
-        get 'aboutlists'
-        get :favorites
-      end
     end
     resources :favorites , only: %i[index]
     resources :tags
     resources :videos
     resources :comments
     resources :profile
+    resources :password_resets, only: %i[create edit update]
   end
+  get '/password_resets/:id/edit' , to: 'home#index', as: :edit_password_reset
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
     get '*path', to: 'home#index', constraints: lambda { |req|
       req.path.exclude? 'rails/active_storage'

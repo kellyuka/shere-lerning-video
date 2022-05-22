@@ -5,7 +5,7 @@ import youtube from './modules/youtube'
 import comments from './modules/comments'
 import tags from './modules/tags'
 import favorites from './modules/favorites'
-
+import passwordresets from './modules/passwordresets'
 
 export default createStore({
   modules: {
@@ -15,5 +15,6 @@ export default createStore({
     comments,
     tags,
     favorites,
+    passwordresets,
   }
 })

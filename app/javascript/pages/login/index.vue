@@ -60,10 +60,12 @@
             >
               Get Started
             </button>
-            <!-- <a
+            <router-link
+              :to="{ name: 'PasswordresetNew' }"
               class="mb-4 is-inline-block"
-              href="#"
-            ><small>Forgot password?</small></a> -->
+            >
+              <small>Forgot password?</small>
+            </router-link>
             <router-link
               :to="{ name: 'RegisterIndex' }"
               class="button mb-2 is-flex is-justify-content-center is-align-items-center is-fullwidth"

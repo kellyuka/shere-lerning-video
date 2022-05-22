@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :name, presence: true
   validates :profile, length: { maximum: 200 }
+  validates :reset_password_token, presence: true, uniqueness: true, allow_nil: true
+
   def avatar_url
     avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : nil
   end

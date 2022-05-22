@@ -6,6 +6,9 @@ import ListNew from '../pages/list/new.vue'
 import ListShow from '../pages/list/show/show.vue'
 import ListIndex from '../pages/list/index.vue'
 import ProfileIndex from "../pages/profile/index";
+import PasswordresetNew from "../pages/password_reset/new.vue";
+import PasswordresetEdit from "../pages/password_reset/edit.vue";
+
 import store from '../store'
 
 const routes = [
@@ -45,6 +48,17 @@ const routes = [
     component: ProfileIndex,
     name: "ProfileIndex",
     meta: { requiredAuth: true },
+  },
+  {
+    path: "/password_reset",
+    component: PasswordresetNew,
+    name: "PasswordresetNew",
+  },
+  {
+    path: "/password_resets/:id/edit",
+    component: PasswordresetEdit,
+    name: "PasswordresetEdit",
+    props: route => ({ id: String(route.params.id) }) 
   },
 ];
 
