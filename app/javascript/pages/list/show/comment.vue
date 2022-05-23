@@ -120,10 +120,14 @@ export default {
     CommentEdit,
   },
   props: { 
-    list_id: {
+    listid: {
       type: Number,
       required: true
-    }
+    },
+    comments: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
@@ -153,14 +157,10 @@ export default {
   },
   computed: {
     ...mapGetters("users", ["authUser"]),
-    ...mapGetters("comments", ["comments"]),
-  },
-  created () {
-    this.fetchComments(this.list_id);
   },
   methods: {
     ...mapActions("comments", [
-      "fetchComments","createComment","updateComment","deleteComment", 
+      "createComment","updateComment","deleteComment", 
     ]),
     isAuthUserComment(comment) {
         if (this.authUser) {
@@ -177,7 +177,7 @@ export default {
     },
     async create_comment() {
       try { 
-        this.createcomment.list_id = this.list_id 
+        this.createcomment.list_id = this.listid 
         await this.createComment(this.createcomment);
         this.createcomment = {} 
       }

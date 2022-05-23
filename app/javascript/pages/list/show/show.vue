@@ -109,7 +109,8 @@
         </div>
         <div class="content">
           <Comment
-            :list_id="list.id"
+            :listid="list.id"
+            :comments="comments"
           />
         </div>
       </article>
@@ -140,6 +141,7 @@ export default {
   computed: {
     ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["list"]),
+    ...mapGetters("comments", ["comments"]),
     isAuthUserList() {
       if (this.authUser) {
         return this.authUser.id === this.list.user_id
@@ -152,7 +154,9 @@ export default {
     "updateList",
     "deleteList",
     ]),
-    
+    ...mapActions("comments", [
+      "fetchComments",
+    ]),
     async updatelist(list) {
       try {
         await 
@@ -194,8 +198,9 @@ export default {
       }
     }
   },
-  created: function(){
+  created() {
     this.showList(this.id);
+    this.fetchComments(this.id);
   }
 }
 </script>
