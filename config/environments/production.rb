@@ -66,7 +66,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "shere_lerning_video_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = Settings.default_url_options.to_h
+  config.action_mailer.default_url_options = {  :host => 'https://share-techtube.herokuapp.com/' }
   
   # 送信方法
   config.action_mailer.delivery_method = :smtp
