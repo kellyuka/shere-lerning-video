@@ -33,6 +33,7 @@ gem 'rails-i18n', '~> 6.0'
 gem 'google-api-client', require: 'google/apis/youtube_v3'
 gem "aws-sdk-s3", require: false
 gem 'meta-tags'
+gem 'config'
 
 # gem 'google-api-client', '~> 0.28.7'
 group :development, :test do
@@ -59,6 +60,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'foreman'
+  gem 'letter_opener_web', '~> 1.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
