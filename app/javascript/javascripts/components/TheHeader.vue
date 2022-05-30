@@ -5,6 +5,7 @@
         <router-link
           :to="{ name: 'AboutIndex' }"
           class="navbar-item has-text-danger"
+          @click="changeBurgerVisibillity"
         >
           <img
             class="pr-4"
@@ -35,6 +36,7 @@
           <router-link
             :to="{ name: 'ListIndex' }"
             class="navbar-item"
+            @click="changeBurgerVisibillity"
           >
             LISTS
           </router-link>
@@ -42,6 +44,7 @@
             v-if="authUser"
             :to="{ name: 'ListNew' }"
             class="navbar-item"
+            @click="changeBurgerVisibillity"
           >
             NEW LIST
           </router-link>
@@ -53,7 +56,10 @@
                 :to="{ name: 'ProfileIndex' }"
                 class="nav-link"
               >
-                <div class="button is-rounded">
+                <div 
+                  class="button is-rounded"
+                  @click="changeBurgerVisibillity"
+                >
                   <img
                     v-if="authUser.avatar_url"
                     :src="authUser.avatar_url"
@@ -82,6 +88,7 @@
               <router-link
                 :to="{ name: 'LoginIndex' }"
                 class="nav-link button is-danger"
+                @click="changeBurgerVisibillity"
               >
                 LOGIN
               </router-link>
@@ -111,6 +118,7 @@ export default {
     async handleLogout() {
       try {
         await this.logoutUser()
+        this.burgerVisibillity = !this.burgerVisibillity;
         this.$router.push({name: 'ListIndex'})
         this.$notify({
           title: "ログアウトしました",
