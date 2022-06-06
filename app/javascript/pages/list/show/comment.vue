@@ -27,13 +27,11 @@
       </div>
       <div v-if="isAuthUserComment(comment)">
         <div class="media-right">
-          <!-- 編集 -->
           <ion-icon 
             name="create-outline"
             class="edit-icon"
             @click="VisibleComment(comment)"
           />
-          <!-- 削除-->
           <ion-icon
             name="trash-outline"
             class="edit-icon"
@@ -180,6 +178,9 @@ export default {
         this.createcomment.list_id = this.listid 
         await this.createComment(this.createcomment);
         this.createcomment = {} 
+        this.$notify({
+          title: "投稿しました",
+        });
       }
       catch (error) { console.log(error);}
     },
@@ -201,7 +202,6 @@ export default {
     async delete_comment(comment) {
       try {
         await
-        console.log("ugo") 
         this.deleteComment(comment)
         this.$notify({
           title: "削除しました",

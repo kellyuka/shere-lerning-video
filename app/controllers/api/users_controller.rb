@@ -1,11 +1,6 @@
 class Api::UsersController < ApplicationController
   before_action :authenticate!, only: %i[me]
 
-  def index
-    user = User
-    render json: user
-  end
-
   def create
     user = User.new(user_params)
 

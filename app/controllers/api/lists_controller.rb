@@ -7,27 +7,12 @@ class Api::ListsController < ApplicationController
   def index
     pagy, lists = pagy(List.order(created_at: :desc))
     pagy_headers_merge(pagy)
-    render json: lists,
-           only: %i[id user_id title recommend],
-           include: [
-             { videos: { only: :videoid } },
-             { comments: { only: [] } },
-             { tags: { only: %i[id name] } },
-             { user: { methods: :avatar_url,
-                       only: :name } }
-           ]
+    render json: lists
   end
 
   def show
     @list = List.find(params[:id])
-    render json: @list,
-           only: %i[id user_id playlistid title recommend],
-           include: [
-             { videos: { only: %i[id videoid] } },
-             { tags: { only: %i[id name] } },
-             { user: { methods: :avatar_url,
-                       only: %i[name profile] } }
-           ]
+    render json: @list
   end
 
   def create
@@ -49,15 +34,7 @@ class Api::ListsController < ApplicationController
     list = current_user.lists.build(list_params)
     list.tag_ids = tag_ids
     if list.save && list.videos.insert_all(videos)
-      render json: list,
-             only: %i[id user_id title recommend],
-             include: [
-               { videos: { only: %i[id videoid] } },
-               { comments: { only: [] } },
-               { tags: { only: %i[id name] } },
-               { user: { methods: :avatar_url,
-                         only: %i[name profile] } }
-             ]
+      render json: list
     else
       render json: list.errors, status: :bad_request
     end
@@ -65,15 +42,7 @@ class Api::ListsController < ApplicationController
 
   def update
     if @list.update(list_params)
-      render json: @list,
-             only: %i[id user_id title recommend],
-             include: [
-               { videos: { only: %i[id videoid] } },
-               { comments: { only: [] } },
-               { tags: { only: %i[id name] } },
-               { user: { methods: :avatar_url,
-                         only: %i[name profile] } }
-             ]
+      render json: @list
     else
       render json: @list.errors, status: :bad_request
     end

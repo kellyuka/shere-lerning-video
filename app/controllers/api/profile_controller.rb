@@ -4,7 +4,7 @@ class Api::ProfileController < ApplicationController
   def update
     user = User.find(current_user.id)
     if user.update(user_params)
-      render json: user, methods: [:avatar_url]
+      render json: user, each_serializer: UserSerializer
     else
       render json: user.errors, status: :bad_request
     end
