@@ -3,11 +3,13 @@ import axios from '../../plugins/axios'
 const state = {
   lists: [],
   list: [],
+  totalpage: [],
 }
 
 const getters =  {
   lists: state => state.lists,
   list: state => state.list,
+  totalpage: state => state.totalpage,
 }
 
 const mutations = {
@@ -24,12 +26,13 @@ const mutations = {
     state.lists = state.lists.filter(list => {
       return list.id != deleteList.id
     })
-  }
+  },
+  setTotalPage:(state, totalpage) => { state.totalpage = totalpage },
 }
 const actions = {
   fetchLists({ commit }) {
     axios.get('lists')  
-    .then(res => { commit('setLists', res.data) })
+    .then(res => { commit('setLists', res.data), commit('setTotalPage',res.headers["total-pages"]) })
     .catch(err => console.log(err.response));
   },
   showList({ commit }, id) {
@@ -38,7 +41,7 @@ const actions = {
     .catch(err => console.log(err.response));
   },
   createList({ commit }, list) {
-    return axios.post('lists', list)
+    axios.post('lists', list)
     .then(res => { commit('addList', res.data) })
     .catch(err => console.log(err.response));
   },
@@ -51,7 +54,11 @@ const actions = {
     return axios.delete('lists/'+list.id)
       .then(res => { commit('deleteList', res.data) })
       .catch(err => console.log(err.response));
-  }
+  },
+  changePage({ commit }, val) {
+    axios.get(`lists/?page=`+ val)
+    .then(res => { commit('setLists', res.data) })
+  },
 }
 
 export default {

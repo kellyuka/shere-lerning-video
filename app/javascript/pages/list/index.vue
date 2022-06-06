@@ -46,6 +46,27 @@
               <ListItem
                 :lists="lists"
               />
+              <nav
+                class="pagination is-rounded"
+                role="navigation"
+                aria-label="pagination"
+              >
+                <ul class="pagination-list" />
+                <a
+                  v-show="currentPage != 1"
+                  class="pagination-previous disabled"
+                  @click="Previouspage"
+                >
+                  Previous
+                </a>
+                <a
+                  v-show="currentPage != totalpage"
+                  class="pagination-next"
+                  @click="NextPage"
+                >
+                  Next
+                </a>
+              </nav>
             </div>
             <div v-if="isActive == 'search'">
               <div class="field">
@@ -96,11 +117,13 @@ export default {
       isActive: 'list',
       keyword: '',
       tagearchlists: [],
+      currentPage: 1
     }
   },
   computed: {
     ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["lists"]),
+    ...mapGetters("lists", ["totalpage"]),
     ...mapGetters("tags", ["tags"]),
     searchLists: function() {
       var searchlists = [];
@@ -123,7 +146,10 @@ export default {
     this.fetchTags();
   },
   methods: {
-    ...mapActions("lists", ["fetchLists"]),
+    ...mapActions("lists", [
+      "fetchLists",
+      "changePage",
+    ]),
     ...mapActions("tags", ["fetchTags"]),
     require_login(){
       if (this.authUser) {
@@ -148,6 +174,15 @@ export default {
       }
       this.isActive = 'tag'
     },
+    NextPage(){
+      this.currentPage += 1
+      this.changePage(this.currentPage)
+    },
+    Previouspage(){
+      this.currentPage -= 1
+      console.log(this.currentPage)
+      this.changePage(this.currentPage)
+    }
   }
 }
 </script>
