@@ -2,7 +2,7 @@ class Api::CommentsController < ApplicationController
   before_action :authenticate!, only: %i[create]
   before_action :currentuser_set_comment, only: %i[update destroy]
   def index
-    comments = Comment.all
+    comments = Comment
     render json: comments
   end
 

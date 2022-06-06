@@ -5,7 +5,7 @@ class Api::ListsController < ApplicationController
   require 'pagy/extras/headers'
 
   def index
-    pagy, lists = pagy(List.all.order(created_at: :desc))
+    pagy, lists = pagy(List.order(created_at: :desc))
     pagy_headers_merge(pagy)
     render json: lists,
            only: %i[id user_id title recommend],

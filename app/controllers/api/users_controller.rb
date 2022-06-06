@@ -2,7 +2,7 @@ class Api::UsersController < ApplicationController
   before_action :authenticate!, only: %i[me]
 
   def index
-    user = User.all
+    user = User
     render json: user
   end
 

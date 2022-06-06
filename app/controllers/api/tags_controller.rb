@@ -1,6 +1,6 @@
 class Api::TagsController < ApplicationController
   def index
-    tags = Tag.all
+    tags = Tag
     render json: tags.order(created_at: :desc)
   end
 
