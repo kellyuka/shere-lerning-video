@@ -240,6 +240,8 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     os (1.1.4)
+    pagy (5.10.1)
+      activesupport
     parallel (1.22.1)
     parser (3.1.1.0)
       ast (~> 2.4.1)
@@ -411,6 +413,7 @@ DEPENDENCIES
   letter_opener_web (~> 1.0)
   listen (~> 3.3)
   meta-tags
+  pagy
   pg (~> 1.1)
   pry-byebug
   puma (~> 5.0)

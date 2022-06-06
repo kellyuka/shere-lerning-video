@@ -34,6 +34,7 @@ gem 'google-api-client', require: 'google/apis/youtube_v3'
 gem "aws-sdk-s3", require: false
 gem 'meta-tags'
 gem 'config'
+gem 'pagy'
 
 # gem 'google-api-client', '~> 0.28.7'
 group :development, :test do

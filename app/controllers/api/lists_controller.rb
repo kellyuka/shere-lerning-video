@@ -1,9 +1,12 @@
 class Api::ListsController < ApplicationController
-  before_action :authenticate!, only: %i[create update destroy]
   before_action :currentuser_set_list, only: %i[update destroy]
+  before_action :authenticate!, only: %i[create update destroy]
+  include Pagy::Backend
+  require 'pagy/extras/headers'
 
   def index
-    lists = List.all.order(created_at: :desc)
+    pagy, lists = pagy(List.all.order(created_at: :desc))
+    pagy_headers_merge(pagy)
     render json: lists,
            only: %i[id user_id title recommend],
            include: [
