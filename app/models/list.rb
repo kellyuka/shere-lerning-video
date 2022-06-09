@@ -8,7 +8,4 @@ class List < ApplicationRecord
   has_many :tags, through: :list_tags
   has_many :favorites, dependent: :destroy
 
-  validates :title, presence: true, length: { maximum: 100 }
-  validates :recommend, length: { maximum: 1000 }
-  validates :playlistid, presence: true
 end

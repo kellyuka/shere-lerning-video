@@ -94,7 +94,7 @@
         <label class="label">タグ</label>
         <div class="control">
           <v-select 
-            v-model="list.tag_names"
+            v-model="list.list_tags"
             label="name" 
             :options="options" 
             :reduce="tags => tags.name"
@@ -142,8 +142,8 @@ export default {
         title: '',
         playlistid: '',
         recommend: '',
-        videos: '',
-        tag_names: [],
+        videos: [],
+        list_tags: [],
       },
     }
   },
@@ -191,7 +191,10 @@ export default {
       try {
         await
         this.searchVideos(this.list.playlistid)
-        this.list.videos = this.videos
+        for (var i in this.videos) {
+          var video = this.videos[i].snippet.resourceId.videoId
+          this.list.videos.push(video);
+        }
         this.createList(this.list)
         this.$router.push({ name: 'ListIndex' })
         this.$notify({

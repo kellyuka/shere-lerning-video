@@ -41,12 +41,12 @@ const actions = {
     .catch(err => console.log(err.response));
   },
   createList({ commit }, list) {
-    axios.post('lists', list)
+    axios.post('lists', { list: list })
     .then(res => { commit('addList', res.data) })
     .catch(err => console.log(err.response));
   },
   updateList({ commit },list) {
-    return axios.patch('lists/'+list.id, list)
+    return axios.patch('lists/'+list.id, { list: list })
       .then(res => { commit('updateList', res.data) })
       .catch(err => console.log(err.response));
   },
