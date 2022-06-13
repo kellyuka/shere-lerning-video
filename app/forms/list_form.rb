@@ -19,9 +19,9 @@ class ListForm
 
   def save
     ActiveRecord::Base.transaction do
-      tags = list_tags.map{ |tag_name| Tag.where(name: tag_name).first_or_create }
+      tags = list_tags.map { |tag_name| Tag.where(name: tag_name).first_or_create }
       list.update!(user_id: user_id, title: title, recommend: recommend, playlistid: playlistid, tags: tags)
-      videos.map{ |video| Video.where(list_id: list, videoid: video).first_or_create }
+      videos.map { |video| Video.where(list_id: list, videoid: video).first_or_create }
     end
   rescue ActiveRecord::RecordInvalid
     false
@@ -32,5 +32,6 @@ class ListForm
   end
 
   private
+
   attr_reader :list
 end

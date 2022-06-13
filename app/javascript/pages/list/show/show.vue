@@ -30,6 +30,7 @@
           :class="modal_class"
         >
           <Edit
+            :list="list"
             @updatelist="updatelist"
             @VisibleModal="VisibleModal"
           />

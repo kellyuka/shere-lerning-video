@@ -25,8 +25,10 @@ class Api::ListsController < ApplicationController
   end
 
   def update
-    if @list.update(list_params)
-      render json: @list
+    @list = ListForm.new(list_params, list: @list)
+    if @list.valid?
+      @list.save
+      render json: @list.to_model, each_serializer: ListSerializer
     else
       render json: @list.errors, status: :bad_request
     end
@@ -44,6 +46,6 @@ class Api::ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:title, :recommend, :playlistid, videos:[], list_tags:[]).merge(user_id: current_user.id)
+    params.require(:list).permit(:title, :recommend, :playlistid, videos: [], list_tags: []).merge(user_id: current_user.id)
   end
 end

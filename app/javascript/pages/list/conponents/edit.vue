@@ -75,6 +75,18 @@
               {{ errors.recommend }}
             </p>
           </div>
+          <div class="field">
+            <label class="label">タグ</label>
+            <div class="control">
+              <v-select 
+                v-model="list.tags"
+                label="name"
+                :options="tags"
+                multiple
+                taggable
+              />
+            </div>
+          </div>
           <div class="field is-grouped">
             <div class="control">
               <button
@@ -104,14 +116,20 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 import { useForm, Field } from 'vee-validate';
 import { object, string } from 'yup';
 
 export default {
   name: "ListEdit",
-    components: {
+  components: {
     Field,
+  },
+  props: { 
+    list: {
+      type: Object,
+      required: true
+    },
   },
   setup() {
     const schema = object({
@@ -133,25 +151,33 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("lists", ["list"]),
+    ...mapGetters("tags", ["tags"]),
     editlist:{
       get(){
         return {
           id: this.list.id,
           title: this.list.title,
           playlistid: this.list.playlistid,
+          videos: this.list.videos.map((v) => {return v.videoid}),
           recommend: this.list.recommend,
+          list_tags: this.list.tags.map((t) => {return t.name}),
         }
       },
     }
   },
   methods: {
+    ...mapActions("tags", [
+      "fetchTags",
+    ]),
     handleupdatelist() {
       this.$emit('updatelist',this.editlist)
     },
     VisibleModal(){
       this.$emit('VisibleModal')
     },
+  },
+  created () {
+    this.fetchTags();
   },
 }
 </script>
