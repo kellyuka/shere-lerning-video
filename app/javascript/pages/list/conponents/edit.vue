@@ -158,7 +158,7 @@ export default {
           id: this.list.id,
           title: this.list.title,
           playlistid: this.list.playlistid,
-          videos: this.list.videos.map((v) => {return v.videoid}),
+          videos: [],
           recommend: this.list.recommend,
           list_tags: this.list.tags.map((t) => {return t.name}),
         }
