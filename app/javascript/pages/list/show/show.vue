@@ -30,6 +30,7 @@
           :class="modal_class"
         >
           <Edit
+            :list="list"
             @updatelist="updatelist"
             @VisibleModal="VisibleModal"
           />
@@ -142,6 +143,7 @@ export default {
     ...mapGetters("users", ["authUser"]),
     ...mapGetters("lists", ["list"]),
     ...mapGetters("comments", ["comments"]),
+    ...mapGetters("youtube", ["videos"]),
     isAuthUserList() {
       if (this.authUser) {
         return this.authUser.id === this.list.user_id
@@ -157,9 +159,17 @@ export default {
     ...mapActions("comments", [
       "fetchComments",
     ]),
+    ...mapActions("youtube", [
+      "searchVideos",
+    ]),
     async updatelist(list) {
       try {
         await 
+        this.searchVideos(list.playlistid)
+        for (var i in this.videos) {
+          var video = this.videos[i].snippet.resourceId.videoId
+          list.videos.push(video);
+        }
         this.updateList(list)
         this.$router.push({ name: 'ListIndex' })
         this.$notify({

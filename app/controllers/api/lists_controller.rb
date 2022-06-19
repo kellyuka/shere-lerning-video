@@ -3,77 +3,32 @@ class Api::ListsController < ApplicationController
   before_action :authenticate!, only: %i[create update destroy]
   include Pagy::Backend
   require 'pagy/extras/headers'
-
   def index
-    pagy, lists = pagy(List.all.order(created_at: :desc))
+    pagy, lists = pagy(List.order(created_at: :desc))
     pagy_headers_merge(pagy)
-    render json: lists,
-           only: %i[id user_id title recommend],
-           include: [
-             { videos: { only: :videoid } },
-             { comments: { only: [] } },
-             { tags: { only: %i[id name] } },
-             { user: { methods: :avatar_url,
-                       only: :name } }
-           ]
+    render json: lists
   end
 
   def show
     @list = List.find(params[:id])
-    render json: @list,
-           only: %i[id user_id playlistid title recommend],
-           include: [
-             { videos: { only: %i[id videoid] } },
-             { tags: { only: %i[id name] } },
-             { user: { methods: :avatar_url,
-                       only: %i[name profile] } }
-           ]
+    render json: @list
   end
 
   def create
-    tag_ids = []
-    videos = []
-    params[:tag_names].each do |name|
-      tag = Tag.find_or_create_by(name: name)
-      tag_ids << tag.id
-    end
-
-    params[:videos].each do |item|
-      video = {
-        videoid: item[:snippet][:resourceId][:videoId],
-        created_at: Time.current,
-        updated_at: Time.current
-      }
-      videos << video
-    end
-    list = current_user.lists.build(list_params)
-    list.tag_ids = tag_ids
-    if list.save && list.videos.insert_all(videos)
-      render json: list,
-             only: %i[id user_id title recommend],
-             include: [
-               { videos: { only: %i[id videoid] } },
-               { comments: { only: [] } },
-               { tags: { only: %i[id name] } },
-               { user: { methods: :avatar_url,
-                         only: %i[name profile] } }
-             ]
+    @list = ListForm.new(list_params)
+    if @list.valid?
+      @list.save
+      render json: @list.to_model, each_serializer: ListSerializer
     else
-      render json: list.errors, status: :bad_request
+      render json: @list.errors, status: :bad_request
     end
   end
 
   def update
-    if @list.update(list_params)
-      render json: @list,
-             only: %i[id user_id title recommend],
-             include: [
-               { videos: { only: %i[id videoid] } },
-               { comments: { only: [] } },
-               { tags: { only: %i[id name] } },
-               { user: { methods: :avatar_url,
-                         only: %i[name profile] } }
-             ]
+    @list = ListForm.new(list_params, list: @list)
+    if @list.valid?
+      @list.save
+      render json: @list.to_model, each_serializer: ListSerializer
     else
       render json: @list.errors, status: :bad_request
     end
@@ -91,7 +46,6 @@ class Api::ListsController < ApplicationController
   end
 
   def list_params
-    # params.require(:list).permit(:title, :recommend, :playlistid, tag_ids: [])
-    params.permit(:title, :recommend, :playlistid, tag_ids: [])
+    params.require(:list).permit(:title, :recommend, :playlistid, videos: [], list_tags: []).merge(user_id: current_user.id)
   end
 end

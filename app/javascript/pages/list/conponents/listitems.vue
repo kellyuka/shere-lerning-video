@@ -63,7 +63,7 @@
               size="large"
             />
           </span>
-          {{ list.comments.length }}
+          {{ list.comments_count }}
           <template v-if="authUser">
             <template v-if="isAuthUserfavorite(list)">
               <span class="icon">
@@ -108,11 +108,7 @@ export default {
       },
       user: {
         type: Object,
-        required: true,
-          name: {
-            type: String,
-            required: true,
-          }
+        required: true
       },
     },
   },

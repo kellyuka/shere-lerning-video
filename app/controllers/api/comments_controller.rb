@@ -1,31 +1,17 @@
 class Api::CommentsController < ApplicationController
   before_action :authenticate!, only: %i[create]
   before_action :currentuser_set_comment, only: %i[update destroy]
-  def index
-    comments = Comment.all
-    render json: comments
-  end
 
   def show
     list = List.find(params[:id])
     comments = list.comments
-    render json: comments,
-           include: [
-             { user:
-               { methods: :avatar_url,
-                 only: :name } }
-           ]
+    render json: comments
   end
 
   def create
     comment = current_user.comments.build(comment_params)
     if comment.save
-      render json: comment,
-             include: [
-               { user:
-                 { methods: :avatar_url,
-                   only: :name } }
-             ]
+      render json: comment
     else
       render json: comment.errors, status: :bad_request
     end
@@ -33,12 +19,7 @@ class Api::CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      render json: @comment,
-             include: [
-               { user:
-                 { methods: :avatar_url,
-                   only: :name } }
-             ]
+      render json: @comment
     else
       render json: @comment.errors, status: :bad_request
     end
