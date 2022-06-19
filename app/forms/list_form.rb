@@ -7,6 +7,7 @@ class ListForm
     validates :recommend, presence: true, length: { maximum: 1000 }
     validates :playlistid, presence: true
     validates :user_id, presence: true
+    validates :videos, presence: true
   end
 
   delegate :persisted?, to: :list
