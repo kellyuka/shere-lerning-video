@@ -16,7 +16,7 @@ const actions = {
         part: "snippet",
         type: "video",
         channelId: channelid,
-        key: 'AIzaSyCQtHNjxHRZq_H5ledUA-XIQW2-k3lE5cY',
+        key: process.env.VUE_APP_YOUTUBE_API_KEY,
         maxResults: 50,
       }
     })
@@ -26,7 +26,7 @@ const actions = {
       params: {
         part: 'snippet',
         playlistId: playlistid,
-        key: 'AIzaSyCQtHNjxHRZq_H5ledUA-XIQW2-k3lE5cY',
+        key: process.env.VUE_APP_YOUTUBE_API_KEY,
         maxResults: 50,
       }
     })
