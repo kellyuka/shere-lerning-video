@@ -1,4 +1,4 @@
-# Shere-Lerning-Youtube(仮)
+# ShereTechtube
 ## サービス概要
 YouTubeで見て、有用だった勉強動画の再生リストを作成し  
 共有することで、信憑性の高い動画が見つけられる  
@@ -46,19 +46,27 @@ YouTubeで見て、有用だった勉強動画の再生リストを作成し
 - プロフィールにTwitter連携
 - 当サイトからYouTubeの再生リストに動画を追加
 - 登録された再生リスト内の動画を再読込みの自動化
-### 画面イメージ
-- 一覧
-<img width="612" alt="スクリーンショット 2022-03-24 12 55 34" src="https://user-images.githubusercontent.com/93305003/159839149-dae382c0-1e56-4e8e-a5d9-9277bfc60486.png">  
-
-- 登録
-<img width="612" alt="スクリーンショット 2022-03-24 13 06 20" src="https://user-images.githubusercontent.com/93305003/159840224-8e9957d7-2194-4cfa-a844-54b35216e96b.png">
+ーンショット 2022-03-24 13 06 20" src="https://user-images.githubusercontent.com/93305003/159840224-8e9957d7-2194-4cfa-a844-54b35216e96b.png">
 
 ## なぜこのサービスを作りたいのか？
-同じ勉強をしている人、知っている人の推奨する動画には信憑性があり、見たいです。  
-例えば、校長が薦めるCSS動画とか、バディが薦めるギブ精神を上げる動画とか、受講生がPFを作る際に参考にした動画とか気になります。  
-動画を見るだけだと、時間を浪費していると感じるのですが、
-自分の知見（例：わかりやすい、細かいところまで、実演があるとか。）を入れてアウトプットして価値を出すことで、浪費と感じないようにしたいです。  
-見る側も登録する側もwin-winな関係になれますし、YouTubeの再生回数も上がるので、Youtuberともwin-winの関係になれます。
+プログラミングの勉強の媒体の一つとしてyoutubeを使っています。  
+動画を探すときに数が多いので、どの動画を見ると良いか悩みます。  
+そのため、プログラマー同士で共有できる場があれば、  
+検索する時間の短縮や、有力な動画が集まるのではないかと考え、作成いたしました。  
+
+## 使用技術
+< バックエンド >  
+・Ruby 3.0.0  
+・Rails  6.1.5  
+< フロントエンド >  
+・Vue.js 3.2.31  
+・Bluma(css)  
+< インフラ >  
+・heroku  
+・AWS S3  
+< その他特記 >  
+・gem google-api-client  
+・jsライブラリ lite-youtube-embed  
 
 ## 画面遷移図
 [figma](https://www.figma.com/file/aCfkhFpNcFb3WFQMDmtpth/kellyuka%2FShare-Larning-Youtube?node-id=0%3A1)
