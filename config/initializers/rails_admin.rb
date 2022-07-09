@@ -2,6 +2,12 @@ RailsAdmin.config do |config|
   config.parent_controller = 'ApplicationController'
   config.current_user_method(&:current_user)
 
+  config.authenticate_with do
+    require_login
+  end
+  config.authorize_with do
+    redirect_to main_app.admin_login_path, notice: "権限がありません"  unless current_user.admin?
+  end
   ### Popular gems integration
 
   ## == Devise ==

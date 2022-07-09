@@ -6,6 +6,13 @@
           <h3 class="title has-text-white">
             Admin Login
           </h3>
+          <% if flash.present?  %>
+            <% flash.each do |type, message| %>
+              <div class="subtitle">
+                <%= message %>
+              </div>
+            <% end %>
+          <% end %>
           <%= form_with url: admin_sessions_path, methods: :post, class:"box", local: true do |f| %>
             <div class="field">
               <%= f.label :email, class:"label" %>
