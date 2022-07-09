@@ -42,10 +42,10 @@ class Api::ListsController < ApplicationController
   private
 
   def currentuser_set_list
-    @list = current_user.lists.find(params[:id])
+    @list = login_user.lists.find(params[:id])
   end
 
   def list_params
-    params.require(:list).permit(:title, :recommend, :playlistid, videos: [], list_tags: []).merge(user_id: current_user.id)
+    params.require(:list).permit(:title, :recommend, :playlistid, videos: [], list_tags: []).merge(user_id: login_user.id)
   end
 end
