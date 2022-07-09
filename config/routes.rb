@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :password_resets, only: %i[create edit update]
   end
   get '/password_resets/:id/edit' , to: 'home#index', as: :edit_password_reset
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
     get '*path', to: 'home#index', constraints: lambda { |req|
       req.path.exclude? 'rails/active_storage'
