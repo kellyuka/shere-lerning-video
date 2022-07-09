@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :favorites, dependent: :destroy
   has_many :favorites_lists, through: :favorites, source: :list
+  enum role: { general: 0, admin: 1 }
 
   validates :password, length: { minimum: 5 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }

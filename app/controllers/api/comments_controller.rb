@@ -9,7 +9,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    comment = current_user.comments.build(comment_params)
+    comment = login_user.comments.build(comment_params)
     if comment.save
       render json: comment
     else
@@ -33,7 +33,7 @@ class Api::CommentsController < ApplicationController
   private
 
   def currentuser_set_comment
-    @comment = current_user.comments.find(params[:id])
+    @comment = login_user.comments.find(params[:id])
   end
 
   def comment_params
